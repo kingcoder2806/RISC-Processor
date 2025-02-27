@@ -5,8 +5,7 @@ module control (
     output [1:0] ImmMux,
     output ALUSrcMux,
     output MemtoRegMux,
-    output PCSWriteMux,
-    output PSCInstrMUX,
+    output PCSMux,
     output HaltMux,
     output BranchRegMux,
     output BranchMux,
@@ -67,7 +66,7 @@ module control (
 
     // logic for read register 1 mux control 
     // select alternate register field for LLB and LHB instructions
-    assign RR1Mux = (op[15] & ~op[14] & op[13]);
+    assign RR1Mux = (op[3] & ~op[2] & op[1]);
 
     // logic for read register 2 mux control
     // select instruction[7:4] for most instructions, but use instruction[11:8] for SW
@@ -77,34 +76,31 @@ module control (
     // 00: imm4 (SLL, SRA, ROR) : 4-bits = immediate
     // 01: offset4 (LW, SW) : 4-bits = SE(signed <<1)
     // 10: imm8 (LLB, LHB) : 8-bits = ZE(immediate)
-    // 11: offset9 (B) : 9-bits = signed << 1
-    assign ImmMux[1] = op[3] & (op[2] | (op[1] & op[0])); // 1 for LLB/LHB (101x) or B (1100)
-    assign ImmMux[0] = (op[3] & ~op[2] & ~op[1]) |      // 1 for LW/SW (100x)
-                      (op[3] & op[2] & op[1] & ~op[0]);  // 1 for B (1100)
+    assign ImmMux[1] = op[3] & (op[2] & ~op[1]); // 1 for LLB/LHB (101x) only
+    assign ImmMux[0] = (op[3] & ~op[2] & ~op[1]); // 1 for LW/SW (100x) only
 
     // Logic for ALU select between imm and register 2 data
     // 0: Use reg2 data for ADD, SUB, XOR, RED, PADDSB
-    // 1: Use immediate for SLL, SRA, ROR, LW, SW, LLB, LHB, B
+    // 1: Use immediate for SLL, SRA, ROR, LW, SW, LLB, LHB
     assign ALUSrcMux = (op[2] & ~op[3]) |  // SLL, SRA, ROR
-                      (op[3] & ~op[2]) |   // LW, SW
-                      (op[3] & op[2] & ~op[1]) | // LLB, LHB
-                      (op == 4'b1100);      // B instruction
+                    (op[3] & ~op[2]) |   // LW, SW
+                    (op[3] & op[2] & ~op[1]); // LLB, LHB only
 
     // logic for choosing to store data from memory or from ALU
     // 1: memory data (LW)
     assign MemtoRegMux = (op = 4'b1000);
 
-    // logic for putting current PC in write data in reg file and logic for putting current PC or PC + 2 into instruction memory
+    // logic for putting current PC in write data in reg file and logic for putting current PC or PC + 2 into instruction memory (PSC)
     assign PCSMux = (op = 4'b1110);
 
     // logic to stop PC from incrementing
     assign HaltMux = (op == 4'b1111); 
 
     // logic to determine if we branch to data in register data 1 (using flags)
-    assign BranchRegMux = (op == 4'b1101) & take_branch;
+    assign BranchRegMux = (op == 4'b1101);
 
     // logic to determine if we branch based on immediate value (using flags)
-    assign BranchMux = (op == 4'b1100) & take_branch;
+    assign BranchMux = (op == 4'b1100);
 
     // logic to enable write to register file
     // enable for arithmetic/logical instructions, LW, LLB, LHB, PCS

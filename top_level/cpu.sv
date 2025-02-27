@@ -8,7 +8,7 @@ module cpu(
     // declare all logic connections between modules
     logic [15:0] instruction;          // Instruction from memory
     logic [15:0] pc_plus2;             // PC + 2
-    logic [15:0] branch_target         // PC + SE(imm << 1)
+    logic [15:0] branch_target;        // PC + SE(imm << 1)
     logic [15:0] pc_next;              // Next PC value
     logic [3:0] rr1_reg;               // Read register 1 selector
     logic [3:0] rr2_reg;               // Read register 2 selector
@@ -28,8 +28,7 @@ module cpu(
     logic [1:0] ImmMux;                // Immediate value mux control
     logic ALUSrcMux;                   // ALU source mux control
     logic MemtoRegMux;                 // Memory to register mux control
-    logic PCSWriteMux;                 // PC save mux control
-    logic PSCInstrMUX;                 // PC instruction mux control
+    logic PCSMux;                 // PC save mux control
     logic HaltMux;                     // Halt mux control
     logic BranchRegMux;                // Branch register mux control
     logic BranchMux;                   // Branch immediate mux control
@@ -42,7 +41,20 @@ module cpu(
     // PC Select //
     ///////////////
 
-    // ADD: logic to determine when BranchRegMux BranchMux & take_branch
+    // instantiate program counter register
+    pc_reg PC(
+        .clk(clk),
+        .rst_n(rst_n),
+        .pc_next(pc_next),
+        .pc(pc)
+    );
+
+    // instantiate branch module to determine if branch is taken on B or BR operation
+    branch branch_ctrl (
+    .branch_condition(instruction[11:9]), 
+    .flag_reg(flags), // from ALU
+    .branch_taken(branch_taken)
+    );
 
     // PC incrementer and branch target
     assign pc_plus2 = pc + 16'h0002;
@@ -51,17 +63,9 @@ module cpu(
     
     // PC selection logic
     assign pc_next = HaltMux ? pc :
-                     BranchRegMux ? rr1_data :
+                     BranchRegMux & ? rr1_data :
                      BranchMux ? branch_target :
                      pc_plus2;
-    
-    // instantiate program counter register
-    pc_reg PC(
-        .clk(clk),
-        .rst_n(rst_n),
-        .pc_next(pc_next),
-        .pc(pc)
-    );
     
     ////////////////////////
     // Instruction memory //
@@ -101,8 +105,7 @@ module cpu(
         .ImmMux(ImmMux),
         .ALUSrcMux(ALUSrcMux),
         .MemtoRegMux(MemtoRegMux),
-        .PCSWriteMux(PCSWriteMux),
-        .PSCInstrMUX(PSCInstrMUX),
+        .PCSMux(PCSMux),
         .HaltMux(HaltMux),
         .BranchRegMux(BranchRegMux),
         .BranchMux(BranchMux),
@@ -131,7 +134,7 @@ module cpu(
     );
 
     // Write data selection for register file using assign statement with conditional operators
-    assign write_data = PCSWriteMux ? pc_plus2 :                                  // PCS instruction - save PC+2
+    assign write_data = PCSMux ? pc_plus2 :                                  // PCS instruction - save PC+2
                        MemtoRegMux ? mem_data_out :                               // Load from memory
                        alu_result;                                                // ALU result
 
@@ -141,10 +144,9 @@ module cpu(
     /////////
 
     // Immediate value selection using assign statements and conditional operators
-    assign imm_value = (ImmMux == 2'b00) ? {{12{1'b0}}, instruction[3:0]} :             // 4-bit immediate
-                       (ImmMux == 2'b01) ? {{11{instruction[3]}}, instruction[3:0], 1'b0} : // 4-bit offset shifted
-                       (ImmMux == 2'b10) ? {{8{1'b0}}, instruction[7:0]} :              // 8-bit immediate
-                                          {{7{instruction[8]}}, instruction[8:0]};       // 9-bit offset (2'b11)
+    assign imm_value = (ImmMux == 2'b00) ? {{12{1'b0}}, instruction[3:0]} :             // 4-bit immediate (SLL, SRA, ROR)
+                       (ImmMux == 2'b01) ? {{11{instruction[3]}}, instruction[3:0], 1'b0} : // 4-bit offset shifted (LW, SW)
+                       {{8{1'b0}}, instruction[7:0]};                                     // 8-bit immediate (LLB, LHB) - 2'b10
 
     assign alu_input_b = ALUSrcMux ? imm_value : rr2_data;
 
@@ -158,9 +160,5 @@ module cpu(
         .flags(flags)             // Z, V, N flags
     );
 
-    
-    // Branch condition logic - would need to be expanded based on actual condition codes
-    // This is a placeholder - actual implementation would check flags based on condition bits
-    //assign take_branch = flags[2];  // For example, using Zero flag?
     
 endmodule
