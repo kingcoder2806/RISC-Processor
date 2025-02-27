@@ -11,7 +11,7 @@ module control (
     output BranchMux,
     output RegWrite,
     output MemWrite
-    output DataMemEnable
+    output MemRead
 );
 
     // WISC-S25 Instruction Opcodes:
@@ -70,7 +70,7 @@ module control (
 
     // logic for read register 2 mux control
     // select instruction[7:4] for most instructions, but use instruction[11:8] for SW
-    assign RR2Mux = (op == 4'b1001);
+    assign RR2Mux = MemWrite;
 
     // logic for immediate value mux control, 2-bit
     // 00: imm4 (SLL, SRA, ROR) : 4-bits = immediate
@@ -86,9 +86,15 @@ module control (
                     (op[3] & ~op[2]) |   // LW, SW
                     (op[3] & op[2] & ~op[1]); // LLB, LHB only
 
+    // logic to enable write data to memory
+    assign MemWrite = (op == 4'b1001); // SW instruction
+
+    // logic to enable using data memory (LW/SW)
+    assign MemRead = (op == 4'b1000)
+
     // logic for choosing to store data from memory or from ALU
     // 1: memory data (LW)
-    assign MemtoRegMux = (op = 4'b1000);
+    assign MemtoRegMux = MemRead;
 
     // logic for putting current PC in write data in reg file and logic for putting current PC or PC + 2 into instruction memory (PSC)
     assign PCSMux = (op = 4'b1110);
@@ -110,11 +116,6 @@ module control (
                      (op == 4'b1011) |        // LHB
                      (op == 4'b1110);         // PCS
 
-    // logic to enable write data to memory
-    assign MemWrite = (op == 4'b1001); // SW instruction
-
-    // logic to enable using data memory (LW/SW)
-    assign DataMemEnable = (op[3] & ~op[2] & ~op[1])
 
 
 endmodule

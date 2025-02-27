@@ -18,7 +18,7 @@ module control_tb();
     logic BranchMux;
     logic RegWrite;
     logic MemWrite;
-    logic DataMemEnable;
+    logic MemRead;
     
     // Instantiate the module under test
     control dut(
@@ -34,7 +34,7 @@ module control_tb();
         .BranchMux(BranchMux),
         .RegWrite(RegWrite),
         .MemWrite(MemWrite),
-        .DataMemEnable(DataMemEnable)
+        .MemRead(MemRead)
     );
     
     // Helper function to check and report errors
@@ -51,7 +51,7 @@ module control_tb();
         logic exp_BranchMux, 
         logic exp_RegWrite, 
         logic exp_MemWrite,
-        logic exp_DataMemEnable
+        logic exp_MemRead
     );
         
         // Check each signal against expected value
@@ -110,8 +110,8 @@ module control_tb();
             errors++;
         end
         
-        if (DataMemEnable !== exp_DataMemEnable) begin
-            $display("Error: %s - DataMemEnable is %b, expected %b", op_name, DataMemEnable, exp_DataMemEnable);
+        if (MemRead !== exp_MemRead) begin
+            $display("Error: %s - DataMemEnable is %b, expected %b", op_name, MemRead, exp_MemRead);
             errors++;
         end
         
@@ -174,7 +174,7 @@ module control_tb();
         // SW (1001)
         instruction = 16'b1001_0000_0000_0000;
         #10;
-        check_signals("SW", 1'b0, 1'b1, 2'b01, 1'b1, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1, 1'b1);
+        check_signals("SW", 1'b0, 1'b1, 2'b01, 1'b1, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1, 1'b0);
         
         // LLB (1010)
         instruction = 16'b1010_0000_0000_0000;
