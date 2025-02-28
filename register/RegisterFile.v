@@ -7,9 +7,9 @@ module RegisterFile(
     inout [15:0] SrcData1, SrcData2    
 );
 
-    logic [15:0] read_wordline1, read_wordline2, write_wordline;
-    logic [15:0] read_enable1, read_enable2;  // New intermediate signals
-    logic write_read_1, write_read_2;
+    wire [15:0] read_wordline1, read_wordline2, write_wordline;
+    wire [15:0] read_enable1, read_enable2;  // Intermediate signals
+    wire write_read_1, write_read_2;
 
     // convert 4-bit register numbers to 16-bit one-hot signals (read 1)
     ReadDecoder_4_16 read_decoder1(
@@ -55,7 +55,7 @@ module RegisterFile(
     assign write_read_2 = WriteReg && (DstReg == SrcReg2);
 
     // bypass logic
-    assign SrcData1 = write_read_1 ? DstData : 16'bzzzz;
-    assign SrcData2 = write_read_2 ? DstData : 16'bzzzz;
+    assign SrcData1 = write_read_1 ? DstData : 16'bzzzz_zzzz_zzzz_zzzz;
+    assign SrcData2 = write_read_2 ? DstData : 16'bzzzz_zzzz_zzzz_zzzz;
 
 endmodule

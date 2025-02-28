@@ -1,6 +1,6 @@
 module ReadDecoder_4_16(
     input [3:0] RegId,
-    output logic [15:0] Wordline
+    output [15:0] Wordline
 );
     // assigning the correct bit of the wordline (one-hot) based on RegId
     assign Wordline[0] = (RegId == 4'b0000);

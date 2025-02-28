@@ -10,7 +10,7 @@ module control (
     output BranchRegMux,
     output BranchMux,
     output RegWrite,
-    output MemWrite
+    output MemWrite,
     output MemRead
 );
 
@@ -48,14 +48,14 @@ module control (
     ////////////
     // Unique //
     ////////////
-    // 1100 - B       : Branch with offset   (Opcode ccci iiii iiii) , ccc = condition  as  in Table  1 , iiiiiiiii = 9-bit signed  offset  in  two’s  complement 
+    // 1100 - B       : Branch with offset   (Opcode ccci iiii iiii) , ccc = condition  as  in Table  1 , iiiiiiiii = 9-bit signed  offset  in  two's  complement 
     // 1101 - BR      : Branch to Register   (Opcode cccx ssss xxxx) , ccc = condition as in Table 1 , ssss  = encodes the source register rs
     // 1110 - PCS     : Program Counter Save (Opcode dddd xxxx xxxx) , dddd = encodes register rd
     // 1111 - HLT     : Halt execution       (Opcode xxxx xxxx xxxx) , this is a no-op
 
 
     // internal signal declaration
-    logic [3:0] op;
+    wire [3:0] op;
     
     // assigning opcode to the PC opcode
     assign op = instruction[15:12];
@@ -63,6 +63,12 @@ module control (
     ////////////////////////////////
     // control signal assignments //
     ////////////////////////////////
+
+    // logic to enable write data to memory
+    assign MemWrite = (op == 4'b1001); // SW instruction
+
+    // logic to enable using data memory (LW/SW)
+    assign MemRead = (op == 4'b1000);
 
     // logic for read register 1 mux control 
     // select alternate register field for LLB and LHB instructions
@@ -76,28 +82,22 @@ module control (
     // 00: imm4 (SLL, SRA, ROR) : 4-bits = immediate
     // 01: offset4 (LW, SW) : 4-bits = SE(signed <<1)
     // 10: imm8 (LLB, LHB) : 8-bits = ZE(immediate)
-    assign ImmMux[1] = op[3] & (op[2] & ~op[1]); // 1 for LLB/LHB (101x) only
-    assign ImmMux[0] = (op[3] & ~op[2] & ~op[1]); // 1 for LW/SW (100x) only
+    assign ImmMux[1] = op[3] & ~op[2] & op[1]; // 1 for LLB/LHB (101x) only
+    assign ImmMux[0] = op[3] & ~op[2] & ~op[1]; // 1 for LW/SW (100x) only
 
     // Logic for ALU select between imm and register 2 data
     // 0: Use reg2 data for ADD, SUB, XOR, RED, PADDSB
     // 1: Use immediate for SLL, SRA, ROR, LW, SW, LLB, LHB
-    assign ALUSrcMux = (op[2] & ~op[3]) |  // SLL, SRA, ROR
-                    (op[3] & ~op[2]) |   // LW, SW
-                    (op[3] & op[2] & ~op[1]); // LLB, LHB only
+    assign ALUSrcMux = (~op[3] & op[2] & ~(op[1] & op[0])) | // SLL, SRA, ROR (not PADDSB)
+                   (op[3] & (~op[2] | ~op[1]));         // LW, SW, LLB, LHB
 
-    // logic to enable write data to memory
-    assign MemWrite = (op == 4'b1001); // SW instruction
-
-    // logic to enable using data memory (LW/SW)
-    assign MemRead = (op == 4'b1000)
 
     // logic for choosing to store data from memory or from ALU
     // 1: memory data (LW)
     assign MemtoRegMux = MemRead;
 
     // logic for putting current PC in write data in reg file and logic for putting current PC or PC + 2 into instruction memory (PSC)
-    assign PCSMux = (op = 4'b1110);
+    assign PCSMux = (op == 4'b1110);
 
     // logic to stop PC from incrementing
     assign HaltMux = (op == 4'b1111); 
@@ -115,7 +115,5 @@ module control (
                      (op == 4'b1010) |        // LLB
                      (op == 4'b1011) |        // LHB
                      (op == 4'b1110);         // PCS
-
-
 
 endmodule

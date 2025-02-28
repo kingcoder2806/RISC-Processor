@@ -8,7 +8,7 @@ module BitCell(
     inout Bitline1,
     inout Bitline2
 );
-    logic q_out;
+    wire q_out;
     
     // d flip-flop instance 
     dff dff_inst(

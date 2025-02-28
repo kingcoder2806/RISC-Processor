@@ -7,6 +7,9 @@ module RegisterFile_tb();
     reg [15:0] DstData;
     wire [15:0] SrcData1, SrcData2;
     
+    // For loop counter
+    integer i;
+    
     // instantiate RegisterFile
     RegisterFile iDUT(
         .clk(clk),
@@ -135,7 +138,7 @@ module RegisterFile_tb();
         
         // test 7: sequential writes and reads
         @(posedge clk);
-        for(int i = 0; i < 16; i++) begin
+        for(i = 0; i < 16; i = i + 1) begin
             // write value to register i
             DstReg = i[3:0];
             DstData = 16'h1000 + i;
@@ -144,7 +147,7 @@ module RegisterFile_tb();
         end
         
         WriteReg = 0;
-        for(int i = 0; i < 16; i++) begin
+        for(i = 0; i < 16; i = i + 1) begin
             // Read and verify value from register i
             SrcReg1 = i[3:0];
             @(posedge clk);

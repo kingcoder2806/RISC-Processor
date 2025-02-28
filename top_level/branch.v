@@ -4,20 +4,20 @@ module branch(
     output branch_taken            // 1 if branch should be taken, 0 otherwise
 );
 
-    // Declare logic signals
-    logic n_flag;  // Negative flag
-    logic v_flag;  // Overflow flag
-    logic z_flag;  // Zero flag
+    // Declare wire signals
+    wire n_flag;  // Negative flag
+    wire v_flag;  // Overflow flag
+    wire z_flag;  // Zero flag
     
-    // Declare condition logic signals
-    logic cond_neq;     // Not Equal (Z = 0)
-    logic cond_eq;      // Equal (Z = 1)
-    logic cond_gt;      // Greater Than (Z = N = 0)
-    logic cond_lt;      // Less Than (N = 1)
-    logic cond_gte;     // Greater Than or Equal (Z = 1 or Z = N = 0)
-    logic cond_lte;     // Less Than or Equal (N = 1 or Z = 1)
-    logic cond_ovfl;    // Overflow (V = 1)
-    logic cond_uncond;  // Unconditional
+    // Declare condition wire signals
+    wire cond_neq;     // Not Equal (Z = 0)
+    wire cond_eq;      // Equal (Z = 1)
+    wire cond_gt;      // Greater Than (Z = N = 0)
+    wire cond_lt;      // Less Than (N = 1)
+    wire cond_gte;     // Greater Than or Equal (Z = 1 or Z = N = 0)
+    wire cond_lte;     // Less Than or Equal (N = 1 or Z = 1)
+    wire cond_ovfl;    // Overflow (V = 1)
+    wire cond_uncond;  // Unconditional
     
     // Extract individual flags
     assign n_flag = flag_reg[2];

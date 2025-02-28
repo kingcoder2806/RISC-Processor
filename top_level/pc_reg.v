@@ -1,12 +1,12 @@
 module pc_reg (
-    input logic clk,               // Clock input
-    input logic rst_n,             // Active low reset
-    input logic [15:0] pc_next,    // Next PC value
-    output logic [15:0] pc         // Current PC value
+    input clk,               // Clock input
+    input rst_n,             // Active low reset
+    input [15:0] pc_next,    // Next PC value
+    output reg [15:0] pc     // Current PC value (reg instead of wire for sequential output)
 );
 
     // Program counter register
-    always_ff @(posedge clk, negedge rst_n) begin
+    always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             // Reset PC to 0 when reset is active
             pc <= 16'h0000;

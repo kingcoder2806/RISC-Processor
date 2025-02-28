@@ -1,40 +1,42 @@
 module cpu(
-    input logic clk,
-    input logic rst_n,
-    output logic hlt,
-    output logic [15:0] pc
+    input clk,
+    input rst_n,
+    output hlt,
+    output [15:0] pc
 );
 
-    // declare all logic connections between modules
-    logic [15:0] instruction;          // Instruction from memory
-    logic [15:0] pc_plus2;             // PC + 2
-    logic [15:0] branch_target;        // PC + SE(imm << 1)
-    logic [15:0] pc_next;              // Next PC value
-    logic [3:0] rr1_reg;               // Read register 1 selector
-    logic [3:0] rr2_reg;               // Read register 2 selector
-    logic [3:0] wr_reg;                // Write register selector
-    logic [15:0] rr1_data;             // Data from rs register
-    logic [15:0] rr2_data;             // Data from rt register
-    logic [15:0] write_data;           // Data to write to rd register
-    logic [15:0] alu_result;           // ALU result
-    logic [15:0] imm_value;            // Immediate value for ALU
-    logic [15:0] alu_input_b;          // Second input to ALU
-    logic [15:0] mem_data_out;         // Data from memory
-    logic take_branch;                 // Branch condition is satisfied
+    // declare all wire connections between modules
+    wire [15:0] instruction;          // Instruction from memory
+    wire [15:0] pc_plus2;             // PC + 2
+    wire [15:0] branch_target;        // PC + SE(imm << 1)
+    wire [15:0] pc_next;              // Next PC value
+    wire [3:0] rr1_reg;               // Read register 1 selector
+    wire [3:0] rr2_reg;               // Read register 2 selector
+    wire [3:0] wr_reg;                // Write register selector
+    wire [15:0] rr1_data;             // Data from rs register
+    wire [15:0] rr2_data;             // Data from rt register
+    wire [15:0] write_data;           // Data to write to rd register
+    wire [15:0] alu_result;           // ALU result
+    wire [15:0] imm_value;            // Immediate value for ALU
+    wire [15:0] alu_input_b;          // Second input to ALU
+    wire [15:0] mem_data_out;         // Data from memory
+    wire take_branch;                 // Branch condition is satisfied
+    wire [2:0] flags;                 // Z, V, N flags
+    wire branch_taken;                // Branch condition is satisfied
 
-    // control signals from control_assign module
-    logic RR1Mux;                      // Read register 1 mux control
-    logic RR2Mux;                      // Read register 2 mux control
-    logic [1:0] ImmMux;                // Immediate value mux control
-    logic ALUSrcMux;                   // ALU source mux control
-    logic MemtoRegMux;                 // Memory to register mux control
-    logic PCSMux;                 // PC save mux control
-    logic HaltMux;                     // Halt mux control
-    logic BranchRegMux;                // Branch register mux control
-    logic BranchMux;                   // Branch immediate mux control
-    logic RegWrite;                    // Register write control
-    logic MemWrite;                    // Memory write control
-    logic MemRead;               // Enable using data memory
+    // control signals from control module
+    wire RR1Mux;                      // Read register 1 mux control
+    wire RR2Mux;                      // Read register 2 mux control
+    wire [1:0] ImmMux;                // Immediate value mux control
+    wire ALUSrcMux;                   // ALU source mux control
+    wire MemtoRegMux;                 // Memory to register mux control
+    wire PCSMux;                      // PC save mux control
+    wire HaltMux;                     // Halt mux control
+    wire BranchRegMux;                // Branch register mux control
+    wire BranchMux;                   // Branch immediate mux control
+    wire RegWrite;                    // Register write control
+    wire MemWrite;                    // Memory write control
+    wire MemRead;                     // Enable using data memory
     
 
     ///////////////
@@ -51,9 +53,9 @@ module cpu(
 
     // instantiate branch module to determine if branch is taken on B or BR operation
     branch branch_ctrl (
-    .branch_condition(instruction[11:9]), 
-    .flag_reg(flags), // from ALU
-    .branch_taken(branch_taken)
+        .branch_condition(instruction[11:9]), 
+        .flag_reg(flags), // from ALU
+        .branch_taken(branch_taken)
     );
 
     // PC incrementer and branch target
@@ -63,8 +65,8 @@ module cpu(
     
     // PC selection logic
     assign pc_next = HaltMux ? pc :
-                     BranchRegMux & ? rr1_data :
-                     BranchMux ? branch_target :
+                     (BranchRegMux & branch_taken) ? rr1_data :
+                     (BranchMux & branch_taken) ? branch_target :
                      pc_plus2;
     
     ////////////////////////
@@ -87,7 +89,7 @@ module cpu(
         .data_out(mem_data_out),  // Output: data read from memory
         .data_in(rr2_data),       // Input: data to write to memory (from rt register)
         .addr(alu_result),        // Address: calculated by ALU
-        .enable(MemRead),   // Enable for LW/SW
+        .enable(MemRead),         // Enable for LW/SW
         .wr(MemWrite),            // Write enable signal from control
         .clk(clk),
         .rst(~rst_n)              // Convert active-low to active-high
@@ -111,7 +113,7 @@ module cpu(
         .BranchMux(BranchMux),
         .RegWrite(RegWrite),
         .MemWrite(MemWrite),
-        .DataMemEnable(DataMemEnable)
+        .MemRead(MemRead)
     );
     
     // Register selection logic
@@ -135,8 +137,8 @@ module cpu(
 
     // Write data selection for register file using assign statement with conditional operators
     assign write_data = PCSMux ? pc_plus2 :                                  // PCS instruction - save PC+2
-                       MemtoRegMux ? mem_data_out :                               // Load from memory
-                       alu_result;                                                // ALU result
+                       MemtoRegMux ? mem_data_out :                          // Load from memory
+                       alu_result;                                           // ALU result
 
 
     /////////
@@ -149,8 +151,6 @@ module cpu(
                        {{8{1'b0}}, instruction[7:0]};                                     // 8-bit immediate (LLB, LHB) - 2'b10
 
     assign alu_input_b = ALUSrcMux ? imm_value : rr2_data;
-
-    logic [2:0] flags;                 // Z, V, N flags from ALU
     
     alu ALU(
         .a(rr1_data),
@@ -160,5 +160,7 @@ module cpu(
         .flags(flags)             // Z, V, N flags
     );
 
+    // Connect hlt output to HaltMux
+    assign hlt = HaltMux;
     
 endmodule
