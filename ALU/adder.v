@@ -9,7 +9,7 @@ module adder(
 	// Internal signals
 	wire [15:0] B_in;		// Intermediate B operand
 	wire [4:0] C;			// Carry-in signal for each CLA
-	wire [15:0] Unsat_Sum;	// Adder result before saturation
+	wire [15:0] Unsat_Sum;		// Adder result before saturation
 	wire [3:0] Pg;			// Group propagate signal
 	wire [3:0] Gg;			// Group generate signal
 	
