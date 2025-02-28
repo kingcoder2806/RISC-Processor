@@ -25,7 +25,7 @@ module PADDSB (Sum, A, B);
 	// Check for overflow in each half byte and saturate accordingly
 	assign Sum[3:0] = (Ovfl0 & A[3] & B[3]) ? 4'b1000 : (Ovfl0 & ~A[3] & ~B[3]) ? 4'b0111 : result[3:0];
 	assign Sum[7:4] = (Ovfl1 & A[7] & B[7]) ? 4'b1000 : (Ovfl1 & ~A[7] & ~B[7]) ? 4'b0111 : result[7:4];
-	assign Sum[11:8] = (Ovfl2 & A[11] & B[11]) ? 4'b1000 : (Ovfl2 & ~A[11] & ~B[8]) ? 4'b0111 : result[11:8];
+	assign Sum[11:8] = (Ovfl2 & A[11] & B[11]) ? 4'b1000 : (Ovfl2 & ~A[11] & ~B[11]) ? 4'b0111 : result[11:8];
 	assign Sum[15:12] = (Ovfl3 & A[15] & B[15]) ? 4'b1000 : (Ovfl3 & ~A[15] & ~B[15]) ? 4'b0111 : result[7:4];
 
 endmodule
