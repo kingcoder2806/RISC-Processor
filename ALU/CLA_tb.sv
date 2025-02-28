@@ -2,10 +2,10 @@
 module CLA_tb();
 
 	logic [3:0] A, B, Sum;
-	logic Cin, Cout, Ovfl, Gg, Pg;
+	logic Cin, Cout, Gg, Pg;
 	
 	// Instantiate DUT
-	CLA iDUT(.A(A), .B(B), .Sum(Sum), .Cin(Cin), .Cout(Cout), .Ovfl(Ovfl), .Gg(Gg), .Pg(Pg));
+	CLA iDUT(.A(A), .B(B), .Sum(Sum), .Cin(Cin), .Cout(Cout), .Gg(Gg), .Pg(Pg));
 	
 	initial begin
 		// Simple addition
