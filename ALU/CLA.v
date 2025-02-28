@@ -5,7 +5,7 @@ module CLA(
 	input Cin,
 	output Cout,
 	output [3:0] Sum,
-	output Ovfl,
+	//output Ovfl,
 	output Gg,
 	output Pg);
 	
@@ -44,6 +44,6 @@ module CLA(
 	full_adder_1bit iFA3(.A(A[3]), .B(B[3]), .Cin(carry[3]), .Sum(Sum[3]), .Cout());
 	
 	// Assign overflow logic
-	assign Ovfl = (~A[3] & ~B[3] & Sum[3]) | (A[3] & B[3] & ~Sum[3]);
+	//assign Ovfl = (~A[3] & ~B[3] & Sum[3]) | (A[3] & B[3] & ~Sum[3]);
 
 endmodule
