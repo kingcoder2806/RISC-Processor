@@ -1,24 +1,23 @@
-// Testbench for WISC-S25 Control Unit
 module control_tb();
     // Inputs
-    reg [15:0] instruction;
+    logic [15:0] instruction;
     
     // For checking results
-    integer errors = 0;
+    int errors = 0;
     
     // Outputs
-    wire RR1Mux;
-    wire RR2Mux;
-    wire [1:0] ImmMux;
-    wire ALUSrcMux;
-    wire MemtoRegMux;
-    wire PCSMux;
-    wire HaltMux;
-    wire BranchRegMux;
-    wire BranchMux;
-    wire RegWrite;
-    wire MemWrite;
-    wire MemRead;
+    logic RR1Mux;
+    logic RR2Mux;
+    logic [1:0] ImmMux;
+    logic ALUSrcMux;
+    logic MemtoRegMux;
+    logic PCSMux;
+    logic HaltMux;
+    logic BranchRegMux;
+    logic BranchMux;
+    logic RegWrite;
+    logic MemWrite;
+    logic MemRead;
     
     // Instantiate the module under test
     control dut(
@@ -37,6 +36,90 @@ module control_tb();
         .MemRead(MemRead)
     );
     
+    // Helper function to check and report errors
+    function void check_signals(
+        string op_name,
+        logic exp_RR1Mux, 
+        logic exp_RR2Mux, 
+        logic [1:0] exp_ImmMux, 
+        logic exp_ALUSrcMux,
+        logic exp_MemtoRegMux, 
+        logic exp_PCSMux, 
+        logic exp_HaltMux,
+        logic exp_BranchRegMux, 
+        logic exp_BranchMux, 
+        logic exp_RegWrite, 
+        logic exp_MemWrite,
+        logic exp_MemRead
+    );
+        
+        // Check each signal against expected value
+        if (RR1Mux !== exp_RR1Mux && exp_RR1Mux !== 1'bx) begin
+            $display("Error: %s - RR1Mux is %b, expected %b", op_name, RR1Mux, exp_RR1Mux);
+            errors++;
+        end
+        
+        if (RR2Mux !== exp_RR2Mux) begin
+            $display("Error: %s - RR2Mux is %b, expected %b", op_name, RR2Mux, exp_RR2Mux);
+            errors++;
+        end
+        
+        if (ImmMux !== exp_ImmMux && exp_ImmMux !== 2'bxx) begin
+            $display("Error: %s - ImmMux is %b, expected %b", op_name, ImmMux, exp_ImmMux);
+            errors++;
+        end
+        
+        if (ALUSrcMux !== exp_ALUSrcMux && exp_ALUSrcMux !== 1'bx) begin
+            $display("Error: %s - ALUSrcMux is %b, expected %b", op_name, ALUSrcMux, exp_ALUSrcMux);
+            errors++;
+        end
+        
+        if (MemtoRegMux !== exp_MemtoRegMux) begin
+            $display("Error: %s - MemtoRegMux is %b, expected %b", op_name, MemtoRegMux, exp_MemtoRegMux);
+            errors++;
+        end
+        
+        if (PCSMux !== exp_PCSMux) begin
+            $display("Error: %s - PCSMux is %b, expected %b", op_name, PCSMux, exp_PCSMux);
+            errors++;
+        end
+        
+        if (HaltMux !== exp_HaltMux) begin
+            $display("Error: %s - HaltMux is %b, expected %b", op_name, HaltMux, exp_HaltMux);
+            errors++;
+        end
+        
+        if (BranchRegMux !== exp_BranchRegMux) begin
+            $display("Error: %s - BranchRegMux is %b, expected %b", op_name, BranchRegMux, exp_BranchRegMux);
+            errors++;
+        end
+        
+        if (BranchMux !== exp_BranchMux) begin
+            $display("Error: %s - BranchMux is %b, expected %b", op_name, BranchMux, exp_BranchMux);
+            errors++;
+        end
+        
+        if (RegWrite !== exp_RegWrite) begin
+            $display("Error: %s - RegWrite is %b, expected %b", op_name, RegWrite, exp_RegWrite);
+            errors++;
+        end
+        
+        if (MemWrite !== exp_MemWrite) begin
+            $display("Error: %s - MemWrite is %b, expected %b", op_name, MemWrite, exp_MemWrite);
+            errors++;
+        end
+        
+        if (MemRead !== exp_MemRead) begin
+            $display("Error: %s - DataMemEnable is %b, expected %b", op_name, MemRead, exp_MemRead);
+            errors++;
+        end
+        
+        // If all checks pass, print success message
+        if (errors == 0) begin
+            $display("%s - All control signals correct", op_name);
+        end
+    endfunction
+
     // Main test process
     initial begin
         $display("Starting WISC-S25 Control Unit Tests");
@@ -131,89 +214,4 @@ module control_tb();
         
         $stop();
     end
-    
-    // Helper task to check and report errors (converted from function to task for Verilog)
-    task check_signals;
-        input [200:0] op_name;
-        input exp_RR1Mux; 
-        input exp_RR2Mux; 
-        input [1:0] exp_ImmMux; 
-        input exp_ALUSrcMux;
-        input exp_MemtoRegMux; 
-        input exp_PCSMux; 
-        input exp_HaltMux;
-        input exp_BranchRegMux; 
-        input exp_BranchMux; 
-        input exp_RegWrite; 
-        input exp_MemWrite;
-        input exp_MemRead;
-        
-        begin
-            // Check each signal against expected value
-            if (RR1Mux !== exp_RR1Mux && exp_RR1Mux !== 1'bx) begin
-                $display("Error: %s - RR1Mux is %b, expected %b", op_name, RR1Mux, exp_RR1Mux);
-                errors = errors + 1;
-            end
-            
-            if (RR2Mux !== exp_RR2Mux) begin
-                $display("Error: %s - RR2Mux is %b, expected %b", op_name, RR2Mux, exp_RR2Mux);
-                errors = errors + 1;
-            end
-            
-            if (ImmMux !== exp_ImmMux && exp_ImmMux !== 2'bxx) begin
-                $display("Error: %s - ImmMux is %b, expected %b", op_name, ImmMux, exp_ImmMux);
-                errors = errors + 1;
-            end
-            
-            if (ALUSrcMux !== exp_ALUSrcMux && exp_ALUSrcMux !== 1'bx) begin
-                $display("Error: %s - ALUSrcMux is %b, expected %b", op_name, ALUSrcMux, exp_ALUSrcMux);
-                errors = errors + 1;
-            end
-            
-            if (MemtoRegMux !== exp_MemtoRegMux) begin
-                $display("Error: %s - MemtoRegMux is %b, expected %b", op_name, MemtoRegMux, exp_MemtoRegMux);
-                errors = errors + 1;
-            end
-            
-            if (PCSMux !== exp_PCSMux) begin
-                $display("Error: %s - PCSMux is %b, expected %b", op_name, PCSMux, exp_PCSMux);
-                errors = errors + 1;
-            end
-            
-            if (HaltMux !== exp_HaltMux) begin
-                $display("Error: %s - HaltMux is %b, expected %b", op_name, HaltMux, exp_HaltMux);
-                errors = errors + 1;
-            end
-            
-            if (BranchRegMux !== exp_BranchRegMux) begin
-                $display("Error: %s - BranchRegMux is %b, expected %b", op_name, BranchRegMux, exp_BranchRegMux);
-                errors = errors + 1;
-            end
-            
-            if (BranchMux !== exp_BranchMux) begin
-                $display("Error: %s - BranchMux is %b, expected %b", op_name, BranchMux, exp_BranchMux);
-                errors = errors + 1;
-            end
-            
-            if (RegWrite !== exp_RegWrite) begin
-                $display("Error: %s - RegWrite is %b, expected %b", op_name, RegWrite, exp_RegWrite);
-                errors = errors + 1;
-            end
-            
-            if (MemWrite !== exp_MemWrite) begin
-                $display("Error: %s - MemWrite is %b, expected %b", op_name, MemWrite, exp_MemWrite);
-                errors = errors + 1;
-            end
-            
-            if (MemRead !== exp_MemRead) begin
-                $display("Error: %s - DataMemEnable is %b, expected %b", op_name, MemRead, exp_MemRead);
-                errors = errors + 1;
-            end
-            
-            // If all checks pass, print success message
-            if (errors == 0) begin
-                $display("%s - All control signals correct", op_name);
-            end
-        end
-    endtask
 endmodule

@@ -1,66 +1,72 @@
 module cpu_tb();
   
-
    wire [15:0] PC;
-   wire [15:0] Inst;           /* This should be the 15 bits of the FF that
-                                  stores instructions fetched from instruction memory
-                               */
-   wire        RegWrite;       /* Whether register file is being written to */
-   wire [3:0]  WriteRegister;  /* What register is written */
-   wire [15:0] WriteData;      /* Data */
-   wire        MemWrite;       /* Similar as above but for memory */
+   wire [15:0] Inst;           // Instruction fetched from memory
+   wire        RegWrite;       // Whether register file is being written to
+   wire [3:0]  WriteRegister;  // What register is written
+   wire [15:0] WriteData;      // Data
+   wire        MemWrite;       // Memory write control
    wire        MemRead;
    wire [15:0] MemAddress;
    wire [15:0] MemData;
 
-   wire        Halt;         /* Halt executed and in Memory or writeback stage */
+   // Additional signals to monitor
+   wire [3:0]  ReadReg1;       // First read register selector
+   wire [3:0]  ReadReg2;       // Second read register selector
+   wire [15:0] ReadData1;      // Data from first read register
+   wire [15:0] ReadData2;      // Data from second read register
+   wire [15:0] ImmValue;       // Immediate value
+   wire [15:0] ALUResult;      // Result from ALU
+   wire [2:0]  Flags;          // CPU flags (Z, V, N)
+   wire        BranchTaken;    // Whether branch was taken
+
+   // Control signals
+   wire        RR1Mux;
+   wire        RR2Mux;
+   wire [1:0]  ImmMux;
+   wire        ALUSrcMux;
+   wire        MemtoRegMux;
+   wire        PCSMux;
+   wire        HaltMux;
+   wire        BranchRegMux;
+   wire        BranchMux;
+
+   wire        Halt;           // Halt signal
         
    integer     inst_count;
    integer     cycle_count;
 
    integer     trace_file;
    integer     sim_log_file;
+   integer     debug_file;     // Additional file for detailed debug info
 
-   reg clk; /* Clock input */
-   reg rst_n; /* (Active low) Reset input */
+   reg clk;    // Clock input
+   reg rst_n;  // (Active low) Reset input
 
-     
+   // Instantiate your processor
+   cpu DUT(.clk(clk), .rst_n(rst_n), .pc(PC), .hlt(Halt));
 
-   cpu DUT(.clk(clk), .rst_n(rst_n), .pc_out(PC), .hlt(Halt)); /* Instantiate your processor */
-   
-
-
-
-
-
-
-   /* Setup */
+   // Setup
    initial begin
       $display("Hello world...simulation starting");
       $display("See verilogsim.log and verilogsim.trace for output");
+      $display("See verilogsim.debug for detailed signal information");
       inst_count = 0;
       trace_file = $fopen("verilogsim.trace");
       sim_log_file = $fopen("verilogsim.log");
-      
+      debug_file = $fopen("verilogsim.debug");
    end
 
-
-
-
-
-  /* Clock and Reset */
-// Clock period is 100 time units, and reset length
-// to 201 time units (two rising edges of clock).
-
+   // Clock and Reset
    initial begin
       $dumpvars;
       cycle_count = 0;
-      rst_n = 0; /* Intial reset state */
+      rst_n = 0;  // Initial reset state
       clk = 1;
       #201 rst_n = 1; // delay until slightly after two clock periods
     end
 
-    always #50 begin   // delay 1/2 clock period each time thru loop
+    always #50 begin   // delay 1/2 clock period each time
       clk = ~clk;
     end
 	
@@ -72,19 +78,14 @@ module cpu_tb();
 	end
     end
 
-
-
-
-
-
-
-
-  /* Stats */
+   // Stats
    always @ (posedge clk) begin
       if (rst_n) begin
          if (Halt || RegWrite || MemWrite) begin
             inst_count = inst_count + 1;
          end
+         
+         // Standard log output
          $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x",
                   cycle_count,
                   PC,
@@ -96,6 +97,22 @@ module cpu_tb();
                   MemWrite,
                   MemAddress,
                   MemData);
+                  
+         // Additional detailed debug information
+         $fdisplay(debug_file, "DEBUG:: Cycle %d\n  PC: %8x Instr: %8x",
+                  cycle_count, PC, Inst);
+         $fdisplay(debug_file, "  RegSel: RR1=%d RR2=%d WR=%d  RegData: RD1=%8x RD2=%8x WD=%8x RegWrite=%d",
+                  ReadReg1, ReadReg2, WriteRegister, ReadData1, ReadData2, WriteData, RegWrite);
+         $fdisplay(debug_file, "  ALU: Result=%8x Flags=%b  Imm=%8x",
+                  ALUResult, Flags, ImmValue);
+         $fdisplay(debug_file, "  Mem: Read=%d Write=%d Addr=%8x Data=%8x",
+                  MemRead, MemWrite, MemAddress, MemData);
+         $fdisplay(debug_file, "  Ctrl: RR1Mux=%d RR2Mux=%d ImmMux=%d ALUSrcMux=%d MemtoRegMux=%d",
+                  RR1Mux, RR2Mux, ImmMux, ALUSrcMux, MemtoRegMux);
+         $fdisplay(debug_file, "        PCSMux=%d HaltMux=%d BranchRegMux=%d BranchMux=%d BranchTaken=%d\n",
+                  PCSMux, HaltMux, BranchRegMux, BranchMux, BranchTaken);
+         
+         // Standard trace information
          if (RegWrite) begin
             if (MemRead) begin
                // ld
@@ -122,6 +139,7 @@ module cpu_tb();
 
             $fclose(trace_file);
             $fclose(sim_log_file);
+            $fclose(debug_file);
             
             $finish;
          end else begin
@@ -134,7 +152,6 @@ module cpu_tb();
                         MemData);
             end else begin
                // conditional branch or NOP
-               // Need better checking in pipelined testbench
                inst_count = inst_count + 1;
                $fdisplay(trace_file, "INUM: %8d PC: 0x%04x",
                          (inst_count-1),
@@ -142,45 +159,38 @@ module cpu_tb();
             end
          end 
       end
-      
    end
 
-
-   /* Assign internal signals to top level wires
-      The internal module names and signal names will vary depending
-      on your naming convention and your design */
-
-   // Edit the example below. You must change the signal
-   // names on the right hand side
-    
-//   assign PC = DUT.fetch0.pcCurrent; //You won't need this because it's part of the main cpu interface
-   assign Inst = DUT.fetch0.instr;
+   // Assign internal signals to top level wires
+   // Basic CPU execution signals
+   assign Inst = DUT.instruction;
+   assign RegWrite = DUT.RegWrite;
+   assign WriteRegister = DUT.wr_reg;
+   assign WriteData = DUT.write_data;
+   assign MemRead = DUT.MemRead;
+   assign MemWrite = DUT.MemWrite;
+   assign MemAddress = DUT.alu_result;
+   assign MemData = DUT.rr2_data;
    
-   assign RegWrite = DUT.decode0.regFile0.write;
-   // Is memory being read, one bit signal (1 means yes, 0 means no)
+   // Additional internal signals
+   assign ReadReg1 = DUT.rr1_reg;
+   assign ReadReg2 = DUT.rr2_reg;
+   assign ReadData1 = DUT.rr1_data;
+   assign ReadData2 = DUT.rr2_data;
+   assign ImmValue = DUT.imm_value;
+   assign ALUResult = DUT.alu_result;
+   assign Flags = DUT.flags;
+   assign BranchTaken = DUT.branch_taken;
    
-   assign WriteRegister = DUT.decode0.regFile0.writeregsel;
-   // The name of the register being written to. (4 bit signal)
-
-   assign WriteData = DUT.decode0.regFile0.writedata;
-   // Data being written to the register. (16 bits)
-   
-   assign MemRead =  DUT.memory0.memRead;
-   // Is memory being read, one bit signal (1 means yes, 0 means no)
-   
-   assign MemWrite = (DUT.memory0.memReadorWrite & DUT.memory0.memWrite);
-   // Is memory being written to (1 bit signal)
-   
-   assign MemAddress = DUT.memory0.aluResult;
-   // Address to access memory with (for both reads and writes to memory, 16 bits)
-   
-   assign MemData = DUT.memory0.writeData;
-   // Data to be written to memory for memory writes (16 bits)
-   
-//   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
-   // Is processor halted (1 bit signal)
-   
-   /* Add anything else you want here */
-
+   // Control signals
+   assign RR1Mux = DUT.RR1Mux;
+   assign RR2Mux = DUT.RR2Mux;
+   assign ImmMux = DUT.ImmMux;
+   assign ALUSrcMux = DUT.ALUSrcMux;
+   assign MemtoRegMux = DUT.MemtoRegMux;
+   assign PCSMux = DUT.PCSMux;
+   assign HaltMux = DUT.HaltMux;
+   assign BranchRegMux = DUT.BranchRegMux;
+   assign BranchMux = DUT.BranchMux;
    
 endmodule
