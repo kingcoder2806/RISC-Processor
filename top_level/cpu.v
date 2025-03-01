@@ -10,6 +10,8 @@ module cpu(
     wire [15:0] pc_plus2;             // PC + 2
     wire [15:0] branch_target;        // PC + SE(imm << 1)
     wire [15:0] pc_next;              // Next PC value
+    wire [15:0] pc2_raw;              // Raw increment pc value from adder
+    wire [15:0] branch_raw;           // Raw branch pc value from adder
     wire [3:0] rr1_reg;               // Read register 1 selector
     wire [3:0] rr2_reg;               // Read register 2 selector
     wire [3:0] wr_reg;                // Write register selector
@@ -58,11 +60,34 @@ module cpu(
         .branch_taken(branch_taken)
     );
 
-    // PC incrementer and branch target
-    assign pc_plus2 = pc + 16'h0002;
-    assign branch_target = pc_plus2 + {{6{instruction[8]}}, instruction[8:0], 1'b0};
+    // PC incrementer and branch target using the adder module
+    
+    // PC + 2 adder
+    adder pc_incrementer(
+        .A(pc),
+        .B(16'h0002),
+        .Sub(1'b0),
+        .Sum(pc2_raw),
+        .Ovfl(pc_increment_ovfl)
+    );
+
+    assign pc_plus2 = pc_increment_ovfl ? 16'h0000 : pc2_raw;
 
     
+    // branch target calculation adder (pc_plus2 + sign-extended immediate)
+    wire [15:0] extended_imm = {{6{instruction[8]}}, instruction[8:0], 1'b0};
+    adder branch_target_adder(
+        .A(pc_plus2),
+        .B(extended_imm),
+        .Sub(1'b0),
+        .Sum(branch_target),
+        .Ovfl(branch_target_ovfl)
+    );
+
+    // for wrap-around, we need to calculate what the wrapped result would be
+    wire [16:0] branch_full = {1'b0, pc_plus2} + {1'b0, extended_imm};
+    assign branch_target = branch_target_ovfl ? branch_full[15:0] : branch_target_sat;
+
     // PC selection logic
     assign pc_next = HaltMux ? pc :
                      (BranchRegMux & branch_taken) ? rr1_data :
@@ -157,7 +182,7 @@ module cpu(
         .b(alu_input_b),
         .op(instruction[15:12]),  // Using opcode as ALU operation
         .result(alu_result),
-        .flags(flags)             // Z, V, N flags
+        .flags(flags)             // N,  Z, V [N,Z,V]
     );
 
     // Connect hlt output to HaltMux

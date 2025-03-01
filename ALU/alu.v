@@ -15,6 +15,8 @@ module alu(
 	wire [15:0] ror_result;
 	wire [15:0] paddsb_result;
 	wire [15:0] add_sub, xor_red, adder_xorred, shift_rorpaddsb;
+	wire [15:0] llb_result, lhb_result;
+	wire [15:0] store_result;
 	wire V;
 	
 	assign sub = op[0];
@@ -55,5 +57,32 @@ module alu(
 	
 	// 3rd level mux
 	assign result = op[2] ? shift_rorpaddsb : adder_xorred;
+
+	//logic for LLB and LHB result
+	assign llb_result = {input_A[15:8], input_B[7:0]};
+	assign lhb_result = {input_B[7:0], input_A[7:0]};
+
+	// logic for LW and SW result
+	assign store_result =  ((input_A & 0xFFFE) + (input_B))
+
+
+	// NEED Case statement to assign the internal rsults to the outpu result 
+	/* Example of what thuis might look like possibly
+
+
+	always @* begin
+		casez (opcode)
+			4'bz00z		: out_reg = addsub_o;	//add,sub,lw,sw
+			`PADDSB		: out_reg = paddsb_o;
+			4'bz1zz		: out_reg = shift_o;	 	// all shift ops
+			`RED			: out_reg = red_o;
+			`XOR			: out_reg = xor_o;
+			`LHB			: out_reg = LHB;
+			default 		: out_reg = LLB;			// LLB. and everything else.
+		endcase
+	end
+	assign out = out_reg; 
+	*/
+
 
 endmodule
