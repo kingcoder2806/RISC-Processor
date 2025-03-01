@@ -17,7 +17,7 @@ module alu(
 	wire [15:0] add_sub, xor_red, adder_xorred, shift_rorpaddsb;
 	wire V;
 	
-	assign sub = (op = 4'b0001) ? 1 : 0;
+	assign sub = op[0];
 	
 	adder iadd_sub(.A(a), .B(b), .Sub(sub), .Sum(sum), .Ovfl(V));
 	
@@ -29,7 +29,7 @@ module alu(
 	
 	assign shift_mode = op[0];
 	
-	Shifer iShift(.Shift_In(a), .Shift_Val(b[3:0]), .Shift_Out(shift_result), Mode(shift_mode));
+	Shifer iShift(.Shift_In(a), .Shift_Val(b[3:0]), .Shift_Out(shift_result), .Mode(shift_mode));
 	
 	right_rotate(.ROR_In(a), .ROR_Val(b[3:0]), .ROR_Out(ror_result));
 	
@@ -47,7 +47,7 @@ module alu(
 	// Seelct ALU output using 2:1 muxes and opcode
 	assign add_sub = sum;
 	assign xor_red = op[0] ? xor_result : red_result;
-	assign ror_paddsb = op[0] ? paddsb : ror;
+	assign ror_paddsb = op[0] ? paddsb_result : ror_result;
 	
 	// 2nd level muxes
 	assign adder_xorred = op[1] ? xor_red : add_sub;
