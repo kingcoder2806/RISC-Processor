@@ -182,7 +182,7 @@ module cpu(
         .b(alu_input_b),
         .op(instruction[15:12]),  // Using opcode as ALU operation
         .result(alu_result),
-        .flags(flags)             // N,  Z, V [N,Z,V]
+        .flags(flags)             // N, Z, V [N,Z,V]
     );
 
     // Connect hlt output to HaltMux
