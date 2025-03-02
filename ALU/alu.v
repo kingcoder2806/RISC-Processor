@@ -79,7 +79,7 @@ module alu(
 	assign level3_mux2 = op[1] ? lb_result : addr_result;
 	
 	// 4th level mux
-	assign result = op[3] ? level3_mux1 : level3_mux2;
+	assign result = op[3] ? level3_mux2 : level3_mux1;
 
 	// NEED Case statement to assign the internal rsults to the outpu result 
 	/* Example of what thuis might look like possibly

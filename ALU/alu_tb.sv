@@ -18,24 +18,23 @@ module alu_tb();
                 expected = a + b;
                 #1
                 if (result != expected) begin
-                        $display("Test 1 failed");
-                end else begin
-                        $display("Test 1 passed");
-                        error = error + 1;
-                end
+                    $display("Test 1 failed");
+					error = error + 1;
+                end else
+                    $display("Test 1 passed");
+
                 #5
                 // addition positive saturation
                 a = 16'h7fff;
                 b = 16'h0123;
-                op = 4'b0001;
+                op = 4'b0000;
                 expected = 16'h7fff;
                 #1
                 if (result != expected) begin
-                        $display("Test 2 failed");
-                end else begin
-                        $display("Test 2 passed");
-                        error = error + 1;
-                end
+                    $display("Test 2 failed");
+					error = error + 1;
+                end else
+                    $display("Test 2 passed");
 
                 #5
                 // addition negative saturation
@@ -45,11 +44,10 @@ module alu_tb();
                 expected = 16'h8000;
                 #1
                 if (result != expected) begin
-                        $display("Test 3 failed");
-                end else begin
-                        $display("Test 3 passed");
-                        error = error + 1;
-                end
+                    $display("Test 3 failed");
+					error = error + 1;
+                end else
+                    $display("Test 3 passed");
 
                 #5
                 // subtraction
@@ -59,14 +57,13 @@ module alu_tb();
                 expected = a - b;
                 #1
                 if (result != expected) begin
-                        $display("Test 4 failed");
-                end else begin
-                        $display("Test 4 passed");
-                        error = error + 1;
-                end
+                    $display("Test 4 failed");
+					error = error + 1;
+                end else
+                    $display("Test 4 passed");
 
                 #5
                 $stop;
-
-        end
+		end
+		
 endmodule
