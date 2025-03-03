@@ -15,8 +15,8 @@ module RegisterFile(input clk, input rst, input [3:0] SrcReg1, input [3:0] SrcRe
     wire write_read_1, write_read_2;
 
 	// assign bypass signals 
-	assign write_read_1 = WriteEn && (DstReg == SrcReg1);
-    assign write_read_2 = WriteEn && (DstReg == SrcReg2);
+	assign write_read_1 = WriteEn & (DstReg == SrcReg1);
+    assign write_read_2 = WriteEn & (DstReg == SrcReg2);
 
 	// create the gated read enables
 	assign read_enable1 = SrcReg1_Sel & {16{~write_read_1}};
