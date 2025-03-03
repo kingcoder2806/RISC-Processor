@@ -24,15 +24,15 @@ module branch(
     assign z_flag = flag_reg[1];    // Z
     assign v_flag = flag_reg[0];    // V 
     
-    // condition evaluation using assign statements
-    assign cond_neq = ~z_flag;
-    assign cond_eq = z_flag;
-    assign cond_gt = (~z_flag) & (~n_flag);
-    assign cond_lt = n_flag;
-    assign cond_gte = z_flag | ((~z_flag) & (~n_flag));  
-    assign cond_lte = n_flag | z_flag;
-    assign cond_ovfl = v_flag;
-    assign cond_uncond = 1'b1;
+    // condition evaluation using assign statements NVZ
+    assign cond_neq = (~n_flag) & (~v_flag) & (~z_flag); 
+    assign cond_eq = (~n_flag) & (~v_flag) & (z_flag);
+    assign cond_gt = (~n_flag) & (v_flag) & (~z_flag);
+    assign cond_lt = (~n_flag) & (v_flag) & (z_flag);
+    assign cond_gte = (n_flag) & (~v_flag) & (~z_flag); 
+    assign cond_lte = (n_flag) & (~v_flag) & (z_flag);
+    assign cond_ovfl = (n_flag) & (v_flag) & (~z_flag);
+    assign cond_uncond = (n_flag) & (v_flag) & (z_flag);
     
     // determine if branch should be taken based on condition and flags
     assign branch_taken = 

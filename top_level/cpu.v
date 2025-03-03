@@ -73,7 +73,7 @@ module cpu(
     adder_pc branch_target_adder(
         .A(pc_plus2),
         .B(extended_imm),
-        .Sub(1'b0),
+        .Sub(instruction[8]),
         .Sum(branch_target)
     );
 
