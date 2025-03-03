@@ -102,11 +102,11 @@ module control (
     // logic to stop PC from incrementing
     assign HaltMux = (op == 4'b1111); 
 
-    // logic to determine if we branch to data in register data 1 (using flags)
-    assign BranchRegMux = op[0];
-
     // logic to determine if we branch based on immediate value (using flags)
-    assign BranchMux = ~op[0];
+    assign BranchMux = (op == 4'b1100);
+
+    // logic to determine if we branch to data in register data 1 (using flags)
+    assign BranchRegMux = (op == 4'b1101);
 
     // logic to enable write to register file
     // enable for arithmetic/logical instructions, LW, LLB, LHB, PCS

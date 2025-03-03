@@ -1,35 +1,35 @@
 module branch(
-    input [2:0] branch_condition,  // The 3-bit condition code (ccc)
-    input [2:0] flag_reg,          // The flag register [N, Z, V]
+    input [2:0] branch_condition,  // the 3-bit condition code (ccc)
+    input [2:0] flag_reg,          // the flag register [N, Z, V]
     output branch_taken            // 1 if branch should be taken, 0 otherwise
 );
 
     // declare wire signals
-    wire n_flag;  // Negative flag
-    wire z_flag;  // Zero flag
-    wire v_flag;  // Overflow flag
+    wire n_flag;  // N
+    wire z_flag;  // Z
+    wire v_flag;  // V
     
     // declare condition wire signals
-    wire cond_neq;     // Not Equal (Z = 0)
-    wire cond_eq;      // Equal (Z = 1)
-    wire cond_gt;      // Greater Than (Z = N = 0)
-    wire cond_lt;      // Less Than (N = 1)
-    wire cond_gte;     // Greater Than or Equal (Z = 1 or Z = N = 0)
-    wire cond_lte;     // Less Than or Equal (N = 1 or Z = 1)
-    wire cond_ovfl;    // Overflow (V = 1)
-    wire cond_uncond;  // Unconditional
+    wire cond_neq;     // not Equal (Z = 0)
+    wire cond_eq;      // equal (Z = 1)
+    wire cond_gt;      // greater Than (Z = N = 0)
+    wire cond_lt;      // less Than (N = 1)
+    wire cond_gte;     // greater Than or Equal (Z = 1 or Z = N = 0)
+    wire cond_lte;     // less Than or Equal (N = 1 or Z = 1)
+    wire cond_ovfl;    // overflow (V = 1)
+    wire cond_uncond;  // unconditional
     
-    // extract individual flags - MODIFIED for new mapping
-    assign n_flag = flag_reg[2];    // N is now at bit 2
-    assign z_flag = flag_reg[1];    // Z is now at bit 1
-    assign v_flag = flag_reg[0];    // V is now at bit 0
+    // extract individual flags 
+    assign n_flag = flag_reg[2];    // N
+    assign z_flag = flag_reg[1];    // Z
+    assign v_flag = flag_reg[0];    // V 
     
     // condition evaluation using assign statements
     assign cond_neq = ~z_flag;
     assign cond_eq = z_flag;
     assign cond_gt = (~z_flag) & (~n_flag);
     assign cond_lt = n_flag;
-    assign cond_gte = z_flag | (~n_flag);
+    assign cond_gte = z_flag | ((~z_flag) & (~n_flag));  
     assign cond_lte = n_flag | z_flag;
     assign cond_ovfl = v_flag;
     assign cond_uncond = 1'b1;

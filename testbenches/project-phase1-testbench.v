@@ -1,3 +1,4 @@
+`timescale 1ns/100ps
 module cpu_tb();
   
    wire [15:0] PC;
@@ -74,7 +75,7 @@ module cpu_tb();
     	cycle_count = cycle_count + 1;
 	if (cycle_count > 100000) begin
 		$display("hmm....more than 100000 cycles of simulation...error?\n");
-		$finish;
+		$stop();
 	end
     end
 
@@ -141,7 +142,7 @@ module cpu_tb();
             $fclose(sim_log_file);
             $fclose(debug_file);
             
-            $finish;
+            $stop();
          end else begin
             if (MemWrite) begin
                // st

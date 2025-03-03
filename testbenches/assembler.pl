@@ -4,7 +4,7 @@
 
 #USAGE:
 
-#
+# How I ran it : ./assembler.pl sample.asm > loadfile_all.img
 
 # assembler.pl <infile> [ > <outfile> ]
 
