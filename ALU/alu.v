@@ -18,7 +18,7 @@ module alu(
 	wire [15:0] level3_mux1, level3_mux2;
 	wire [15:0] llb_result, lhb_result, lb_result;
 	wire [15:0] addr_result;
-	wire V;
+	wire V, Z_flag_op;
 	
 	// Assign subtraction bit
 	assign sub = op[0];
@@ -37,6 +37,9 @@ module alu(
 	// TODO:
 	// red iRed();
 	
+	// temporary assign for red
+	assign red_result = 16'h0000;
+	
 	// Shift mode (0 = SLL, 1 = SRA)
 	assign shift_mode = op[0];
 	
@@ -50,13 +53,14 @@ module alu(
 	PADDSB ipaddsb(.A(a), .B(b), .Sum(paddsb_result));
 	
 	// Assign V flag if overflow occurs only during add and sub operation
-	assign flags[0] = V & (op[3:1] == 3'b000);
+	assign flags[0] = V & (op == 4'b0000 | op == 4'b0001);
 	
-	// Assign Z flag if result is 0
-	assign flags[1] = (result == 16'h0000) ? 1 : 0; 
+	// Assign Z flag if result is 0 only during add, sub, xor, sll, sra, and ror operations
+	assign Z_flag_op = ((op == 4'b0000) | (op == 4'b0001) | (op == 4'b0010) | (op == 4'b0100) | (op == 4'b0101) | (op == 4'b0110));
+	assign flags[1] = (result == 16'h0000) & (Z_flag_op) ? 1 : 0; 
 	
-	// Assign N flag if result from adder is negative
-	assign flags[2] = (sum[15] == 1'b1) & (op[3:1] == 3'b000) ? 1 : 0;
+	// Assign N flag if result from add and sub is negative
+	assign flags[2] = (sum[15] == 1'b1) & (op == 4'b0000 | op == 4'b0001) ? 1 : 0;
 	
 	// Logic for LLB and LHB result
 	assign llb_result = {a[15:8], b[7:0]};
@@ -65,39 +69,27 @@ module alu(
 	// Assign which load byte operation is being done
 	assign lb_result = op[0] ? lhb_result : llb_result;
 	
-	// Selct ALU output using 2:1 muxes and opcode
-	assign add_sub = sum;
-	assign xor_red = op[0] ? xor_result : red_result;
-	assign ror_paddsb = op[0] ? paddsb_result : ror_result;
+	// Use case statement to select the operation result
+	reg [15:0] final_result;
 	
-	// 2nd level muxes
-	assign adder_xorred = op[1] ? xor_red : add_sub;
-	assign shift_rorpaddsb = op[1] ? shift_result : ror_paddsb;
-	
-	// 3rd level mux
-	assign level3_mux1 = op[2] ? shift_rorpaddsb : adder_xorred;
-	assign level3_mux2 = op[1] ? lb_result : addr_result;
-	
-	// 4th level mux
-	assign result = op[3] ? level3_mux2 : level3_mux1;
-
-	// NEED Case statement to assign the internal rsults to the outpu result 
-	/* Example of what thuis might look like possibly
-
-
 	always @* begin
-		casez (opcode)
-			4'bz00z		: out_reg = addsub_o;	//add,sub,lw,sw
-			`PADDSB		: out_reg = paddsb_o;
-			4'bz1zz		: out_reg = shift_o;	 	// all shift ops
-			`RED			: out_reg = red_o;
-			`XOR			: out_reg = xor_o;
-			`LHB			: out_reg = LHB;
-			default 		: out_reg = LLB;			// LLB. and everything else.
+		case(op)
+			4'b0000: final_result = sum;               // ADD
+			4'b0001: final_result = sum;               // SUB
+			4'b0010: final_result = xor_result;        // XOR
+			4'b0011: final_result = red_result;        // RED
+			4'b0100: final_result = shift_result;      // SLL
+			4'b0101: final_result = shift_result;      // SRA
+			4'b0110: final_result = ror_result;        // ROR
+			4'b0111: final_result = paddsb_result;     // PADDSB
+			4'b1000: final_result = addr_result;       // LW
+			4'b1001: final_result = addr_result;       // SW
+			4'b1010: final_result = llb_result;        // LLB
+			4'b1011: final_result = lhb_result;        // LHB
+			default: final_result = 16'h0000;          // Default case
 		endcase
 	end
-	assign out = out_reg; 
-	*/
-
-
+	
+	assign result = final_result;
+	
 endmodule

@@ -27,6 +27,6 @@ module addsub_4bit (Sum, Ovfl, A, B, sub);
 	// Overflow cases: 1) If positve + positve = negative
 	//				   2) If negative + negative = positve
 	
-	assign Ovfl = (~A[3] & ~B_operand[3] & Sum[3]) ? 1 : (A[3] & B_operand[3] & ~Sum[3]) ? 1 : 0;
+	assign Ovfl = (~A[3] & ~B_operand[3] & Sum[3]) | (A[3] & B_operand[3] & ~Sum[3]);
 
 endmodule
