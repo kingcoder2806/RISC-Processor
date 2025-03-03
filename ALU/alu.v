@@ -54,10 +54,10 @@ module alu(
 	
 	// Assign Z flag if result is 0 only during add, sub, xor, sll, sra, and ror operations
 	assign Z_flag_op = ((op == 4'b0000) | (op == 4'b0001) | (op == 4'b0010) | (op == 4'b0100) | (op == 4'b0101) | (op == 4'b0110));
-	assign flags[1] = (result == 16'h0000) & (Z_flag_op) ? 1 : 0;
+	assign flags[1] = (result == 16'h0000) & (Z_flag_op);
 	
 	// Assign N flag if result from add and sub is negative
-	assign flags[2] = (sum[15] == 1'b1) & (op == 4'b0000 | op == 4'b0001) ? 1 : 0;
+	assign flags[2] = (sum[15] == 1'b1) & (op == 4'b0000 | op == 4'b0001);
 	
 	// Logic for LLB and LHB result
 	assign llb_result = {a[15:8], b[7:0]};
