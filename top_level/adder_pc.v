@@ -3,7 +3,7 @@ module adder_pc(A, B, Sub, Sum);
 	input [15:0] A;
 	input [15:0] B;
 	input Sub; // not used
-	input [15:0] Sum;
+	output [15:0] Sum;
 	
 	// Internal signals
 	wire C[4:0];
@@ -18,9 +18,9 @@ module adder_pc(A, B, Sub, Sum);
 	assign C[4] = Gg[3] | (Pg[3] & C[3]);
 	
 	// Instantiate 4-bit carry look ahead adders
-	CLA iCLA0(.A(A[3:0]), .B(B[3:0]), .Cin(C[0]), .Cout(), .Sum(Sum[3:0]), .Gg(Gg[0]), .Pg(Pg[0]));
-	CLA iCLA1(.A(A[7:4]), .B(B[7:4]), .Cin(C[1]), .Cout(), .Sum(Sum[7:4]), .Gg(Gg[1]), .Pg(Pg[1]));
-	CLA iCLA2(.A(A[11:8]), .B(B[11:8]), .Cin(C[2]), .Cout(), .Sum(Sum[11:8]), .Gg(Gg[2]), .Pg(Pg[2]));
-	CLA iCLA3(.A(A[15:12]), .B(B[15:12]), .Cin(C[3]), .Cout(), .Sum(Sum[15:12]), .Gg(Gg[3]), .Pg(Pg[3]));
+	CLA iCLA0(.A(A[3:0]), .B(4'b0010), .Cin(C[0]), .Cout(), .Sum(Sum[3:0]), .Gg(Gg[0]), .Pg(Pg[0]));
+	CLA iCLA1(.A(A[7:4]), .B(4'h0), .Cin(C[1]), .Cout(), .Sum(Sum[7:4]), .Gg(Gg[1]), .Pg(Pg[1]));
+	CLA iCLA2(.A(A[11:8]), .B(4'h0), .Cin(C[2]), .Cout(), .Sum(Sum[11:8]), .Gg(Gg[2]), .Pg(Pg[2]));
+	CLA iCLA3(.A(A[15:12]), .B(4'h0), .Cin(C[3]), .Cout(), .Sum(Sum[15:12]), .Gg(Gg[3]), .Pg(Pg[3]));
 
 endmodule
