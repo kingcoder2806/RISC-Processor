@@ -6,6 +6,7 @@ module alu(
 	output [2:0] flags
 	);
 	
+	// Internal signals
 	wire sub;
 	wire shift_mode;
 	wire [15:0] sum;
@@ -33,12 +34,8 @@ module alu(
 	// Bitwise xor operation
 	assign xor_result = a ^ b;
 	
-	// reduction module
-	// TODO:
-	// red iRed();
-	
-	// temporary assign for red
-	assign red_result = 16'h0000;
+	// Instantiate reduction module
+	RED iRED(.A(a), .B(b), .R(red_result));
 	
 	// Shift mode (0 = SLL, 1 = SRA)
 	assign shift_mode = op[0];
@@ -69,7 +66,7 @@ module alu(
 	// Assign which load byte operation is being done
 	assign lb_result = op[0] ? lhb_result : llb_result;
 	
-	// Use case statement to select the operation result
+	// Case statement to select the operation result
 	reg [15:0] final_result;
 	
 	always @* begin

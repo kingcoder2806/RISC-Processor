@@ -74,6 +74,19 @@ module alu_tb();
 				error = error + 1;
             end else
                 $display("Test 5 passed");
+				
+			#5
+            // test reduction
+            a = 16'hABCD;
+            b = 16'h1234;
+            op = 4'b0011;
+            expected = 16'hFFF8;
+            #1
+            if (result != expected) begin
+                $display("Test 6 failed");
+				error = error + 1;
+            end else
+                $display("Test 6 passed");
 			
 			#5
             // shift left by 5
@@ -83,10 +96,10 @@ module alu_tb();
             expected = a << 4'h5;
             #1
             if (result != expected) begin
-                $display("Test 6 failed");
+                $display("Test 7 failed");
 				error = error + 1;
             end else
-                $display("Test 6 passed");
+                $display("Test 7 passed");
 			
 			#5
             // shift arithmetic right by 8
@@ -96,10 +109,10 @@ module alu_tb();
             expected = 16'hFF82;
             #1
             if (result != expected) begin
-                $display("Test 7 failed");
+                $display("Test 8 failed");
 				error = error + 1;
             end else
-                $display("Test 7 passed");
+                $display("Test 8 passed");
 				
 			#5
             // right rotate by 10
@@ -109,10 +122,10 @@ module alu_tb();
             expected = 16'hAAE0;
             #1
             if (result != expected) begin
-                $display("Test 8 failed");
+                $display("Test 9 failed");
 				error = error + 1;
             end else
-                $display("Test 8 passed");
+                $display("Test 9 passed");
 				
 			#5
             // test paddsb
@@ -122,10 +135,10 @@ module alu_tb();
             expected = 16'hF27F;
             #1
             if (result != expected) begin
-                $display("Test 9 failed");
+                $display("Test 10 failed");
 				error = error + 1;
             end else
-                $display("Test 9 passed");
+                $display("Test 10 passed");
 				
 			#5
             // test lw
@@ -135,10 +148,10 @@ module alu_tb();
             expected = (a & 16'hFFFE) + b;
             #1
             if (result != expected) begin
-                $display("Test 10 failed");
+                $display("Test 11 failed");
 				error = error + 1;
             end else
-                $display("Test 10 passed");
+                $display("Test 11 passed");
 				
 			#5
             // test sw
@@ -148,10 +161,10 @@ module alu_tb();
             expected = (a & 16'hFFFE) + b;
             #1
             if (result != expected) begin
-                $display("Test 11 failed");
+                $display("Test 12 failed");
 				error = error + 1;
             end else
-                $display("Test 11 passed");
+                $display("Test 12 passed");
 			
 			#5
             // test llb
@@ -161,10 +174,10 @@ module alu_tb();
             expected = 16'hAB59;
             #1
             if (result != expected) begin
-                $display("Test 12 failed");
+                $display("Test 13 failed");
 				error = error + 1;
             end else
-                $display("Test 12 passed");
+                $display("Test 13 passed");
 				
 			#5
             // test lhb
@@ -174,10 +187,10 @@ module alu_tb();
             expected = 16'h56F9;
             #1
             if (result != expected) begin
-                $display("Test 12 failed");
+                $display("Test 14 failed");
 				error = error + 1;
             end else
-                $display("Test 12 passed");
+                $display("Test 14 passed");
 			
 			// end of tests
 			if (error > 0)
