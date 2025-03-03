@@ -35,10 +35,8 @@ module RegisterFile(input clk, input rst, input [3:0] SrcReg1, input [3:0] SrcRe
 	Register iReg14(.clk(clk), .rst(rst), .D(DstData), .WriteReg(WriteEn[14]), .ReadEnable1(SrcReg1_Sel[14]), .ReadEnable2(SrcReg2_Sel[14]), .Bitline1(Data_Out1), .Bitline2(Data_Out2));
 	Register iReg15(.clk(clk), .rst(rst), .D(DstData), .WriteReg(WriteEn[15]), .ReadEnable1(SrcReg1_Sel[15]), .ReadEnable2(SrcReg2_Sel[15]), .Bitline1(Data_Out1), .Bitline2(Data_Out2));
 	
-    // Register bypassing logic (To be used in pipelined stage)
-	// assign SrcData1 = (WriteEn & (SrcReg1 == DstReg) & (DstReg != 4'b0000)) ? DstData : Data_Out1;
-	// assign SrcData2 = (WriteEn & (SrcReg2 == DstReg) & (DstReg != 4'b0000)) ? DstData : Data_Out2;
-    assign SrcData1 = Data_Out1;
-    assign SrcData2 = Data_Out2;
+	// Register bypassing logic
+	assign SrcData1 = (WriteEn & (SrcReg1 == DstReg) & (DstReg != 4'b0000)) ? DstData : Data_Out1;
+	assign SrcData2 = (WriteEn & (SrcReg2 == DstReg) & (DstReg != 4'b0000)) ? DstData : Data_Out2;
 	
 endmodule
