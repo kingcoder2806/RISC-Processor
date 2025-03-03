@@ -52,7 +52,7 @@ module memory1c (data_out, data_in, addr, enable, wr, clk, rst);
       if (rst) begin
          //load loadfile_all.img
          if (!loaded) begin
-            $readmemh("/filespace/c/crhowarth/ece552/ECE552_Project/All_Files/loadfile_all.img", mem);
+            $readmemh("/filespace/c/crhowarth/ece552/ECE552_Project/testbenches/loadfile_all.img", mem);
             loaded = 1;
          end
          
