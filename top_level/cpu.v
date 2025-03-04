@@ -22,7 +22,10 @@ module cpu(
     wire [15:0] mem_data_out;         // Data from memory
     wire take_branch;                 // Branch condition is satisfied
     wire [2:0] flags;                 // Z, V, N flags
+    wire [2:0] flags_out;                 // Z, V, N flag register output
     wire branch_taken;                // Branch condition is satisfied
+    wire [3:0] op;
+    wire flag_enable;
 
     // control signals from control module
     wire RR1Mux;                      // Read register 1 mux control
@@ -37,11 +40,13 @@ module cpu(
     wire RegWrite;                    // Register write control
     wire MemWrite;                    // Memory write control
     wire MemRead;                     // Enable using data memory
-    
+   
 
     ///////////////
     // PC Select //
     ///////////////
+
+    assign op = instruction[15:12];
 
     // instantiate program counter register
     pc_reg PC(
@@ -53,13 +58,13 @@ module cpu(
 
     // instantiate branch module to determine if branch is taken on B or BR operation
     branch branch_ctrl (
-        .branch_condition(instruction[11:9]), 
-        .flag_reg(flags), // from ALU
+        .branch_condition(instruction[11:9]),
+        .flag_reg(flags_out), // from ALU
         .branch_taken(branch_taken)
     );
 
     // PC incrementer and branch target using the adder module
-    
+   
     // PC + 2 adder
     adder_pc pc_incrementer(
         .A(pc),
@@ -82,7 +87,8 @@ module cpu(
                      (BranchRegMux & branch_taken) ? rr1_data :
                      (BranchMux & branch_taken) ? branch_target :
                      pc_plus2;
-    
+
+   
     ////////////////////////
     // Instruction memory //
     ////////////////////////
@@ -109,7 +115,7 @@ module cpu(
         .rst(~rst_n)              // Convert active-low to active-high
     );
 
-    
+   
     //////////////////
     // Control unit //
     //////////////////
@@ -127,15 +133,16 @@ module cpu(
         .BranchMux(BranchMux),
         .RegWrite(RegWrite),
         .MemWrite(MemWrite),
-        .MemRead(MemRead)
+        .MemRead(MemRead),
+        .Flag_Enable(flag_enable)
     );
-    
+   
     // Register selection logic
     assign rr1_reg = RR1Mux ? instruction[11:8] : instruction[7:4];    // 1 : LLB / LHB , 0 : else
-    assign rr2_reg = RR2Mux ? instruction[11:8] : instruction[3:0];    // 1 : SW , 0 : else
-    assign wr_reg = instruction[11:8];                                // always [11:8] 
-    
-    
+    assign rr2_reg = (MemWrite | MemRead) ? instruction[11:8] : instruction[3:0]; // LW and SW
+    assign wr_reg = instruction[11:8];                                // always [11:8]
+   
+   
     // RegisterFile instantiation
     RegisterFile RF(
         .clk(clk),
@@ -165,7 +172,7 @@ module cpu(
                        {{8{1'b0}}, instruction[7:0]};                                     // 8-bit immediate (LLB, LHB) - 2'b10
 
     assign alu_input_b = ALUSrcMux ? imm_value : rr2_data;
-    
+   
     alu ALU(
         .a(rr1_data),
         .b(alu_input_b),
@@ -174,7 +181,12 @@ module cpu(
         .flags(flags)             // N, Z, V [N,Z,V]
     );
 
+    // Flop the flag registers
+    dff idff0(.d(flags[2]), .q(flags_out[2]), .wen(flag_enable), .clk(clk), .rst(~rst_n)); // N flop
+    dff idff1(.d(flags[1]), .q(flags_out[1]), .wen(flag_enable), .clk(clk), .rst(~rst_n)); // Z flop
+    dff idff2(.d(flags[0]), .q(flags_out[0]), .wen(flag_enable), .clk(clk), .rst(~rst_n)); // V flop
+
     // Connect hlt output to HaltMux
     assign hlt = HaltMux;
-    
+   
 endmodule

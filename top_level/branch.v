@@ -1,48 +1,24 @@
 module branch(
-    input [2:0] branch_condition,  // the 3-bit condition code (ccc)
-    input [2:0] flag_reg,          // the flag register [N, Z, V]
-    output branch_taken            // 1 if branch should be taken, 0 otherwise
+    input [2:0] branch_condition,       // Condition code
+    input [2:0] flag_reg,    // Flag register [N, Z, V]
+    output branch_taken   // Condition pass signal
 );
+    wire N, V, Z;
+    assign {N, Z, V} = flag_reg;  // Extract flags: flag[2] = N, flag[1] = Z, flag[0] = V
 
-    // declare wire signals
-    wire n_flag;  // N
-    wire z_flag;  // Z
-    wire v_flag;  // V
-    
-    // declare condition wire signals
-    wire cond_neq;     // not Equal (Z = 0)
-    wire cond_eq;      // equal (Z = 1)
-    wire cond_gt;      // greater Than (Z = N = 0)
-    wire cond_lt;      // less Than (N = 1)
-    wire cond_gte;     // greater Than or Equal (Z = 1 or Z = N = 0)
-    wire cond_lte;     // less Than or Equal (N = 1 or Z = 1)
-    wire cond_ovfl;    // overflow (V = 1)
-    wire cond_uncond;  // unconditional
-    
-    // extract individual flags 
-    assign n_flag = flag_reg[2];    // N
-    assign z_flag = flag_reg[1];    // Z
-    assign v_flag = flag_reg[0];    // V 
-    
-    // condition evaluation using assign statements NVZ
-    assign cond_neq = (~n_flag) & (~v_flag) & (~z_flag); 
-    assign cond_eq = (~n_flag) & (~v_flag) & (z_flag);
-    assign cond_gt = (~n_flag) & (v_flag) & (~z_flag);
-    assign cond_lt = (~n_flag) & (v_flag) & (z_flag);
-    assign cond_gte = (n_flag) & (~v_flag) & (~z_flag); 
-    assign cond_lte = (n_flag) & (~v_flag) & (z_flag);
-    assign cond_ovfl = (n_flag) & (v_flag) & (~z_flag);
-    assign cond_uncond = (n_flag) & (v_flag) & (z_flag);
-    
-    // determine if branch should be taken based on condition and flags
-    assign branch_taken = 
-        (branch_condition == 3'b000) ? cond_neq :
-        (branch_condition == 3'b001) ? cond_eq :
-        (branch_condition == 3'b010) ? cond_gt :
-        (branch_condition == 3'b011) ? cond_lt :
-        (branch_condition == 3'b100) ? cond_gte :
-        (branch_condition == 3'b101) ? cond_lte :
-        (branch_condition == 3'b110) ? cond_ovfl :
-        (branch_condition == 3'b111) ? cond_uncond : 1'b0;
+    reg Branch;
+    always @(*) begin
+        case (branch_condition)
+            3'b000: Branch = ~Z;          // Not Equal (Z = 0)
+            3'b001: Branch = Z;           // Equal (Z = 1)
+            3'b010: Branch = ~Z & ~N;     // Greater Than (Z = N = 0)
+            3'b011: Branch = N;           // Less Than (N = 1)
+            3'b100: Branch = Z | (~Z & ~N); // Greater Than or Equal (Z = 1 or Z = N = 0)
+            3'b101: Branch = N | Z;       // Less Than or Equal (N = 1 or Z = 1)
+            3'b110: Branch = V;           // Overflow (V = 1)
+            3'b111: Branch = 1'b1;        // Unconditional
+        endcase
+    end
 
+    assign branch_taken = Branch;
 endmodule

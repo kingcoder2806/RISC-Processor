@@ -29,7 +29,7 @@ module alu(
 	
 	// Instantiate adder for LW and SW address calculation (address = (a & 0xFFFE) + b)
 	// Sign-extension of immediate (b) and shifting taken care at top-level
-	adder iLWSW(.A({a[15:1], 1'b0}), .B(b), .Sub(1'b0), .Sum(addr_result), .Ovfl());
+	adder iLWSW(.A({a & 16'hFFFE}), .B(b), .Sub(1'b0), .Sum(addr_result), .Ovfl());
 	
 	// Bitwise xor operation
 	assign xor_result = a ^ b;

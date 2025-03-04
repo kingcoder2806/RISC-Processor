@@ -11,7 +11,8 @@ module control (
     output BranchMux,
     output RegWrite,
     output MemWrite,
-    output MemRead
+    output MemRead,
+    output Flag_Enable
 );
 
     // WISC-S25 Instruction Opcodes:
@@ -67,7 +68,7 @@ module control (
     // logic to enable write data to memory
     assign MemWrite = (op == 4'b1001); // SW instruction
 
-    // logic to enable using data memory (LW/SW)
+    // logic to enable using data memory (LW)
     assign MemRead = (op == 4'b1000);
 
     // logic for read register 1 mux control 
@@ -115,5 +116,16 @@ module control (
                      (op == 4'b1010) |        // LLB
                      (op == 4'b1011) |        // LHB
                      (op == 4'b1110);         // PCS
+
+
+    assign Flag_Enable = ((op == 4'b0000) | 
+        (op == 4'b0001) | (op == 4'b0010) | (op == 4'b0100) | (op == 4'b0101) | (op == 4'b0110));
+
+    // 0000 - ADD     : Addition with saturation 
+    // 0001 - SUB     : Subtraction with saturation 
+    // 0010 - XOR     : Bitwise XOR 
+    // 0100 - SLL     : Shift Left Logical (by immediate) 
+    // 0101 - SRA     : Shift Right Arithmetic (by immediate) 
+    // 0110 - ROR     : Rotate Right (by immediate) 
 
 endmodule

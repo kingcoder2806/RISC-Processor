@@ -20,6 +20,7 @@ module cpu_tb();
    wire [15:0] ALUResult;      // Result from ALU
    wire [2:0]  Flags;          // CPU flags (Z, V, N)
    wire        BranchTaken;    // Whether branch was taken
+   wire [3:0] opcode;
 
    // Control signals
    wire        RR1Mux;
@@ -53,9 +54,9 @@ module cpu_tb();
       $display("See verilogsim.log and verilogsim.trace for output");
       $display("See verilogsim.debug for detailed signal information");
       inst_count = 0;
-      trace_file = $fopen("verilogsim.trace");
-      sim_log_file = $fopen("verilogsim.log");
-      debug_file = $fopen("verilogsim.debug");
+      trace_file = $fopen("/filespace/c/crhowarth/ece552/ECE552_Project/debug/verilogsim.trace");
+      sim_log_file = $fopen("/filespace/c/crhowarth/ece552/ECE552_Project/debug/verilogsim.log");
+      debug_file = $fopen("/filespace/c/crhowarth/ece552/ECE552_Project/debug/verilogsim.debug");
    end
 
    // Clock and Reset
@@ -180,8 +181,10 @@ module cpu_tb();
    assign ReadData2 = DUT.rr2_data;
    assign ImmValue = DUT.imm_value;
    assign ALUResult = DUT.alu_result;
-   assign Flags = DUT.flags;
+   assign Flags = DUT.flags_out;
    assign BranchTaken = DUT.branch_taken;
+   assign opcode = DUT.op;
+
    
    // Control signals
    assign RR1Mux = DUT.RR1Mux;
