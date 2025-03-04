@@ -1,0 +1,120 @@
+DEBUG:: Cycle           4
+  PC: 00000000 Instr: 00000412
+  RegSel: RR1= 1 RR2= 2 WR= 4  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=000  Imm=00000002
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=0 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=1
+
+DEBUG:: Cycle           5
+  PC: 00000002 Instr: 00007123
+  RegSel: RR1= 2 RR2= 3 WR= 1  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000003
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=0 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle           6
+  PC: 00000004 Instr: 00001501
+  RegSel: RR1= 0 RR2= 1 WR= 5  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000001
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=0 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle           7
+  PC: 00000006 Instr: 00002653
+  RegSel: RR1= 5 RR2= 3 WR= 6  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000003
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=0 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle           8
+  PC: 00000008 Instr: 00003789
+  RegSel: RR1= 8 RR2= 9 WR= 7  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000009
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=0 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle           9
+  PC: 0000000a Instr: 0000b124
+  RegSel: RR1= 1 RR2= 4 WR= 1  RegData: RD1=00000000 RD2=00000000 WD=00002400 RegWrite=1
+  ALU: Result=00002400 Flags=010  Imm=00000024
+  Mem: Read=0 Write=0 Addr=00002400 Data=00000000
+  Ctrl: RR1Mux=1 RR2Mux=0 ImmMux=2 ALUSrcMux=1 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle          10
+  PC: 0000000c Instr: 0000a258
+  RegSel: RR1= 2 RR2= 8 WR= 2  RegData: RD1=00000000 RD2=00000000 WD=00000058 RegWrite=1
+  ALU: Result=00000058 Flags=010  Imm=00000058
+  Mem: Read=0 Write=0 Addr=00000058 Data=00000000
+  Ctrl: RR1Mux=1 RR2Mux=0 ImmMux=2 ALUSrcMux=1 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=1
+
+DEBUG:: Cycle          11
+  PC: 0000000e Instr: 00004552
+  RegSel: RR1= 5 RR2= 2 WR= 5  RegData: RD1=00000000 RD2=00000058 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000002
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000058
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=1 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle          12
+  PC: 00000010 Instr: 00005675
+  RegSel: RR1= 7 RR2= 5 WR= 6  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000005
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=1 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle          13
+  PC: 00000012 Instr: 0000668a
+  RegSel: RR1= 8 RR2=10 WR= 6  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=0000000a
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=1 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle          14
+  PC: 00000014 Instr: 00008a00
+  RegSel: RR1= 0 RR2=10 WR=10  RegData: RD1=00000000 RD2=00000000 WD=00000412 RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000000
+  Mem: Read=1 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=1 ALUSrcMux=1 MemtoRegMux=1
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=1
+
+DEBUG:: Cycle          15
+  PC: 00000016 Instr: 00009a00
+  RegSel: RR1= 0 RR2=10 WR=10  RegData: RD1=00000000 RD2=00000412 WD=00000000 RegWrite=0
+  ALU: Result=00000000 Flags=010  Imm=00000000
+  Mem: Read=0 Write=1 Addr=00000000 Data=00000412
+  Ctrl: RR1Mux=0 RR2Mux=1 ImmMux=1 ALUSrcMux=1 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=1
+
+DEBUG:: Cycle          16
+  PC: 00000018 Instr: 0000c3fd
+  RegSel: RR1=15 RR2=13 WR= 3  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=0
+  ALU: Result=00000000 Flags=010  Imm=0000000d
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=1 MemtoRegMux=0
+        PCSMux=0 HaltMux=0 BranchRegMux=0 BranchMux=1 BranchTaken=1
+
+DEBUG:: Cycle          17
+  PC: 0000001c Instr: 0000e100
+  RegSel: RR1= 0 RR2= 0 WR= 1  RegData: RD1=00000000 RD2=00000000 WD=0000001e RegWrite=1
+  ALU: Result=00000000 Flags=010  Imm=00000000
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=0 MemtoRegMux=0
+        PCSMux=1 HaltMux=0 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
+DEBUG:: Cycle          18
+  PC: 0000001e Instr: 0000f000
+  RegSel: RR1= 0 RR2= 0 WR= 0  RegData: RD1=00000000 RD2=00000000 WD=00000000 RegWrite=0
+  ALU: Result=00000000 Flags=010  Imm=00000000
+  Mem: Read=0 Write=0 Addr=00000000 Data=00000000
+  Ctrl: RR1Mux=0 RR2Mux=0 ImmMux=0 ALUSrcMux=0 MemtoRegMux=0
+        PCSMux=0 HaltMux=1 BranchRegMux=0 BranchMux=0 BranchTaken=0
+
