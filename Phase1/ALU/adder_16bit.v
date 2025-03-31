@@ -1,4 +1,4 @@
-module adder_pc(
+module adder_16bit(
 	input [15:0] A,
 	input [15:0] B,
 	input Sub,

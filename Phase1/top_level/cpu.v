@@ -9,6 +9,7 @@ module cpu(
     wire [15:0] instruction;          // Instruction from memory
     wire [15:0] pc_plus2;             // PC + 2
     wire [15:0] branch_target;        // PC + SE(imm << 1)
+
     wire [15:0] pc_next;              // Next PC value
     wire [3:0] rr1_reg;               // Read register 1 selector
     wire [3:0] rr2_reg;               // Read register 2 selector
@@ -20,11 +21,13 @@ module cpu(
     wire [15:0] imm_value;            // Immediate value for ALU
     wire [15:0] alu_input_b;          // Second input to ALU
     wire [15:0] mem_data_out;         // Data from memory
-    wire take_branch;                 // Branch condition is satisfied
+    wire [15:0] extended_imm;         // extended immediate for branch inst
     wire [2:0] flags;                 // Z, V, N flags
-    wire [2:0] flags_out;                 // Z, V, N flag register output
+    wire [2:0] flags_out;             // Z, V, N flag register output
     wire branch_taken;                // Branch condition is satisfied
     wire [3:0] op;
+    wire [8:0] imm;
+    wire [3:0] code; 
     wire flag_enable;
 
     // control signals from control module
@@ -47,6 +50,8 @@ module cpu(
     ///////////////
 
     assign op = instruction[15:12];
+    assign imm = instruction[8:0];
+    assign code = instruction[11:9];
 
     // instantiate program counter register
     pc_reg PC(
@@ -56,9 +61,10 @@ module cpu(
         .pc(pc)
     );
 
+    
     // instantiate branch module to determine if branch is taken on B or BR operation
     branch branch_ctrl (
-        .branch_condition(instruction[11:9]),
+        .branch_condition(code),
         .flag_reg(flags_out), // from ALU
         .branch_taken(branch_taken)
     );
@@ -66,7 +72,7 @@ module cpu(
     // PC incrementer and branch target using the adder module
    
     // PC + 2 adder
-    adder_pc pc_incrementer(
+    adder_16bit pc_incrementer(
         .A(pc),
         .B(16'h0002),
         .Sub(1'b0),
@@ -74,13 +80,13 @@ module cpu(
     );
 
     // branch target calculation adder (pc_plus2 + sign-extended immediate)
-    wire [15:0] extended_imm = {{6{instruction[8]}}, instruction[8:0], 1'b0};
-    adder_pc branch_target_adder(
+    assign extended_imm = {{6{imm[8]}}, imm[8:0], 1'b0};
+    adder_16bit branch_target_adder(
         .A(pc_plus2),
         .B(extended_imm),
-        .Sub(instruction[8]),
+        .Sub(1'b0),
         .Sum(branch_target)
-    );
+    ); 
 
     // PC selection logic
     assign pc_next = HaltMux ? pc :

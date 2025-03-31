@@ -1,5 +1,5 @@
 `timescale 1ns/100ps
-module adder_tb();
+module adder_16bit_tb();
 
 	logic [15:0] A, B, Sum;
 	logic Sub, Ovfl;
