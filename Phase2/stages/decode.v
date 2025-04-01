@@ -1,40 +1,26 @@
-// ADD HAZARD DETECTION HERE!!!!
+// ADD HAZARD DETECTION UNIT HERE!!!!
 
 module decode (
     input clk,
     input rst_n,
     
     // Inputs from Fetch/Decode pipeline register
-    input [15:0] FD_pc_plus_2,
-    input [15:0] FD_instruction,
+    input [32:0] D_in,
     
     // branch resolution signals to go back to F stage
     output flush,
-    output halt,
+    output stall,
     output [15:0] branch_target
 
-    // outputs to go into Decode / Execute pipeline
-    // pipeline data
-    output [15:0] D_rr1_data;             // Data from rs register
-    output [15:0] D_rr2_data;             // Data from rt register
-    output [15:0] D_write_data;           // Data to write to rd register
-    output [15:0] D_imm_value;            // imm value from inst
-    output [3:0] D_rr1_reg;               // Read register 1 selector
-    output [3:0] D_rr2_reg;               // Read register 2 selector
-    output [3:0] D_wr_reg;                // Write register selector
-    output [3:0] D_ALUop;                 // opcode from inst
-
-    // pipeline control
-    output D_ALUSrcMux,       // ALU source selection for EX stage
-    output D_MemtoRegMux,     // selects memory vs. ALU result in WB
-    output D_PCSMux,          // selects PC+2 for PCS instructions in WB
-    output D_RegWrite,        // register write enable for WB
-    output D_MemWrite,        // memory write enable for MEM stage
-    output D_MemRead,         // memory read enable for MEM stage
-    output D_Flag_Enable,     // flag update enable for EX stage
+    // pipeline data and control signals
+    output [86:0] D_out;
 
 );
     
+    // internal signals from Fetch
+    wire [15:0] FD_pc_plus_2;
+    wire [15:0] FD_instruction;
+
     // declare all wire connections for decode stage
     wire [3:0] rr1_reg;               // Read register 1 selector
     wire [3:0] rr2_reg;               // Read register 2 selector
@@ -57,9 +43,14 @@ module decode (
     wire RegWrite;                    // Register write control
     wire MemWrite;                    // Memory write control
     wire MemRead;                     // Enable using data memory
-    wire Flag_Enable;
-    wire ALUop;
+    wire Flag_Enable;                 // enables FF for flags
+    wire ALUop;                       // bits [15:12] of inst for alu operation
 
+
+    // break up the FD pipeline data
+    assign FD_pc_plus_2 = D_in[31:16];    // PC + 2 forwarded to D stage
+    assign FD_instruction = D_in[15:0];   // Instruction forwarded to D stage
+ 
     // Control unit instantiation
     control ctrl_unit(
         .instruction(FD_instruction),
@@ -82,7 +73,10 @@ module decode (
     // Register selection logic
     assign rr1_reg = RR1Mux ? FD_instruction[11:8] : FD_instruction[7:4];    // 1 : LLB / LHB , 0 : else
     assign rr2_reg = (MemWrite | MemRead) ? FD_instruction[11:8] : FD_instruction[3:0]; // LW and SW
-    assign wr_reg = FD_instruction[11:8];  
+    assign wr_reg = FD_instruction[11:8]; 
+
+    // assign write data, data out from from writeback stage
+    assign write_data = PCSMux ? FD_pc_plus_2 : data_out;
     
     // RegisterFile instantiation
     RegisterFile RF(
@@ -120,8 +114,9 @@ module decode (
         .Sum(branch_value)
     );
 
-    // assign halt to go and stop write to pipe registers
-    assign halt = HaltMux;
+
+    // these will actual come from hazard detection unit //
+    assign stall:
 
     // assign flush so PC can load in the new branch addr
     assign flush = (BranchRegMux & branch_taken) | (BranchMux & branch_taken);
@@ -129,22 +124,61 @@ module decode (
     // assign branch tagret, if branchMux high take output of branch_addr else take rr1 data
     assign branch_target = BranchMux ? branch_value : rr1_data;
 
-    // assiging internal signals to outputs of Decode:
-    assign D_ALUop       = ALUop;
-    assign D_ALUSrcMux   = ALUSrcMux;
-    assign D_MemtoRegMux = MemtoRegMux;
-    assign D_PCSMux      = PCSMux;
-    assign D_RegWrite    = RegWrite;
-    assign D_MemWrite    = MemWrite;
-    assign D_MemRead     = MemRead;
-    assign D_Flag_Enable = Flag_Enable;
-    assign D_imm_value   = imm_value;
-    assign D_rr1_reg     = rr1_reg;
-    assign D_rr2_reg     = rr2_reg;
-    assign D_wr_reg      = wr_reg;
-    assign D_rr1_data    = rr1_data;
-    assign D_rr2_data    = rr2_data;
-    assign D_write_data  = write_data;
+    // assign the D_data and D_Control that goes into D/X pipe reg
+
+
+    // Data signals concatenation
+    wire [75:0] D_data;
+    assign D_data = {
+        rr1_data,     // [75:60] Data from rr1 register (16 bits)
+        rr2_data,     // [59:44] Data from rr2 register (16 bits)
+        write_data,   // [43:28] Data to write to wr register (16 bits)
+        imm_value,    // [27:12] Immediate value from instruction (16 bits)
+        rr1_reg,      // [11:8] Read register 1 number (4 bits)
+        rr2_reg,      // [7:4] Read register 2 number (4 bits)
+        wr_reg        // [3:0] Write register number (4 bits)
+    };
+
+    // Control signals concatenation
+    wire [11:0] D_control;
+    assign D_control = {
+        ALUop,        // [11:8] Opcode from instruction (4 bits)
+        ALUSrcMux,    // [7] ALU source selection for EX stage (1 bit)
+        MemtoRegMux,  // [6] Selects memory vs. ALU result in WB (1 bit)
+        PCSMux,       // [5] Selects PC+2 for PCS instructions in WB (1 bit)
+        RegWrite,     // [4] Register write enable for WB (1 bit)
+        MemWrite,     // [3] Memory write enable for MEM stage (1 bit)
+        MemRead,      // [2] Memory read enable for MEM stage (1 bit)
+        Flag_Enable,  // [1] Flag update enable for EX stage (1 bit)
+        HaltMux       // [0] Halt signal (1 bit)
+    };
+
+    
+    // D_out Signal Guide
+    // assign final D_out with data and control values
+    // 
+    // [87:12] D_data (76 bits) - Data path signals
+    //   [87:72] rr1_data     - Data from first source register (16 bits)
+    //   [71:56] rr2_data     - Data from second source register (16 bits)
+    //   [55:40] write_data   - Data to write to destination register (16 bits)
+    //   [39:24] imm_value    - Immediate value from instruction (16 bits)
+    //   [23:20] rr1_reg      - First source register number (4 bits)
+    //   [19:16] rr2_reg      - Second source register number (4 bits)
+    //   [15:12] wr_reg       - Destination register number (4 bits)
+    //
+    // [11:0] D_control (12 bits) - Control signals
+    //   [11:8] ALUop        - ALU operation code (4 bits)
+    //   [7]    ALUSrcMux    - Selects register (0) or immediate (1) for ALU B input
+    //   [6]    MemtoRegMux  - Selects ALU result (0) or memory data (1) for register write
+    //   [5]    PCSMux       - Selects PC+2 as write data for PCS instruction
+    //   [4]    RegWrite     - Enable signal for register file writing
+    //   [3]    MemWrite     - Enable signal for memory writing (SW)
+    //   [2]    MemRead      - Enable signal for memory reading (LW)
+    //   [1]    Flag_Enable  - Enable signal for updating ALU flags
+    //   [0]    HaltMux      - Signal to halt processor execution
+    
+    assign D_out = {D_data, D_control}
+
 
 
 endmodule

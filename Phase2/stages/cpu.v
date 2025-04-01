@@ -5,6 +5,10 @@ module cpu(
     output [15:0] pc
 );
 
+
+    // ADD hazard_forwarding unit here!
+    // ADD Flag registers here for branch resolution!
+    // ADD Control Unit instantiation here!
     
                             ///////////
                             // FETCH //
@@ -12,43 +16,31 @@ module cpu(
 
     // declare all wire connections for I inputs and outputs 
 
-    wire stall;                    // Stall signal for pipeline
+    // internal signals used for branch resultion in Decode that need to be sent to Fetch
     wire flush;                    // Flush signal for pipeline
-    wire branch_taken;             // Branch condition satisfied
-    wire [15:0] pc;                // Current PC from fetch stage
-    wire [15:0] pc_plus_2;         // PC + 2 from fetch stage
-    wire [15:0] instruction;       // Instruction from fetch stage
-    wire [15:0] FD_pc_plus_2       // PC + 2 forwarded to D stage
-    wire [15:0] FD_instruction     // Instruction forwarded to D stage
-    wire [15:0] branch_target;     // Branch target address
-    wire [31:0] FD_in, FD_out;          // Combined input and output to F/D register
-    
-    // concatanate signals for F/D register input
-    // FD_in : {[31:16]FD_pc_plus_2, [15:0]FD_instruction}
-    assign FD_in = {pc_plus_2, instruction};
+    wire hlt;
     
     // instantiate fetch stage
     fetch F_stage(
         .clk(clk),
         .rst_n(rst_n),
-        .stall(stall),
-        .flush(flush),
-        .halt(hlt),
-        .branch_target(branch_target),
-        .pc(pc),
-        .pc_plus2(pc_plus_2),
-        .instruction(instruction)
+        .stall(stall),                  // comes from hazard detection in decode
+        .flush(flush),                  // comes from branch resolution in decode
+        .halt(hlt),                     // comes from Writeback stage
+        .branch_target(branch_target),  // input from decode of branch addr
+        .pc(pc),                        // output to pc of cpu
+        .F_out(FD_pipe_in)            //output of inst and pc+2
     );
     
     // F/D Pipeline Register (single register for all signals)
     // FD_out : {[31:16]FD_pc_plus_2 , [15:0]FD_instruction}
     pipeline_reg #(.WIDTH(32)) ID_data(
         .clk(clk),
-        .rst_n(rst_n),
-        .d(FD_in),
+        .rst_n(rst_n),s
+        .d(FD_pipe_in),
         .clr(flush),      
         .wren(~stall),    
-        .q(FD_out)
+        .q(FD_pipe_out)
     );
 
 
@@ -57,34 +49,14 @@ module cpu(
                             ////////////
 
 
-
-    // assign the register outputs to inputs for decode stage
-    assign FD_pc_plus_2 = FD_out[31:16];    // PC + 2 forwarded to D stage
-    assign FD_instruction = FD_out[15:0];   // Instruction forwarded to D stage
-
     decode decode_stage(
     .clk(clk),
     .rst_n(rst_n),
-    .FD_pc_plus_2(FD_pc_plus_2),
-    .FD_instruction(FD_instruction),
+    .D_in(FD_pipe_out),
     .flush(flush),
-    .halt(hlt),
+    .stall(stall),
     .branch_target(branch_target),
-    .D_rr1_data(D_rr1_data),
-    .D_rr2_data(D_rr2_data),
-    .D_write_data(D_write_data),
-    .D_imm_value(D_imm_value),
-    .D_rr1_reg(D_rr1_reg),
-    .D_rr2_reg(D_rr2_reg),
-    .D_wr_reg(D_wr_reg),
-    .D_ALUop(D_ALUop),
-    .D_ALUSrcMux(D_ALUSrcMux),
-    .D_MemtoRegMux(D_MemtoRegMux),
-    .D_PCSMux(D_PCSMux),
-    .D_RegWrite(D_RegWrite),
-    .D_MemWrite(D_MemWrite),
-    .D_MemRead(D_MemRead),
-    .D_Flag_Enable(D_Flag_Enable)
+    .D_out(DX_pipe_in)
     );
 
 
@@ -92,20 +64,10 @@ module cpu(
     pipeline_reg #(.WIDTH(?)) DX_data(
         .clk(clk),
         .rst_n(rst_n),
-        .d(FD_in),
+        .d(DX_pipe_in),
         .clr(flush),      
         .wren(~stall),    
-        .q(FD_out)
-    );
-
-    // D/X Pipeline Register one register for all control
-    pipeline_reg #(.WIDTH(?)) DX_control(
-        .clk(clk),
-        .rst_n(rst_n),
-        .d(FD_in),
-        .clr(flush),      
-        .wren(~stall),    
-        .q(FD_out)
+        .q(DX_pipe_out)
     );
 
 
@@ -113,16 +75,18 @@ module cpu(
                             // EXECUTE //
                             /////////////
 
-    execute execute_stage();
+    execute execute_stage(
+        .X_in(DX_pipe_out),
+    );
 
     // X/M Pipeline Register one register for all control
     pipeline_reg #(.WIDTH(?)) XM(
         .clk(clk),
         .rst_n(rst_n),
-        .d(FD_in),
+        .d(),
         .clr(flush),      
         .wren(~stall),    
-        .q(FD_out)
+        .q()
     );
 
    

@@ -2,11 +2,6 @@
 
 module execute();
 
-
-
-
-
-
     // todo need to pipe ALUSRCMux here
     wire [15:0] alu_input_b;
     assign alu_input_b = ALUSrcMux ? imm_value : rr2_data;

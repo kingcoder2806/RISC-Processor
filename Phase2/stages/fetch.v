@@ -8,18 +8,18 @@ module fetch(
     
     // Outputs - just the basic values
     output [15:0] pc,             // Current PC value (for CPU output)
-    output [15:0] pc_plus2,       // PC + 2 (for branch calculation)
-    output [15:0] instruction     // Fetched instruction
+    output [32:0] F_out;   // data to be passed to the FD pipe reg
 );
 
     // Internal wires
     wire [15:0] pc_next;          // Next PC value
 
     // PC selection logic for predict-not-taken
-    // Note: Stall comes from hazard in X , flush comes from branch resolution in D, halt coms from control in D
-    assign pc_next = halt ? pc :                      // Stall: keep current PC
-                    flush ? branch_target :            // Branch taken (misprediction): jump to target
-                    pc_plus2;                          // Predict not taken: always PC+2
+    // Note: Stall comes from hazard in X , flush comes from branch resolution in D, halt coms from writeback
+    assign pc_next = (halt && !flush) ? pc :     // Halt: freeze PC unless in branch shadow
+                 stall ? pc :                   // Stall: keep current PC 
+                 flush ? branch_target :        // Branch taken: jump to target
+                 pc_plus2;                      // Normal: increment PC
 
     // PC register
     pc_reg PC(
@@ -47,5 +47,9 @@ module fetch(
         .clk(clk),
         .rst(~rst_n)              // Convert active-low to active-high
     );
+
+    // assign data that will go into pipeline to decode
+    // FD_in : {[31:16]pc_plus_2, [15:0]instruction}
+    assign F_out = {pc_plus_2, instruction};
 
 endmodule
