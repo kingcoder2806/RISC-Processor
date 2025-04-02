@@ -16,7 +16,7 @@ module decode (
     output [15:0] branch_target,
 
     // pipeline data and control signals
-    output [87:0] D_out
+    output [70:0] D_out
 );
     
     // internal signals from Fetch

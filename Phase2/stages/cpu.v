@@ -83,7 +83,7 @@ module cpu(
 
 
     // D/X Pipeline Register one register for all values
-    pipeline_reg #(.WIDTH(72)) DX_pipeline(
+    pipeline_reg #(.WIDTH(71)) DX_pipeline(
         .clk(clk),
         .rst_n(rst_n),
         .d(DX_pipe_in),
