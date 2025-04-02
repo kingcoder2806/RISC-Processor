@@ -49,9 +49,13 @@ assign {
 
 
     assign M_out = {
+
+        // data signals
         alu_result,       // ALU result [16:0]
         mem_data_out,     // Memory data [16:0]
         wr_reg_X,         // Destination register [3:0]
+
+        // control signals
         HaltMux_X,        // Halt signal
         RegWrite_X,       // Register write enable
         MemtoRegMux_X,    // Memory to register select

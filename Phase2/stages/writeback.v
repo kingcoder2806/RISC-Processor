@@ -4,7 +4,7 @@ module writeback(
     
     // Outputs for CPU and Register File
     output HaltMux_W,   // out to cpu to halt 
-     output RegWrite_W, // to register file in decode
+    output RegWrite_W, // to register file in decode
     output [15:0] write_data_W,
     output [3:0] wr_reg_W
 );
