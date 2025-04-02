@@ -21,7 +21,7 @@ module cpu(
         .rst_n(rst_n),
         .stall(stall),                  // comes from hazard detection in decode
         .flush(flush),                  // comes from branch resolution in decode
-        .halt(hlt),                     // comes from Writeback stage
+        .halt_PC(halt_PC),                     // comes from halt detection in decode to stop PC increment
         .branch_target(branch_target),  // input from decode of branch addr
         .pc(pc),                        // output to pc of cpu
         .F_out(FD_pipe_in)            //output of inst and pc+2
@@ -31,7 +31,7 @@ module cpu(
     // FD_out : {[31:16]FD_pc_plus_2 , [15:0]FD_instruction}
     pipeline_reg #(.WIDTH(32)) ID_pipeline(
         .clk(clk),
-        .rst_n(rst_n),s
+        .rst_n(rst_n),
         .d(FD_pipe_in),
         .clr(flush),      
         .wren(~stall),    
@@ -73,10 +73,9 @@ module cpu(
     .rst_n(rst_n),
     .D_in(FD_pipe_out),
     .flush(flush),
-    .stall(stall),
-    .halt(halt),              // halt to stop PC increment but not cpu in simulation
+    .halt_PC(halt_PC),              // halt to stop PC increment but not cpu in simulation
     .branch_target(branch_target),
-    .D_out(DX_pipe_in)
+    .D_out(DX_pipe_in),
     .write_data_W(write_data_W),
     .wr_reg_W(wr_reg_W),
     .RegWrite_W(RegWrite_W)
@@ -84,7 +83,7 @@ module cpu(
 
 
     // D/X Pipeline Register one register for all values
-    pipeline_reg #(.WIDTH(88)) DX_pipeline(
+    pipeline_reg #(.WIDTH(72)) DX_pipeline(
         .clk(clk),
         .rst_n(rst_n),
         .d(DX_pipe_in),
@@ -128,7 +127,7 @@ module cpu(
     );
 
     // M/W Pipeline Register one register for all values
-    pipeline_reg #(.WIDTH(36)) MW_pipeline(
+    pipeline_reg #(.WIDTH(39)) MW_pipeline(
         .clk(clk),
         .rst_n(rst_n),
         .d(MW_pipe_in),

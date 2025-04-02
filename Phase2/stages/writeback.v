@@ -1,12 +1,12 @@
 module writeback(
     // Inputs from Memory/Writeback pipeline register
-    input [35:0] W_in,
+    input [38:0] W_in,
     
     // Outputs for CPU and Register File
-    output HaltMux_W,
+    output HaltMux_W,   // out to cpu to halt 
+     output RegWrite_W, // to register file in decode
     output [15:0] write_data_W,
-    output [3:0] wr_reg_W,
-    output RegWrite_W
+    output [3:0] wr_reg_W
 );
     // Extract individual signals from W_in
     wire vldW;
@@ -19,12 +19,12 @@ module writeback(
     
     // Extract all signals from the pipeline register
     assign {
+        alu_result,       // ALU result [16:0]
+        mem_data_out,     // Memory data [16:0]
+        wr_reg_W,         // Destination register [3:0]
         HaltMux_W,        // Halt signal
         RegWrite_W,       // Register write enable
-        MemtoRegMux_W,    // Memory to register select
-        wr_reg_W,         // Destination register
-        alu_result,       // ALU result [16:0]
-        mem_data_out      // Memory data [16:0]
+        MemtoRegMux_W     // Memory to register select
     } = W_in;
 
     

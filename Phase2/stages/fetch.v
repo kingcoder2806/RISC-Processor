@@ -3,7 +3,7 @@ module fetch(
     input rst_n,                  // Reset signal (active low)
     input stall,                  // Stall signal from hazard detection
     input flush,                  // Flush signal when branch is taken
-    input halt,
+    input halt_PC,
     input [15:0] branch_target,   // Branch target from ID stage
     
     // Outputs - just the basic values
@@ -16,10 +16,10 @@ module fetch(
 
     // PC selection logic for predict-not-taken
     // Note: Stall comes from hazard in X , flush comes from branch resolution in D, halt coms from writeback
-    assign pc_next = (halt && !flush) ? pc :     // Halt: freeze PC unless in branch shadow
+    assign pc_next = (halt_PC && !flush) ? pc :     // Halt: freeze PC unless in branch shadow
                  stall ? pc :                   // Stall: keep current PC 
                  flush ? branch_target :        // Branch taken: jump to target
-                 pc_plus2;                      // Normal: increment PC
+                 pc_plus_2;                      // Normal: increment PC
 
     // PC register
     pc_reg PC(
@@ -34,7 +34,7 @@ module fetch(
         .A(pc),
         .B(16'h0002),
         .Sub(1'b0),
-        .Sum(pc_plus2)
+        .Sum(pc_plus_2)
     );
 
     // Instruction memory

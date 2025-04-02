@@ -83,6 +83,7 @@ module alu(
 			4'b1001: final_result = addr_result;       // SW
 			4'b1010: final_result = llb_result;        // LLB
 			4'b1011: final_result = lhb_result;        // LHB
+			4'b1110: final_result = a;				   // PCS, passes the pc_plus_2 as input a in execute so if that inst we pass through
 			default: final_result = 16'h0000;          // Default case
 		endcase
 	end

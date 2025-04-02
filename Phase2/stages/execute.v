@@ -30,20 +30,18 @@ module execute(
 
     // Extract signals from D_out
     assign {
-        // Data signals (76 bits)
+        // Data signals (60 bits)
         rr1_data_X,      // Source data 1
         rr2_data_X,      // Source data 2
-        write_data_X,    // Write data
         imm_value_X,     // Immediate value
         rr1_reg_X,       // Source register 1
         rr2_reg_X,       // Source register 2
         wr_reg_X,        // Destination register
 
-        // Control signals (12 bits)
+        // Control signals (11 bits)
         ALUop_X,         // Opcode
         ALUSrcMux_X,     // ALU source select
         MemtoRegMux_X,   // Memory to register select
-        PCSMux_X,        // PC save select
         RegWrite_X,      // Register write enable
         MemWrite_X,      // Memory write enable
         MemRead_X,       // Memory read enable
