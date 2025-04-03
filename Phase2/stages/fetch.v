@@ -1,9 +1,8 @@
 module fetch(
     input clk,                    // Clock signal
     input rst_n,                  // Reset signal (active low)
-    input stall,                  // Stall signal from hazard detection
-    input flush,                  // Flush signal when branch is taken
-    input halt_PC,
+    input stall,                  // Stall signal from hazard detection from cpu
+    input flush,                  // Flush signal when branch is taken from decode
     input [15:0] branch_target,   // Branch target from ID stage
     
     // Outputs - just the basic values
@@ -15,6 +14,7 @@ module fetch(
     wire [15:0] pc_next;          // Next PC value
     wire [15:0] pc_plus_2;        // pc plus 2
     wire [15:0] instruction;
+    wire halt_PC;
 
     // PC selection logic for predict-not-taken
     // Note: Stall comes from hazard in X , flush comes from branch resolution in D, halt coms from writeback
@@ -50,8 +50,11 @@ module fetch(
         .rst(~rst_n)              // Convert active-low to active-high
     );
 
+    // assign halt_PC logic 
+    assign halt_PC = &instruction[15:12];
     // assign data that will go into pipeline to decode
     // FD_in : {[31:16]pc_plus_2, [15:0]instruction}
+
     assign F_out = {pc_plus_2, instruction};
 
 endmodule

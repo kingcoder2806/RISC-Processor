@@ -10,7 +10,6 @@ module decode (
     
     // branch resolution signals to go back to F stage
     output flush,
-    output halt_PC,
     output [15:0] branch_target,
 
     // pipeline data and control signals
@@ -58,7 +57,7 @@ module decode (
         .ALUSrcMux(ALUSrcMux_D),
         .MemtoRegMux(MemtoRegMux_D),
         .PCSMux(PCSMux_D),
-        .HaltMux(HaltMux_D),
+        .HaltMux(HaltMux_D), // used and proporagted to WB stage
         .BranchRegMux(BranchRegMux_D),
         .BranchMux(BranchMux_D),
         .RegWrite(RegWrite_D),
@@ -109,12 +108,13 @@ module decode (
 
     // Calculate branch target with extended imm
     wire [15:0] extended_imm;
+    wire [15:0] branch_imm;
     assign extended_imm = {{6{instruction_F[8]}}, instruction_F[8:0], 1'b0}; // Sign-extend and shift left
     adder_16bit branch_adder(
         .A(pc_plus_2_F),
         .B(extended_imm),
         .Sub(1'b0),
-        .Sum(branch_target)
+        .Sum(branch_imm)
     );
 
     // Data signals and control signals concatenation
@@ -142,15 +142,15 @@ module decode (
     assign halt_PC = HaltMux_D;
 
     // assign flush based off of branch taken
-    assign flush = branch_taken;
+    assign flush = (branch_taken && (BranchMux_D || BranchRegMux_D));
 
     // assign branch target based off of B or BR inst
     // if branch_taken is true and either BranchMux_D or BranchRegMux_D is high:
     // when BranchMux_D is high, use the computed branch target (branch_target_temp).
     // when BranchRegMux_D is high, use the register value (e.g. rr1_data_D).
     // otherwise, branch_target is 0.
-    assign branch_target = (branch_taken && (BranchMux_D || BranchRegMux_D)) ? 
-                         (BranchMux_D ? branch_target : rr1_data_D) :
+    assign branch_target = (flush) ? 
+                         (BranchMux_D ? branch_imm : rr1_data_D) :
                          16'h0000;
 
 endmodule

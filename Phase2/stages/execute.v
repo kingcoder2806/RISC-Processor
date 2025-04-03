@@ -13,7 +13,6 @@ module execute(
     wire [3:0] rr2_reg_X;       // Read register 2 number (4 bits)
     wire [3:0] rr1_reg_X;       // Read register 1 number (4 bits)
     wire [15:0] imm_value_X;    // Immediate value from instruction (16 bits)
-    wire [15:0] write_data_X;   // Data to write to wr register (16 bits)
     wire [15:0] rr2_data_X;     // Data from rr2 register (16 bits)
     wire [15:0] rr1_data_X;     // Data from rr1 register (16 bits)
 
@@ -23,7 +22,6 @@ module execute(
     wire MemRead_X;             // Memory read enable for MEM stage (1 bit)
     wire MemWrite_X;            // Memory write enable for MEM stage (1 bit)
     wire RegWrite_X;            // Register write enable for WB (1 bit)
-    wire PCSMux_X;              // Selects PC+2 for PCS instructions in WB (1 bit)
     wire MemtoRegMux_X;         // Selects memory vs. ALU result in WB (1 bit)
     wire ALUSrcMux_X;           // ALU source selection for EX stage (1 bit)
     wire [3:0] ALUop_X;         // Opcode from instruction (4 bits)

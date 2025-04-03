@@ -10,27 +10,23 @@ module writeback(
     output [3:0] wr_reg_W
 );
     // Extract individual signals from W_in
-    wire vldW;
-    wire hltW;
-    wire reg_wrenW;
-    wire mem_to_regW;
-    wire [3:0] dst_regW;
-    wire [15:0] alu_outW;
-    wire [15:0] main_mem_outW;
-    
+    wire [15:0] alu_result;
+    wire [15:0] mem_data_out;
+    wire MemtoRegMux_W;
+
     // Extract all signals from the pipeline register
     assign {
         alu_result,       // ALU result [16:0]
         mem_data_out,     // Memory data [16:0]
-        wr_reg_W,         // Destination register [3:0]
-        HaltMux_W,        // Halt signal
-        RegWrite_W,       // Register write enable
+        wr_reg_W,         // Destination register [3:0], straight to output
+        HaltMux_W,        // Halt signal, straight to output
+        RegWrite_W,       // Register write enable, straight to output
         MemtoRegMux_W     // Memory to register select
     } = W_in;
 
     
     // Determine the data to write to register file
-    assign write_data_W = mem_to_regW ? mem_data_out : alu_result;
+    assign write_data_W = MemtoRegMux_W ? mem_data_out : alu_result;
 
     
 endmodule

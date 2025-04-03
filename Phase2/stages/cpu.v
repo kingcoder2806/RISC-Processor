@@ -42,7 +42,6 @@ module cpu(
         .rst_n(rst_n),
         .stall(stall),                  // comes from hazard detection in decode
         .flush(flush),                  // comes from branch resolution in decode
-        .halt_PC(halt_PC),                     // comes from halt detection in decode to stop PC increment
         .branch_target(branch_target),  // input from decode of branch addr
         .pc(pc),                        // output to pc of cpu
         .F_out(FD_pipe_in)            //output of inst and pc+2
@@ -70,7 +69,6 @@ module cpu(
     .rst_n(rst_n),
     .D_in(FD_pipe_out),
     .flush(flush),
-    .halt_PC(halt_PC),              // halt to stop PC increment but not cpu in simulation
     .branch_target(branch_target),
     .D_out(DX_pipe_in),
     .write_data_W(write_data_W),
