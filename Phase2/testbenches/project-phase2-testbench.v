@@ -69,6 +69,11 @@ module cpu_ptb();
    wire        HaltMux_W;
    wire        RegWrite_W;
    
+   // Add missing wire declarations
+   wire [15:0] MemAddress_D;
+   wire [15:0] MemData_D;
+   wire [15:0] WriteData_D;
+   
    // ------------------------------
    // Counters and File Handles for Logging
    // ------------------------------
@@ -202,6 +207,7 @@ module cpu_ptb();
    assign ReadReg1_D    = DUT.decode.rr1_reg_D;
    assign ReadReg2_D    = DUT.decode.rr2_reg_D;
    assign BranchTarget  = DUT.decode.branch_target;
+   
    // Decode Stage - Control signals
    assign RR1Mux_D      = DUT.decode.RR1Mux_D;
    assign RR2Mux_D      = DUT.decode.RR2Mux_D;
@@ -227,6 +233,7 @@ module cpu_ptb();
    assign rr1_reg_X     = DUT.execute.rr1_reg_X;
    assign rr2_reg_X     = DUT.execute.rr2_reg_X;
    assign wr_reg_X      = DUT.execute.wr_reg_X;
+   
    // Execute Stage - Control signals
    assign ALUop_X       = DUT.execute.ALUop_X;
    assign ALUSrcMux_X   = DUT.execute.ALUSrcMux_X;
@@ -241,6 +248,7 @@ module cpu_ptb();
    assign ALUResult_M      = DUT.memory.alu_result;
    assign MemoryOut_M      = DUT.memory.mem_data_out;
    assign WriteRegister_M  = DUT.memory.wr_reg_M;
+   
    // Memory Stage - Control signals
    assign HaltMux_M        = DUT.memory.HaltMux_M;
    assign RegWrite_M       = DUT.memory.RegWrite_M;
@@ -249,8 +257,14 @@ module cpu_ptb();
    // Writeback Stage - Data signals
    assign WriteData_W      = DUT.writeback.write_data_W;
    assign WriteRegister_W  = DUT.writeback.wr_reg_W;
+   
    // Writeback Stage - Control signals
    assign HaltMux_W        = DUT.writeback.HaltMux_W;
    assign RegWrite_W       = DUT.writeback.RegWrite_W;
+   
+   // Assign values to the missing signals
+   assign WriteData_D      = WriteData_W;       // Data from writeback stage
+   assign MemAddress_D     = ALUResult_M;       // Memory address from ALU result
+   assign MemData_D        = ReadData2_D;       // Data to write from read register 2
 
 endmodule
