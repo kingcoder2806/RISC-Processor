@@ -56,7 +56,6 @@ module execute(
     // ALU signals
     wire [15:0] alu_result;
     wire [2:0] flags;
-    wire [2:0] flags_out;
     
     // ALU instantiation
     alu ALU(
@@ -64,13 +63,8 @@ module execute(
         .b(alu_input_b),
         .op(ALUop_X),            // Using opcode as ALU operation
         .result(alu_result),
-        .flags(flags)            // Z, V, N flags
+        .flags(flags)            // Z, V, N flags (not used, calculated in the Decode stage)
     );
-    
-    // Flag registers
-    dff idff0(.d(flags[2]), .q(flags_out[2]), .wen(Flag_Enable_X), .clk(clk), .rst(~rst_n)); // N flop
-    dff idff1(.d(flags[1]), .q(flags_out[1]), .wen(Flag_Enable_X), .clk(clk), .rst(~rst_n)); // Z flop
-    dff idff2(.d(flags[0]), .q(flags_out[0]), .wen(Flag_Enable_X), .clk(clk), .rst(~rst_n)); // V flop
     
     // Prepare output for EX/MEM pipeline register
     assign X_out = {

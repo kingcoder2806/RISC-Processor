@@ -4,6 +4,7 @@ module cpu(
     output hlt,
     output [15:0] pc
 );
+
     //declare internal control / data signals
     wire stall, flush, halt_PC;
     wire [15:0] branch_target;
@@ -25,7 +26,11 @@ module cpu(
     wire [38:0] MW_pipe_in, MW_pipe_out;
 
 
-    // ADD hazard and forwarding unit here this will take care of pc_next logic
+    // ADD hazard and forwarding unit here this will take care of pc_next logic for stalls and data forwarding
+
+    // FOR TESTING //
+    assign stall = 0;
+    // FOR TESTING //
     
                             ///////////
                             // FETCH //

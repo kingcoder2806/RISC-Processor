@@ -1,5 +1,3 @@
-// ADD Flag logic here UNIT HERE!!!!
-
 module decode (
     input clk,
     input rst_n,
@@ -94,14 +92,21 @@ module decode (
                        (ImmMux_D == 2'b01) ? {{11{instruction_F[3]}}, instruction_F[3:0], 1'b0} : // 4-bit offset shifted (LW, SW)
                        {{8{1'b0}}, instruction_F[7:0]};                                     // 8-bit immediate (LLB, LHB) - 2'b10
     
-    // Branch resolution - using the same logic from your single-cycle implementation
-    wire [2:0] flags;
-    branch branch_unit(
+    
+    // Calculating if branch is taken by calculating flags, resolving the Branch in this stage
+    wire branch_taken;
+    branch_unit branch_inst(
+        .clk(clk),
+        .rst_n(rst_n),
+        .Flag_Enable_D(Flag_Enable_D),
         .branch_condition(instruction_F[11:9]),
-        .flag_reg(flags),  // need to FIO!
+        .a(rr1_data_D),        // First operand from register file
+        .b(rr2_data_D),        // Second operand from register file
+        .op(ALUop_D),
         .branch_taken(branch_taken)
     );
-    
+
+
     // Calculate branch target with extended imm
     wire [15:0] extended_imm;
     assign extended_imm = {{6{instruction_F[8]}}, instruction_F[8:0], 1'b0}; // Sign-extend and shift left
@@ -133,17 +138,19 @@ module decode (
         HaltMux_D       // [0] Halt signal (1 bit)
     };
 
-    // assign halt signal to stop PC increment but not program
+    // assign halt signal to stop PC increment but not stop processor (stoped by writeback HLT)
     assign halt_PC = HaltMux_D;
 
-    // TODO :  Branch Resoliution LOGIC
-    // these will actual come from hazard detection unit //
-    // assign stall = /* TODO */;
+    // assign flush based off of branch taken
+    assign flush = branch_taken;
 
-    // assign flush so PC can load in the new branch addr
-    assign flush = (BranchRegMux_D & branch_taken) | (BranchMux_D & branch_taken);
-
-    // assign branch tagret, if branchMux high take output of branch_addr else take rr1 data
-    assign branch_target = BranchMux_D ? branch_target : rr1_data_D;
+    // assign branch target based off of B or BR inst
+    // if branch_taken is true and either BranchMux_D or BranchRegMux_D is high:
+    // when BranchMux_D is high, use the computed branch target (branch_target_temp).
+    // when BranchRegMux_D is high, use the register value (e.g. rr1_data_D).
+    // otherwise, branch_target is 0.
+    assign branch_target = (branch_taken && (BranchMux_D || BranchRegMux_D)) ? 
+                         (BranchMux_D ? branch_target : rr1_data_D) :
+                         16'h0000;
 
 endmodule

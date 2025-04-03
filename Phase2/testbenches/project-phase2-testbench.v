@@ -96,9 +96,9 @@ module cpu_ptb();
       $display("Hello world...simulation starting");
       $display("See verilogsim.log, verilogsim.trace, and verilogsim.debug for output");
       inst_count = 0;
-      trace_file = $fopen("verilogsim.trace");
-      sim_log_file = $fopen("verilogsim.log");
-      debug_file = $fopen("verilogsim.debug");
+      trace_file = $fopen("/Users/Patron/Documents/ECE552/ECE552_Project/Phase2/debug/verilogsim.trace");
+      sim_log_file = $fopen("/Users/Patron/Documents/ECE552/ECE552_Project/Phase2/debug/verilogsim.log");
+      debug_file = $fopen("/Users/Patron/Documents/ECE552/ECE552_Project/Phase2/debug/verilogsim.debug");
    end
 
    // Clock and Reset
@@ -116,7 +116,7 @@ module cpu_ptb();
      cycle_count = cycle_count + 1;
      if (cycle_count > 100000) begin
         $display("hmm....more than 100000 cycles of simulation...error?\n");
-        $finish;
+        $stop();
      end
    end
 
@@ -176,7 +176,7 @@ module cpu_ptb();
             $fclose(sim_log_file);
             $fclose(debug_file);
             #5;
-            $finish;
+            $stop();
          end else if (MemWrite_D) begin
             $fdisplay(trace_file, "INUM: %8d PC: 0x%04x ADDR: 0x%04x VALUE: 0x%04x",
                          (inst_count-1),

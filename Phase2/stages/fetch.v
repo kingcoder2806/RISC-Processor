@@ -26,7 +26,7 @@ module fetch(
     // PC register
     pc_reg PC(
         .clk(clk),
-        .rst_n(rst_n),
+        .rst_n(~rst_n),
         .pc_next(pc_next),
         .pc(pc)
     );

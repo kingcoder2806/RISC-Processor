@@ -190,6 +190,8 @@ module cpu_old(
         .flags(flags)             // N, Z, V [N,Z,V]
     );
 
+    
+
     // Flop the flag registers
     dff idff0(.d(flags[2]), .q(flags_out[2]), .wen(flag_enable), .clk(clk), .rst(~rst_n)); // N flop
     dff idff1(.d(flags[1]), .q(flags_out[1]), .wen(flag_enable), .clk(clk), .rst(~rst_n)); // Z flop
