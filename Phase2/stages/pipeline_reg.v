@@ -1,4 +1,4 @@
-module pipeline_reg(
+module pipeline_reg #(parameter WIDTH = 16)(
     input clk,
     input rst_n,
     input [WIDTH-1:0] d,
@@ -6,8 +6,7 @@ module pipeline_reg(
     input wren,
     output [WIDTH-1:0] q
 );
-   parameter WIDTH = 16;
-   
+
    // Array of D flip-flops for each bit
    dff ff [WIDTH-1:0](
       .q(q),
@@ -16,5 +15,5 @@ module pipeline_reg(
       .clk(clk),                    
       .rst(~rst_n)                  // Convert active-low to active-high
    );
-   
+
 endmodule

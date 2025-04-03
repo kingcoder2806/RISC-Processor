@@ -5,7 +5,7 @@ module decode (
     input rst_n,
     
     // Inputs from Fetch/Decode pipeline register
-    input [32:0] D_in,
+    input [31:0] D_in,
     input [15:0] write_data_W,
     input [3:0] wr_reg_W,
     input RegWrite_W,
@@ -102,21 +102,20 @@ module decode (
         .branch_taken(branch_taken)
     );
     
-    // Calculate branch target
-    wire [15:0] branch_value;
+    // Calculate branch target with extended imm
     wire [15:0] extended_imm;
     assign extended_imm = {{6{instruction_F[8]}}, instruction_F[8:0], 1'b0}; // Sign-extend and shift left
     adder_16bit branch_adder(
         .A(pc_plus_2_F),
         .B(extended_imm),
         .Sub(1'b0),
-        .Sum(branch_value)
+        .Sum(branch_target)
     );
 
     // Data signals and control signals concatenation
     assign D_out = {
         // Data signals (60 bits)
-        PCSMux ? pc_plus_2_F : rr1_data_D,     // [70:55] Data from rr1 register or pc_plus_2_F if PSC instrction (16 bits)
+        PCSMux_D ? pc_plus_2_F : rr1_data_D,     // [70:55] Data from rr1 register or pc_plus_2_F if PSC instrction (16 bits)
         rr2_data_D,     // [54:39] Data from rr2 register (16 bits)
         imm_value_D,    // [38:23] Immediate value from instruction (16 bits)
         rr1_reg_D,      // [22:19] Read register 1 number (4 bits)
@@ -145,6 +144,6 @@ module decode (
     assign flush = (BranchRegMux_D & branch_taken) | (BranchMux_D & branch_taken);
 
     // assign branch tagret, if branchMux high take output of branch_addr else take rr1 data
-    assign branch_target = BranchMux_D ? branch_value : rr1_data_D;
+    assign branch_target = BranchMux_D ? branch_target : rr1_data_D;
 
 endmodule

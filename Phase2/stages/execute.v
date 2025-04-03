@@ -3,7 +3,7 @@ module execute(
     input rst_n,
     
     // Input from ID/EX pipeline register
-    input [87:0] X_in,
+    input [70:0] X_in,
     
     // Output to EX/MEM pipeline register
     output [40:0] X_out      // Signals to be passed to MEM stage

@@ -4,16 +4,32 @@ module cpu(
     output hlt,
     output [15:0] pc
 );
+    //declare internal control / data signals
+    wire stall, flush, halt_PC;
+    wire [15:0] branch_target;
+    wire [15:0] write_data_W;
+    wire [3:0] wr_reg_W;
+    wire RegWrite_W;
+
+    // declare all internal pipeline connections
+    // FD Pipeline: 32 bits 
+    wire [31:0] FD_pipe_in, FD_pipe_out;
+
+    // DX Pipeline: 71 bits
+    wire [70:0] DX_pipe_in, DX_pipe_out;
+
+    // XM Pipeline: 41 bits
+    wire [40:0] XM_pipe_in, XM_pipe_out;
+
+    // MW Pipeline: 39 bits
+    wire [38:0] MW_pipe_in, MW_pipe_out;
 
 
     // ADD hazard and forwarding unit here this will take care of pc_next logic
-    // ADD Control Unit instantiation here!
     
                             ///////////
                             // FETCH //
                             ///////////
-
-    // declare all wire connections for I inputs and outputs 
     
     // instantiate fetch stage
     fetch fetch_stage(
@@ -42,30 +58,6 @@ module cpu(
                             ////////////
                             // DECODE //
                             ////////////
-
-
-
-    // DX_pipe_out Signal Guide
-    // 
-    // [87:12] D_data (76 bits) - Data path signals
-    //   [87:72] rr1_data     - Data from first source register (16 bits)
-    //   [71:56] rr2_data     - Data from second source register (16 bits)
-    //   [55:40] write_data   - Data to write to destination register (16 bits)
-    //   [39:24] imm_value    - Immediate value from instruction (16 bits)
-    //   [23:20] rr1_reg      - First source register number (4 bits)
-    //   [19:16] rr2_reg      - Second source register number (4 bits)
-    //   [15:12] wr_reg       - Destination register number (4 bits)
-    //
-    // [11:0] D_control (12 bits) - Control signals
-    //   [11:8] ALUop        - ALU operation code (4 bits)
-    //   [7]    ALUSrcMux    - Selects register (0) or immediate (1) for ALU B input
-    //   [6]    MemtoRegMux  - Selects ALU result (0) or memory data (1) for register write
-    //   [5]    PCSMux       - Selects PC+2 as write data for PCS instruction
-    //   [4]    RegWrite     - Enable signal for register file writing
-    //   [3]    MemWrite     - Enable signal for memory writing (SW)
-    //   [2]    MemRead      - Enable signal for memory reading (LW)
-    //   [1]    Flag_Enable  - Enable signal for updating ALU flags
-    //   [0]    HaltMux      - Signal to halt processor execution
 
 
     decode decode_stage(
@@ -143,9 +135,7 @@ module cpu(
 
 
     writeback writeback_stage(
-        .clk(clk),
-        .rst_n(rst_n),
-        .M_in(MW_pipe_out),
+        .W_in(MW_pipe_out),
         .HaltMux_W(hlt),   // triggers cpu hlt to go high
         .write_data_W(write_data_W),
         .wr_reg_W(wr_reg_W),

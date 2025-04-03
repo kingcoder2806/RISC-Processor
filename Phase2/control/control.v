@@ -13,7 +13,7 @@ module control (
     output MemWrite,
     output MemRead,
     output Flag_Enable,
-    output ALUop
+    output [3:0] ALUop
 );
 
     // WISC-S25 Instruction Opcodes:
@@ -57,10 +57,11 @@ module control (
 
 
     // internal signal declaration
-    wire [3:0] ALUop;
+    wire [3:0] op;
     
     // assigning opcode to the PC opcode
-    assign ALUop = instruction[15:12];
+    assign op = instruction[15:12];
+    assign ALUop = op;
 
     ////////////////////////////////
     // control signal assignments //
