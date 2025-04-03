@@ -32,7 +32,7 @@ module cpu(
                             ///////////
     
     // instantiate fetch stage
-    fetch fetch_stage(
+    fetch fetch(
         .clk(clk),
         .rst_n(rst_n),
         .stall(stall),                  // comes from hazard detection in decode
@@ -60,7 +60,7 @@ module cpu(
                             ////////////
 
 
-    decode decode_stage(
+    decode decode(
     .clk(clk),
     .rst_n(rst_n),
     .D_in(FD_pipe_out),
@@ -89,7 +89,7 @@ module cpu(
                             // EXECUTE //
                             /////////////
 
-    execute execute_stage(
+    execute execute(
         .clk(clk),
         .rst_n(rst_n),
         .X_in(DX_pipe_out),
@@ -111,7 +111,7 @@ module cpu(
                             ////////////
 
 
-    memory memory_stage(
+    memory memory(
         .clk(clk),
         .rst_n(rst_n),
         .M_in(XM_pipe_out),
@@ -134,7 +134,7 @@ module cpu(
                             ///////////////
 
 
-    writeback writeback_stage(
+    writeback writeback(
         .W_in(MW_pipe_out),
         .HaltMux_W(hlt),   // triggers cpu hlt to go high
         .write_data_W(write_data_W),

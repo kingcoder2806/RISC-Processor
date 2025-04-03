@@ -26,7 +26,7 @@ assign {
     // Data signals
     alu_result,      // [40:25] ALU result (16 bits)
     rr2_data_M,      // [24:9] Data to write to memory (16 bits)
-    wr_reg_X,        // [8:5] Destination register (4 bits)
+    wr_reg_M,        // [8:5] Destination register (4 bits)
     
     // Control signals
     MemWrite_M,      // [4] Memory write enable (1 bit)
@@ -40,10 +40,10 @@ assign {
     wire [15:0] mem_data_out;
     memory1c DMEM(
         .data_out(mem_data_out),  // Output: data read from memory
-        .data_in(rr2_data_X),       // Input: data to write to memory (from rt register)
+        .data_in(rr2_data_M),       // Input: data to write to memory (from rt register)
         .addr(alu_result),        // Address: calculated by ALU
-        .enable(MemWrite_X | MemRead_X),         // Enable for LW/SW
-        .wr(MemWrite_X),            // Write enable signal from control
+        .enable(MemWrite_M | MemRead_M),         // Enable for LW/SW
+        .wr(MemWrite_M),            // Write enable signal from control
         .clk(clk),
         .rst(~rst_n)              // Convert active-low to active-high
     );
