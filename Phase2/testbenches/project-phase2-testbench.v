@@ -55,7 +55,7 @@ module cpu_ptb();
 // to 201 time units (two rising edges of clock).
 
    initial begin
-      $dumpvars;
+      //$dumpvars;
       cycle_count = 0;
       rst_n = 0; /* Intial reset state */
       clk = 1;
