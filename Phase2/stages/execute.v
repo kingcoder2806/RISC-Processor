@@ -4,9 +4,15 @@ module execute(
     
     // Input from ID/EX pipeline register
     input [70:0] X_in,
+
+    // Input from forwarding and hazard unit
+    input [1:0] fwdMuxSel_A,
+    input [1:0] fwdMuxSel_B,
+    input [15:0] fwd_dataMux_A,
+    input [15:0] fwd_dataMux_B,
     
     // Output to EX/MEM pipeline register
-    output [40:0] X_out      // Signals to be passed to MEM stage
+    output [48:0] X_out      // Signals to be passed to MEM stage
 );
     // Data signals (76 bits)
     wire [3:0] wr_reg_X;        // Write register number (4 bits)
@@ -48,26 +54,37 @@ module execute(
     } = X_in;
 
     // ALU source B selection
+    wire [15:0] alu_input_a;
     wire [15:0] alu_input_b;
-    assign alu_input_b = ALUSrcMux_X ? imm_value_X : rr2_data_X;
+
+    // to decide if using passed data from decode of data from forwarding
+    wire internal_a, internal_b;
+
+    assign internal_a = (fwdMuxSel_A == 2'b00) || (fwdMuxSel_A == 2'b11);
+    assign internal_b = (fwdMuxSel_B == 2'b00) || (fwdMuxSel_B == 2'b11);
+
+    assign alu_input_a = internal_a ? rr1_data_X : fwd_dataMux_A;
+    assign alu_input_b = internal_b ? (ALUSrcMux_X ? imm_value_X : rr2_data_X) : fwd_dataMux_B;
     
     // ALU signals
-    wire [15:0] alu_result;
+    wire [15:0] alu_result_X;
     wire [2:0] flags;
     
     // ALU instantiation
     alu ALU(
-        .a(rr1_data_X),
+        .a(alu_input_a),
         .b(alu_input_b),
         .op(ALUop_X),            // Using opcode as ALU operation
-        .result(alu_result),
+        .result(alu_result_X),
         .flags(flags)            // Z, V, N flags (not used, calculated in the Decode stage)
     );
     
     // Prepare output for EX/MEM pipeline register
     assign X_out = {
     // Data signals
-    alu_result,      // [40:25] ALU result (16 bits)
+    rr1_reg_X,           //[48:45]
+    rr2_reg_X,           //[44:41]
+    alu_result_X,      // [40:25] ALU result (16 bits)
     rr2_data_X,      // [24:9] Data to write to memory (16 bits)
     wr_reg_X,        // [8:5] Destination register (4 bits)
     

@@ -18,15 +18,17 @@ module fetch(
 
     // PC selection logic for predict-not-taken
     // Note: Stall comes from hazard in X , flush comes from branch resolution in D, halt coms from writeback
-    assign pc_next = (halt_PC && !flush) ? pc :     // Halt: freeze PC unless in branch shadow
-                 stall ? pc :                   // Stall: keep current PC 
+    assign pc_next = halt_PC ? pc :     // Halt: freeze PC unless in branch shadow
                  flush ? branch_target :        // Branch taken: jump to target
                  pc_plus_2;                      // Normal: increment PC
 
-    // PC register
+    // PC register logic to enable
+    wire pc_en;
+    assign pc_en = ~(stall);
     pc_reg PC(
         .clk(clk),
         .rst_n(~rst_n),
+        .wen(pc_en),
         .pc_next(pc_next),
         .pc(pc)
     );
@@ -52,6 +54,7 @@ module fetch(
 
     // assign halt_PC logic 
     assign halt_PC = &instruction[15:12];
+
     // assign data that will go into pipeline to decode
     // FD_in : {[31:16]pc_plus_2, [15:0]instruction}
 

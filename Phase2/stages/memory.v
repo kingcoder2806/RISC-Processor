@@ -3,15 +3,16 @@ module memory(
     input rst_n,
 
     // Input from X/M pipeline register
-    input [40:0] M_in,
+    input [48:0] M_in,
     output [38:0] M_out
 
 );
 
     // Data signals 
     wire [3:0] wr_reg_M;        // Write register number (4 bits)
-    wire [15:0] alu_result;
+    wire [15:0] alu_result_M;
     wire [15:0] rr2_data_M;     // Data from rr2 register (16 bits)
+    wire [3:0] rr1_reg_M, rr2_reg_M; // rr1 and rr2 reg values 
 
     // Control signals
     wire MemRead_M;             // Memory read enable for MEM stage (1 bit)
@@ -24,7 +25,9 @@ module memory(
 
 assign {
     // Data signals
-    alu_result,      // [40:25] ALU result (16 bits)
+    rr1_reg_M,           //[48:45]
+    rr2_reg_M,           //[44:41]
+    alu_result_M,      // [40:25] ALU result (16 bits)
     rr2_data_M,      // [24:9] Data to write to memory (16 bits)
     wr_reg_M,        // [8:5] Destination register (4 bits)
     
@@ -41,7 +44,7 @@ assign {
     memory1c DMEM(
         .data_out(mem_data_out),  // Output: data read from memory
         .data_in(rr2_data_M),       // Input: data to write to memory (from rt register)
-        .addr(alu_result),        // Address: calculated by ALU
+        .addr(alu_result_M),        // Address: calculated by ALU
         .enable(MemWrite_M | MemRead_M),         // Enable for LW/SW
         .wr(MemWrite_M),            // Write enable signal from control
         .clk(clk),
@@ -52,9 +55,9 @@ assign {
     assign M_out = {
 
         // data signals
-        alu_result,       // ALU result [16:0]
-        mem_data_out,     // Memory data [16:0]
-        wr_reg_M,         // Destination register [3:0]
+        alu_result_M,       // ALU result [38:23]
+        mem_data_out,     // Memory data [22:7]
+        wr_reg_M,         // Destination register [7:3]
 
         // control signals
         HaltMux_M,        // Halt signal

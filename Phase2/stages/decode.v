@@ -4,9 +4,15 @@ module decode (
     
     // Inputs from Fetch/Decode pipeline register
     input [31:0] D_in,
+
+    // Inputs from the WB stage
     input [15:0] write_data_W,
     input [3:0] wr_reg_W,
     input RegWrite_W,
+
+    // Inputs from the hazard and forwarding unit
+    input [15:0] branch_fwrd,
+    input [1:0] forwardD,
     
     // branch resolution signals to go back to F stage
     output flush,
@@ -138,19 +144,17 @@ module decode (
         HaltMux_D       // [0] Halt signal (1 bit)
     };
 
-    // assign halt signal to stop PC increment but not stop processor (stoped by writeback HLT)
-    assign halt_PC = HaltMux_D;
-
     // assign flush based off of branch taken
     assign flush = (branch_taken && (BranchMux_D || BranchRegMux_D));
+
+    wire internal_data_select;
+    assign internal_data_select = (forwardD == 2'b00);
 
     // assign branch target based off of B or BR inst
     // if branch_taken is true and either BranchMux_D or BranchRegMux_D is high:
     // when BranchMux_D is high, use the computed branch target (branch_target_temp).
     // when BranchRegMux_D is high, use the register value (e.g. rr1_data_D).
-    // otherwise, branch_target is 0.
-    assign branch_target = (flush) ? 
-                         (BranchMux_D ? branch_imm : rr1_data_D) :
-                         16'h0000;
+    // otherwise, branch_target is 0 if internal data is low, we select the forwared data from cpu
+    assign branch_target = internal_data_select ? ((flush) ? (BranchMux_D ? branch_imm : rr1_data_D) : 16'h0000) : branch_fwrd;
 
 endmodule

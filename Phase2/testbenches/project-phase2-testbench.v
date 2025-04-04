@@ -31,11 +31,6 @@ module cpu_ptb();
    cpu DUT(.clk(clk), .rst_n(rst_n), .pc(PC), .hlt(Halt)); /* Instantiate your processor */
    
 
-
-
-
-
-
    /* Setup */
    initial begin
       $display("Hello world...simulation starting");
@@ -157,7 +152,7 @@ module cpu_ptb();
    assign MemWrite = DUT.memory.MemWrite_M;
    // Is memory being written to, in this cycle (1 bit signal)
    
-   assign MemAddress = DUT.memory.alu_result;
+   assign MemAddress = DUT.memory.alu_result_M;
    // If there's a memory access this cycle, this should hold the address to access memory with (for both reads and writes to memory, 16 bits)
    
    assign MemDataIn = DUT.memory.rr2_data_M; 
