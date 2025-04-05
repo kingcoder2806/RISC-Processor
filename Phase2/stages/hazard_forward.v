@@ -53,7 +53,7 @@ module hazard_forward(
     // 10 => forward from WB stage,
     // 00 => no forwarding needed.
     assign forward_A_selX = fwdA_ex_mem ? 2'b01 : (fwdA_mem_wb ? 2'b10 : 2'b00);
-    assign forward_B_selX = fwdB_mem_wb ? 2'b10 : (fwdB_ex_mem ? 2'b01 : 2'b00);
+    assign forward_B_selX = fwdB_ex_mem ? 2'b01 : (fwdB_mem_wb ? 2'b10 : 2'b00);
 
     //----------------------------------------------------------------------
     // Load-Hazard Stall Detection:

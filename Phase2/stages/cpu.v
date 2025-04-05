@@ -38,7 +38,7 @@ module cpu(
          .reg_wr_enM(MW_pipe_in[1]),       // Regwrite enable in Memory
          .reg_wr_enW(RegWrite_W),     // From WB output
 
-         .write_regX(XM_pipe_in[8:5]),     // Destination reg for write data in X 
+         .write_regX(XM_pipe_in[8:5]),     // Destination reg for write data in E 
          .write_regM(MW_pipe_in[6:3]),     // Destination reg for write data in M
          .write_regW(wr_reg_W),       // from WB output for reg value
 
