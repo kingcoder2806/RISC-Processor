@@ -94,7 +94,7 @@ module cpu(
     assign alu_result_X = XM_pipe_in[40:25];
     assign alu_result_M = MW_pipe_in[38:23];
     assign branch_fwrd =
-                     forwardD == 2'b11 ?  write_data_W : // will use write_data_W outputfrom Writeback stage
+                     forwardD == 2'b11 ? write_data_W : // will use write_data_W outputfrom Writeback stage
                      forwardD == 2'b01 ? alu_result_X : // will use alu_result from Execute stage
                      forwardD == 2'b10 ? alu_result_M : // will use alu_result from Memory stage
                      16'hXXXX;                          // will use src_data_1 internaly from reg file in Decode 
