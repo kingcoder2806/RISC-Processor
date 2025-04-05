@@ -34,6 +34,7 @@ module cpu(
     wire [1:0] forwardD;
     
      hazard_forward hazard (
+         .ALUSrcMux(DX_pipe_in[6]),
          .reg_wr_enX(XM_pipe_in[4]),       // RegWrite enable in Execute
          .reg_wr_enM(MW_pipe_in[1]),       // Regwrite enable in Memory
          .reg_wr_enW(RegWrite_W),     // From WB output

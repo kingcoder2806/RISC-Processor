@@ -1,5 +1,6 @@
 module hazard_forward(
 
+    input         ALUSrcMux,
     input         reg_wr_enX,      // EX stage: register write enable.
     input         reg_wr_enM,      // MEM stage: register write enable.
     input         reg_wr_enW,      // WB stage: register write enable.
@@ -41,12 +42,12 @@ module hazard_forward(
     // Detect forwarding need from MEM stage.
     wire fwdA_ex_mem, fwdB_ex_mem;
     assign fwdA_ex_mem = reg_wr_enM & (write_regM != 4'b0000) & (write_regM == rr1_reg_X);
-    assign fwdB_ex_mem = reg_wr_enM & (write_regM != 4'b0000) & (write_regM == rr2_reg_X);
+    assign fwdB_ex_mem = reg_wr_enM & (write_regM != 4'b0000) & (write_regM == rr2_reg_X) & ~ALUSrcMux; // last arg gives priority to the imm value
 
     // Detect forwarding need from WB stage.
     wire fwdA_mem_wb, fwdB_mem_wb;
     assign fwdA_mem_wb = reg_wr_enW & (write_regW != 4'b0000) & (write_regW == rr1_reg_X);
-    assign fwdB_mem_wb = reg_wr_enW & (write_regW != 4'b0000) & (write_regW == rr2_reg_X);
+    assign fwdB_mem_wb = reg_wr_enW & (write_regW != 4'b0000) & (write_regW == rr2_reg_X) & ~ALUSrcMux; // last arg gives priority to the imm value
 
     // Choose the forwarding source:
     // 01 => forward from MEM stage,

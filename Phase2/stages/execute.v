@@ -64,7 +64,8 @@ module execute(
     assign internal_b = (fwdMuxSel_B == 2'b00) || (fwdMuxSel_B == 2'b11);
 
     assign alu_input_a = internal_a ? rr1_data_X : fwd_dataMux_A;
-    assign alu_input_b = internal_b ? (ALUSrcMux_X ? imm_value_X : rr2_data_X) : fwd_dataMux_B;
+    assign alu_input_b = ALUSrcMux_X ? imm_value_X : (internal_b ? rr2_data_X : fwd_dataMux_B);
+
     
     // ALU signals
     wire [15:0] alu_result_X;
