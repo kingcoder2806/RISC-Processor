@@ -16,15 +16,16 @@ module fetch(
     wire [15:0] instruction;
     wire halt_PC;
 
+     // PC register logic to enable
+    wire pc_en;
+    assign pc_en = ~(stall);
+
     // PC selection logic for predict-not-taken
     // Note: Stall comes from hazard in X , flush comes from branch resolution in D, halt coms from writeback
-    assign pc_next = halt_PC ? pc :     // Halt: freeze PC unless in branch shadow
+    assign pc_next = (halt_PC & !flush)? pc :     // Halt: freeze PC unless in branch shadow!
                  flush ? branch_target :        // Branch taken: jump to target
                  pc_plus_2;                      // Normal: increment PC
 
-    // PC register logic to enable
-    wire pc_en;
-    assign pc_en = ~(stall);
     pc_reg PC(
         .clk(clk),
         .rst_n(~rst_n),
