@@ -123,7 +123,7 @@ module decode (
         .Sum(branch_imm)
     );
 
-    // Data signals and control signals concatenation
+    // Data signals and control signals concatenation // 71 bits
     assign D_out = {
         // Data signals (60 bits)
         PCSMux_D ? pc_plus_2_F : rr1_data_D,     // [70:55] Data from rr1 register or pc_plus_2_F if PSC instrction (16 bits)
