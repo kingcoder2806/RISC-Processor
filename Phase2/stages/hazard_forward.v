@@ -14,6 +14,9 @@ module hazard_forward(
 
     input  [3:0]  rr1_reg_X,       // EX stage: first source register.
     input  [3:0]  rr2_reg_X,       // EX stage: second source register.
+
+    input  [3:0]  rr1_reg_M,       // MEM stage: second source register (for store instructions)
+    input         mem_writeM,       // MEM stage: indicates a store instruction
     
     // Inputs for load hazard detection.
     input         mem_to_regX,     // EX stage: indicates a load instruction.
@@ -23,7 +26,8 @@ module hazard_forward(
 
     output [1:0]  forwardD,        // Forwarding for branch calculation.
     output [1:0]  forward_A_selX,  // Forwarding selector for ALU input A.
-    output [1:0]  forward_B_selX   // Forwarding selector for ALU input B.
+    output [1:0]  forward_B_selX,   // Forwarding selector for ALU input B.
+    output forward_M_selM
 );
 
     //----------------------------------------------------------------------
@@ -56,14 +60,22 @@ module hazard_forward(
     assign forward_A_selX = fwdA_ex_mem ? 2'b01 : (fwdA_mem_wb ? 2'b10 : 2'b00);
     assign forward_B_selX = fwdB_ex_mem ? 2'b01 : (fwdB_mem_wb ? 2'b10 : 2'b00);
 
+    // Mem - Mem forwarding
+    wire fwd_mem_to_mem;
+    assign fwd_mem_to_mem = mem_writeM & reg_wr_enW & (write_regW != 4'b0000) & (write_regW == rr1_reg_M);
+
+    // Forward selector for MEM stage store data
+    assign forward_M_selM = fwd_mem_to_mem;
+
+
     //----------------------------------------------------------------------
     // Load-Hazard Stall Detection:
     // Detect a load-use hazard when a load in EX or MEM stage feeds a value needed
     // by the decode stage.
     //----------------------------------------------------------------------
     wire stall_frm_X = mem_to_regX & ((write_regX == rr1_reg_D) | (write_regX == rr2_reg_D));
-    wire stall_frm_M = mem_to_regM & ((write_regM == rr1_reg_D) | (write_regM == rr2_reg_D));
-    
+    wire stall_frm_M = mem_to_regM & (write_regM == rr1_reg_D);
+
     // With single-cycle memory, the stalls depend solely on data hazards.
     assign stallFD = stall_frm_X | stall_frm_M;
 

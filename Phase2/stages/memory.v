@@ -4,6 +4,10 @@ module memory(
 
     // Input from X/M pipeline register
     input [48:0] M_in,
+
+    // Inputs from forwarding
+    input fwdMuxSel_M,
+    input [15:0] fwdDataWB,
     output [38:0] M_out
 
 );
@@ -11,7 +15,7 @@ module memory(
     // Data signals 
     wire [3:0] wr_reg_M;        // Write register number (4 bits)
     wire [15:0] alu_result_M;
-    wire [15:0] rr2_data_M;     // Data from rr2 register (16 bits)
+    wire [15:0] rr2_data_M, MemDataIn;     // Data from rr2 register (16 bits)
     wire [3:0] rr1_reg_M, rr2_reg_M; // rr1 and rr2 reg values 
 
     // Control signals
@@ -39,11 +43,15 @@ assign {
     MemRead_M        // [0] Memory read enable (1 bit)
 } = M_in;
 
+    // Choose what mem_data_in is in case of mem - mem forwarding
+    assign MemDataIn = fwdMuxSel_M ? fwdDataWB : rr2_data_M;
+
+
     // DATA MEMORY (instance of memory1c)
     wire [15:0] mem_data_out;
     memory1c DMEM(
         .data_out(mem_data_out),  // Output: data read from memory
-        .data_in(rr2_data_M),       // Input: data to write to memory (from rt register)
+        .data_in(MemDataIn),       // Input: data to write to memory (from rt register)
         .addr(alu_result_M),        // Address: calculated by ALU
         .enable(MemWrite_M | MemRead_M),         // Enable for LW/SW
         .wr(MemWrite_M),            // Write enable signal from control
