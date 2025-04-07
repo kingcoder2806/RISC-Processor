@@ -161,7 +161,7 @@ module cpu(
         .rst_n(rst_n),
         .d(XM_pipe_in),
         .clr(1'b0),    // no need to clear
-        .wren(1'b1),   // always enabled, no need to stall  
+        .wren(1'b1),   // no need to stall ever
         .q(XM_pipe_out)
     );
 
