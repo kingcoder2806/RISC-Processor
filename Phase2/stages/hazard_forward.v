@@ -15,8 +15,7 @@ module hazard_forward(
     input  [3:0]  rr1_reg_X,       // EX stage: first source register.
     input  [3:0]  rr2_reg_X,       // EX stage: second source register.
 
-    input  [3:0]  rr1_reg_M,       // MEM stage: second source register (for store instructions)
-    input         mem_writeM,       // MEM stage: indicates a store instruction
+    input MemWriteD,
     
     // Inputs for load hazard detection.
     input         mem_to_regX,     // EX stage: indicates a load instruction.
@@ -62,7 +61,7 @@ module hazard_forward(
 
     // Mem - Mem forwarding
     wire fwd_mem_to_mem;
-    assign fwd_mem_to_mem = mem_writeM & reg_wr_enW & (write_regW != 4'b0000) & (write_regW == rr1_reg_M);
+    assign fwd_mem_to_mem = (write_regM != 4'b0000) & (write_regM == write_regW);
 
     // Forward selector for MEM stage store data
     assign forward_M_selM = fwd_mem_to_mem;
@@ -73,10 +72,12 @@ module hazard_forward(
     // Detect a load-use hazard when a load in EX or MEM stage feeds a value needed
     // by the decode stage.
     //----------------------------------------------------------------------
-    wire stall_frm_X = mem_to_regX & ((write_regX == rr1_reg_D) | (write_regX == rr2_reg_D));
-    wire stall_frm_M = mem_to_regM & (write_regM == rr1_reg_D);
+    wire load_hazard;
+    assign load_hazard = mem_to_regX & (write_regX != 4'b0000) &
+                     ((write_regX == rr1_reg_D) |
+                       ( (write_regX == rr2_reg_D) & (~MemWriteD) ) );
 
     // With single-cycle memory, the stalls depend solely on data hazards.
-    assign stallFD = stall_frm_X | stall_frm_M;
+    assign stallFD = load_hazard;
 
 endmodule

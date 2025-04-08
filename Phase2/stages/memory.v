@@ -46,7 +46,6 @@ assign {
     // Choose what mem_data_in is in case of mem - mem forwarding
     assign MemDataIn = fwdMuxSel_M ? fwdDataWB : rr2_data_M;
 
-
     // DATA MEMORY (instance of memory1c)
     wire [15:0] mem_data_out;
     memory1c DMEM(
@@ -63,6 +62,7 @@ assign {
     assign M_out = {
 
         // data signals
+        
         alu_result_M,       // ALU result [39:23]
         mem_data_out,     // Memory data [22:7]
         wr_reg_M,         // Destination register [6:3]

@@ -47,11 +47,10 @@ module cpu(
          .rr1_reg_D(DX_pipe_in[22:19]),       // First source register in decode stage
          .rr2_reg_D(DX_pipe_in[18:15]),       // Second source register in decode stage
 
+         .MemWriteD(DX_pipe_in[3]),
+
          .rr1_reg_X(XM_pipe_in[48:45]),       // First source register in execute stage
          .rr2_reg_X(XM_pipe_in[44:41]),       // Second source register in execute stage
-
-         .memwriteM(XM_pipe_out[4]),      // out because on same clock signals as M
-         .rr1_reg_M(XM_pipe_out[48:45]),          // out because on same clock signals as M
 
          .mem_to_regX(XM_pipe_in[3]),
          .mem_to_regM(MW_pipe_in[0]),

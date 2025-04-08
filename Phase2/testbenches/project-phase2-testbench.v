@@ -106,7 +106,7 @@ module cpu_ptb();
 
          if (MemWrite) begin
             $fdisplay(trace_file,"STORE: ADDR: 0x%04x VALUE: 0x%04x",
-                      MemAddress, MemDataIn  );
+                      MemAddress, MemDataIn);
          end
          if (Halt) begin
             $fdisplay(sim_log_file, "SIMLOG:: Processor halted\n");
@@ -155,7 +155,7 @@ module cpu_ptb();
    assign MemAddress = DUT.memory.alu_result_M;
    // If there's a memory access this cycle, this should hold the address to access memory with (for both reads and writes to memory, 16 bits)
    
-   assign MemDataIn = DUT.memory.rr2_data_M; 
+   assign MemDataIn = DUT.memory.MemDataIn; 
    // If there's a memory write in this cycle, this is the Data being written to memory (16 bits)
    
    assign MemDataOut = MemRead ? DUT.memory.mem_data_out : 16'h0000;

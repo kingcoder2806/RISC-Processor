@@ -76,7 +76,7 @@ module decode (
     // Register selection logic
     assign rr1_reg_D = RR1Mux_D ? instruction_F[11:8] : instruction_F[7:4];    // 1 : LLB / LHB , 0 : else
     assign rr2_reg_D = (MemWrite_D | MemRead_D) ? instruction_F[11:8] : instruction_F[3:0]; // LW and SW
-    assign wr_reg_D = instruction_F[11:8];     
+    assign wr_reg_D = instruction_F[11:8]; // if SW we dont have a write reg
     
     // RegisterFile instantiation
     RegisterFile RF(
