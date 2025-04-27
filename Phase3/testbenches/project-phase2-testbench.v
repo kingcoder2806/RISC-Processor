@@ -1,5 +1,5 @@
 `timescale 1ns/100ps
-module cpu_ptb();
+module cpu_ptb_phase2();
   
 
    wire [15:0] PC;

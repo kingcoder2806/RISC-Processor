@@ -1,4 +1,4 @@
-module cpu_ptb();
+module cpu_ptb_phase3();
   
 
    wire [15:0] PC;
