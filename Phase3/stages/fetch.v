@@ -4,6 +4,7 @@ module fetch(
     input stall,                  // Stall signal from hazard detection from cpu
     input flush,                  // Flush signal when branch is taken from decode
     input [15:0] branch_target,   // Branch target from ID stage
+    input [15:0] cache_instruction, // From mem module in cpu
     
     // Outputs - just the basic values
     output [15:0] pc,             // Current PC value (for CPU output)
@@ -42,7 +43,8 @@ module fetch(
         .Sum(pc_plus_2)
     );
 
-    // Instruction memory
+    // Instruction memory (removed in phase 3 since we get inst from ICache now)
+    /*
     memory1c IMEM(
         .data_out(instruction),   // Output: instruction fetched
         .data_in(16'h0000),       // Not used (we don't write to instruction memory)
@@ -52,6 +54,10 @@ module fetch(
         .clk(clk),
         .rst(~rst_n)              // Convert active-low to active-high
     );
+    */
+
+    // assign instruction from ICache inst from input
+    assign instruction = cache_instruction;
 
     // assign halt_PC logic 
     assign halt_PC = &instruction[15:12];

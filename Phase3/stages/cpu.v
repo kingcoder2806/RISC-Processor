@@ -26,40 +26,75 @@ module cpu(
     wire [38:0] MW_pipe_in, MW_pipe_out;
 
 
-
     // hazard_forward unit will take care of pc_next logic for stalls and data forwarding for ALU and branch
     // inputs and data intilization for forwarding 
 
     wire [1:0] fwdMuxSel_A, fwdMuxSel_B;
     wire [1:0] forwardD;
     wire forward_M_selM;
+
+    // Add new wires for cache interface
+    wire i_fsm_busy, d_fsm_busy;       // Signals for when cache FSMs are busy handling misses
+    wire [15:0] cache_instr_out;       // Instruction from i-cache
+    wire [15:0] cache_data_out;        // Data from d-cache
+    wire [15:0] mem_data_in;           // Data to be written to memory
     
-     hazard_forward hazard (
-         .ALUSrcMux(DX_pipe_in[6]),
-         .reg_wr_enX(XM_pipe_in[4]),       // RegWrite enable in Execute
-         .reg_wr_enM(MW_pipe_in[1]),       // Regwrite enable in Memory
-         .reg_wr_enW(RegWrite_W),     // From WB output
+    // Extract memory control signals from pipeline registers
+    wire mem_write_en = XM_pipe_out[4];                  // MemWrite from EX/MEM pipeline
+    wire mem_read_en = XM_pipe_out[0];                   // MemRead from EX/MEM pipeline
+    wire mem_en = mem_write_en | mem_read_en;           // Enable memory for reads or writes
+    wire [15:0] mem_addr = XM_pipe_out[40:25];          // ALU result (address) from EX/MEM
+    assign mem_data_in = XM_pipe_out[24:9];             // Data to write from EX/MEM
+    
+    hazard_forward hazard (
+        .ALUSrcMux(DX_pipe_in[6]),
+        .reg_wr_enX(XM_pipe_in[4]),       // RegWrite enable in Execute
+        .reg_wr_enM(MW_pipe_in[1]),       // Regwrite enable in Memory
+        .reg_wr_enW(RegWrite_W),     // From WB output
 
-         .write_regX(XM_pipe_in[8:5]),     // Destination reg for write data in E 
-         .write_regM(MW_pipe_in[6:3]),     // Destination reg for write data in M
-         .write_regW(wr_reg_W),       // from WB output for reg value
+        .write_regX(XM_pipe_in[8:5]),     // Destination reg for write data in E 
+        .write_regM(MW_pipe_in[6:3]),     // Destination reg for write data in M
+        .write_regW(wr_reg_W),       // from WB output for reg value
 
-         .rr1_reg_D(DX_pipe_in[22:19]),       // First source register in decode stage
-         .rr2_reg_D(DX_pipe_in[18:15]),       // Second source register in decode stage
+        .rr1_reg_D(DX_pipe_in[22:19]),       // First source register in decode stage
+        .rr2_reg_D(DX_pipe_in[18:15]),       // Second source register in decode stage
 
-         .MemWriteD(DX_pipe_in[3]),
+        .MemWriteD(DX_pipe_in[3]),
 
-         .rr1_reg_X(XM_pipe_in[48:45]),       // First source register in execute stage
-         .rr2_reg_X(XM_pipe_in[44:41]),       // Second source register in execute stage
+        .rr1_reg_X(XM_pipe_in[48:45]),       // First source register in execute stage
+        .rr2_reg_X(XM_pipe_in[44:41]),       // Second source register in execute stage
 
-         .mem_to_regX(XM_pipe_in[3]),
-         .mem_to_regM(MW_pipe_in[0]),
+        .mem_to_regX(XM_pipe_in[3]),
+        .mem_to_regM(MW_pipe_in[0]),
 
-         .stallFD(stallFD),             // output to stall pc
-         .forwardD(forwardD),           // Encodes whether the branch source (rr1_reg_D) should be forwarded from EX, MEM, or WB (or not at all)
-         .forward_A_selX(fwdMuxSel_A),  // These signals determine which stage’s result should be used for the ALU’s operands in the Execute stage.
-         .forward_B_selX(fwdMuxSel_B),   // ''
-         .forward_M_selM(fwdMuxSel_M)
+        .i_cache_busy(i_fsm_busy),           // I-cache busy signal (added in stage 3)
+        .d_cache_busy(d_fsm_busy),           // D-cache busy signal (added in stage 3)
+
+        // Stall logic
+        .stallFD(stallFD),             // output to stall pc
+        .stallDX(stallDX),             // stall on DCache miss
+        .stallXM(stallXM),             // stall on DCache miss
+
+        // forwarding logic
+        .forwardD(forwardD),           // Encodes whether the branch source (rr1_reg_D) should be forwarded from EX, MEM, or WB (or not at all)
+        .forward_A_selX(fwdMuxSel_A),  // These signals determine which stage’s result should be used for the ALU’s operands in the Execute stage.
+        .forward_B_selX(fwdMuxSel_B),   // ''
+        .forward_M_selM(fwdMuxSel_M)
+    );
+
+    // Instantiate memory interface
+    mem_interface memory(
+        .clk(clk),
+        .rst(~rst_n),                // Convert active-low to active-high
+        .d_wrt_en(mem_write_en),     // Data memory write enable
+        .data_in(mem_data_in),       // Data to write to memory
+        .i_addr(pc),                 // Instruction address (PC)
+        .d_addr(mem_addr),           // Data address
+        .d_mem_en(mem_en),           // Enable data memory
+        .i_fsm_busy(i_fsm_busy),     // Instruction cache busy signal
+        .d_fsm_busy(d_fsm_busy),     // Data cache busy signal
+        .instr_out(cache_instr_out), // Instruction from cache
+        .data_out(cache_data_out)    // Data from cache
     );
     
                             ///////////
@@ -126,7 +161,7 @@ module cpu(
         .rst_n(rst_n),
         .d(DX_pipe_in),
         .clr(1'b0),       // no need to clear
-        .wren(1'b1),      // no need to stall here
+        .wren(~stallDX),  // stall on DCache miss
         .q(DX_pipe_out)
     );
 
@@ -165,7 +200,7 @@ module cpu(
         .rst_n(rst_n),
         .d(XM_pipe_in),
         .clr(1'b0),    // no need to clear
-        .wren(1'b1),   // no need to stall ever
+        .wren(~stallXM), // stall on DCache miss
         .q(XM_pipe_out)
     );
 

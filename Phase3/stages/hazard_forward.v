@@ -1,27 +1,32 @@
 module hazard_forward(
 
-    input         ALUSrcMux,
-    input         reg_wr_enX,      // EX stage: register write enable.
-    input         reg_wr_enM,      // MEM stage: register write enable.
-    input         reg_wr_enW,      // WB stage: register write enable.
+    input ALUSrcMux,
+    input reg_wr_enX,      // EX stage: register write enable.
+    input reg_wr_enM,      // MEM stage: register write enable.
+    input reg_wr_enW,      // WB stage: register write enable.
 
-    input  [3:0]  write_regX,      // EX stage: destination register.
-    input  [3:0]  write_regM,      // MEM stage: destination register.
-    input  [3:0]  write_regW,      // WB stage: destination register.
+    input [3:0] write_regX,      // EX stage: destination register.
+    input [3:0] write_regM,      // MEM stage: destination register.
+    input [3:0] write_regW,      // WB stage: destination register.
 
-    input  [3:0]  rr1_reg_D,       // D stage: first source register.
-    input  [3:0]  rr2_reg_D,       // D stage: second source register.
+    input [3:0] rr1_reg_D,       // D stage: first source register.
+    input [3:0] rr2_reg_D,       // D stage: second source register.
 
-    input  [3:0]  rr1_reg_X,       // EX stage: first source register.
-    input  [3:0]  rr2_reg_X,       // EX stage: second source register.
+    input [3:0] rr1_reg_X,       // EX stage: first source register.
+    input [3:0] rr2_reg_X,       // EX stage: second source register.
 
     input MemWriteD,
     
     // Inputs for load hazard detection.
-    input         mem_to_regX,     // EX stage: indicates a load instruction.
-    input         mem_to_regM,     // MEM stage: indicates a load instruction.
+    input mem_to_regX,     // EX stage: indicates a load instruction.
+    input mem_to_regM,     // MEM stage: indicates a load instruction.
 
-    output        stallFD,         // Stall fetch stage.
+    input i_cache_busy, // added in phase 3 to trigger when ICache stall
+    input d_cache_busy, // added in phase 3 to trigger when DCache stall
+
+    output stallFD,         // Stall fetch-decode pipe
+    output stallDX,         // Stall decode-execute pipe
+    output stallXM,         // Stall execute-memory pipe
 
     output [1:0]  forwardD,        // Forwarding for branch calculation.
     output [1:0]  forward_A_selX,  // Forwarding selector for ALU input A.
@@ -77,7 +82,16 @@ module hazard_forward(
                      ((write_regX == rr1_reg_D) |
                        ( (write_regX == rr2_reg_D) & (~MemWriteD) ) );
 
-    // With single-cycle memory, the stalls depend solely on data hazards.
-    assign stallFD = load_hazard;
+    // Add cache stall detection on Icache or Dcache miss
+    wire cache_stall;
+    assign cache_stall = i_cache_busy | d_cache_busy;
+
+    // With multi-cycle memory, the stalls depend solely on data hazard or cache miss in either I or D
+    assign stallFD = load_hazard | cache_stall;
+
+    // on D_cache miss, stall decode-excute and execute-memory pipe
+    assign stallDX = d_cache_busy
+    assign stallXM = d_cache_busy
+
 
 endmodule
