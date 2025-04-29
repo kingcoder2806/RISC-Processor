@@ -40,7 +40,7 @@ module mem_interface(
         .read_req(i_read_req),
         .fsm_busy(i_fsm_busy),
         .wrt_mem(),                 // Not connected (I-cache never writes)
-        .cache_addr(i_cache_addr),
+        .miss_addr(i_cache_addr),
         .data_out(instr_out)
     );
 

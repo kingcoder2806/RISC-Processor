@@ -1,6 +1,3 @@
-/******************************************************************************
- *  iCache.v – 2 KB, 2-way set-associative instruction cache
- ******************************************************************************/
 module iCache (
     input         clk,
     input         rst,
@@ -14,30 +11,29 @@ module iCache (
     output        read_req,
     output        fsm_busy,
     output        wrt_mem,       // always 0
-    output [15:0] cache_addr,    // to memory arbiter
+    output [15:0] miss_addr,     // to memory arbiter
     output [15:0] data_out       // instruction
 );
 
     /* effective address */
-    wire [15:0] eff_addr = fsm_busy ? cache_addr : addr;
-    wire [4:0]  tag    = eff_addr[15:11];
-    wire [6:0]  index  = eff_addr[10:4];
-    wire [2:0]  offset = eff_addr[3:1];
-    wire [4:0]  addr_tag = addr[15:11];
+    wire [15:0] cache_addr;
+    wire [4:0]  tag    = cache_addr[15:11];
+    wire [6:0]  index  = cache_addr[10:4];
+    wire [2:0]  offset = cache_addr[3:1];
 
     /* decoders */
     wire [127:0] block_en;
-    decoder_7to128b dec_idx (.in(index), .out(block_en));
+    decoder_7to128b dec_idx(.in(index), .out(block_en));
     wire [7:0] word_en;
-    decoder_3to8b  dec_off (.in(offset), .out(word_en));
+    decoder_3to8b  dec_off(.in(offset), .out(word_en));
 
     /* arrays */
     wire [7:0] meta0_in, meta1_in, meta0_out, meta1_out;
     wire [15:0] data0_out, data1_out;
 
     /* hit logic */
-    wire hit0 = meta0_out[7] & (meta0_out[4:0] == addr_tag);
-    wire hit1 = meta1_out[7] & (meta1_out[4:0] == addr_tag);
+    wire hit0 = meta0_out[7] & (meta0_out[4:0] == tag);
+    wire hit1 = meta1_out[7] & (meta1_out[4:0] == tag);
     wire hit  = hit0 | hit1;
 
     /* victim way (deterministic on reset) */
@@ -85,7 +81,7 @@ module iCache (
         .wrt_data_array (wr_data),
         .wrt_tag_array  (wr_tag),
         .wrt_mem        (),
-        .mem_addr       (cache_addr),
+        .mem_addr       (miss_addr),
         .cache_addr     (cache_addr),
         .read_request   (read_req)
     );
