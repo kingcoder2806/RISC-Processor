@@ -58,7 +58,7 @@ module mem_interface(
         .read_req(d_read_req),
         .fsm_busy(d_fsm_busy),
         .wrt_mem(d_wrt_mem),
-        .cache_addr(d_cache_addr),
+        .miss_addr(d_cache_addr),
         .data_out(data_out)
     );
 

@@ -63,7 +63,7 @@ module iCache (
                     .BlockEnable(block_en),.WordEnable(word_en),.DataOut(data1_out));
 
     assign data_out = hit0 ? data0_out :
-                      hit1 ? data1_out : 16'hXXXX;
+                      hit1 ? data1_out : 16'hZZZZ;
 
     assign wrt_mem = 1'b0;  // I-cache never writes memory
 
