@@ -90,8 +90,8 @@ module hazard_forward(
     assign stallFD = load_hazard | cache_stall;
 
     // on D_cache miss, stall decode-excute and execute-memory pipe
-    assign stallDX = d_cache_busy
-    assign stallXM = d_cache_busy
+    assign stallDX = d_cache_busy;
+    assign stallXM = d_cache_busy;
 
 
 endmodule

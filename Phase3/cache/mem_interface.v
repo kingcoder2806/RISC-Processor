@@ -33,32 +33,32 @@ module mem_interface(
     // Instantiate instruction cache
     iCache iCache(
         .clk(clk),
-        .rst_n(~rst),               // Convert active-high to active-low
+        .rst(rst),
         .mem_data_vld(i_data_vld),
         .mem_data(mem_data_out),
-        .addr(i_addr),              // Using addr as in your original module
+        .addr(i_addr),
         .read_req(i_read_req),
         .fsm_busy(i_fsm_busy),
-        .wrt_mem(),                 // Not connected (always 0 for I-cache)
-        .cache_addr(i_cache_addr),  // Using cache_addr from your original module
+        .wrt_mem(),                 // Not connected (I-cache never writes)
+        .cache_addr(i_cache_addr),
         .data_out(instr_out)
     );
 
     // Instantiate data cache
     dCache dCache(
         .clk(clk),
-        .rst_n(~rst),               // Convert active-high to active-low
-        .wrt_en(d_wrt_en),          // Write enable from CPU
-        .mem_en(d_mem_en),          // Memory enable from CPU
-        .ifsm_busy(i_fsm_busy),     // Stall if I-cache is busy
+        .rst(rst),
+        .wrt_en(d_wrt_en),
+        .mem_en(d_mem_en),
+        .ifsm_busy(i_fsm_busy),
         .mem_data_vld(d_data_vld),
         .mem_data(mem_data_out),
-        .addr(d_addr),              // Using addr as in your original module
-        .reg_in(data_in),           // Write data from CPU
+        .addr(d_addr),
+        .reg_in(data_in),
         .read_req(d_read_req),
         .fsm_busy(d_fsm_busy),
         .wrt_mem(d_wrt_mem),
-        .cache_addr(d_cache_addr),  // Using cache_addr from your original module
+        .cache_addr(d_cache_addr),
         .data_out(data_out)
     );
 
@@ -79,11 +79,11 @@ module mem_interface(
     assign sel = i_fsm_busy;             // Select I-cache when it's busy
     
     // Memory interfacing based on selected cache
-    assign mem_addr = sel ? i_cache_addr : d_cache_addr;
-    assign mem_en = sel ? i_read_req : (d_read_req | d_wrt_mem);
-    assign mem_wr = sel ? 1'b0 : d_wrt_mem;  // I-cache never writes
-    assign i_data_vld = sel ? data_vld : 1'b0;
-    assign d_data_vld = sel ? 1'b0 : data_vld;
-    assign mem_data_in = data_in;  // Only D-cache writes to memory
+    assign mem_addr      = sel ? i_cache_addr                 : d_cache_addr;
+    assign mem_en        = sel ? i_read_req                   : (d_read_req | d_wrt_mem);
+    assign mem_wr        = sel ? 1'b0                         : d_wrt_mem;  // I-cache never writes
+    assign i_data_vld    = sel ? data_vld                     : 1'b0;
+    assign d_data_vld    = sel ? 1'b0                         : data_vld;
+    assign mem_data_in   = data_in;  // Only D-cache writes to memory
     
 endmodule

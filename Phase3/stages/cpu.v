@@ -38,6 +38,7 @@ module cpu(
     wire [15:0] cache_instr_out;       // Instruction from i-cache
     wire [15:0] cache_data_out;        // Data from d-cache
     wire [15:0] mem_data_in;           // Data to be written to memory
+    wire stallFD, stallDX, stallXM;
     
     // Extract memory control signals from pipeline registers
     wire mem_write_en = XM_pipe_out[4];                  // MemWrite from EX/MEM pipeline
@@ -83,7 +84,7 @@ module cpu(
     );
 
     // Instantiate memory interface
-    mem_interface memory(
+    mem_interface mem_interface(
         .clk(clk),
         .rst(~rst_n),                // Convert active-low to active-high
         .d_wrt_en(mem_write_en),     // Data memory write enable
@@ -108,6 +109,7 @@ module cpu(
         .stall(stallFD),               // comes from hazard detection unit, PC = PC
         .flush(flush),                  // comes from branch_taken in decode
         .branch_target(branch_target),  // input from decode of branch addr
+        .cache_instruction(cache_instr_out), // ICache out
         .pc(pc),                        // output to pc of cpu
         .F_out(FD_pipe_in)            //output of inst and pc+2
     );
@@ -213,6 +215,7 @@ module cpu(
         .rst_n(rst_n),
         .M_in(XM_pipe_out),
         .M_out(MW_pipe_in),
+        .cache_data(cache_data_out), // Dcache data out
         .fwdDataWB(write_data_W),
         .fwdMuxSel_M(fwdMuxSel_M)
     );
