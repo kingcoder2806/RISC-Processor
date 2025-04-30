@@ -1,7 +1,6 @@
 `timescale 1ns/100ps
 module cpu_ptb_phase3();
   
-
    wire [15:0] PC;
    wire [15:0] Inst;           /* This should be the 15 bits of the FF that
                                   stores instructions fetched from instruction memory
@@ -32,21 +31,20 @@ module cpu_ptb_phase3();
    integer     ICacheHit_count;
    integer     DCacheReq_count;
    integer     ICacheReq_count;
+   integer     DCacheMiss_count;
+   integer     ICacheMiss_count;
 
+   // Stall signal
+   wire        stallFD;
+   wire stallDX;
+   wire stallXM;
+   wire stall;
 
    reg clk; /* Clock input */
    reg rst_n; /* (Active low) Reset input */
 
-     
-
    cpu DUT(.clk(clk), .rst_n(rst_n), .pc(PC), .hlt(Halt)); /* Instantiate your processor */
    
-
-
-
-
-
-
    /* Setup */
    initial begin
       $display("Hello world...simulation starting");
@@ -56,16 +54,16 @@ module cpu_ptb_phase3();
       ICacheHit_count = 0;
       DCacheReq_count = 0;
       ICacheReq_count = 0;
+      DCacheMiss_count = 0;
+      ICacheMiss_count = 0;
 
       trace_file = $fopen("/Users/Patron/Documents/ECE552/ECE552_Project/Phase3/debug/verilogsim.ptrace");
       sim_log_file = $fopen("/Users/Patron/Documents/ECE552/ECE552_Project/Phase3/debug/verilogsim.plog");
-      
    end
 
-
-/* Clock and Reset */
-// Clock period is 100 time units, and reset length
-// to 201 time units (two rising edges of clock).
+   /* Clock and Reset */
+   // Clock period is 100 time units, and reset length
+   // to 201 time units (two rising edges of clock).
 
    initial begin
       $dumpvars;
@@ -90,21 +88,21 @@ module cpu_ptb_phase3();
   /* Stats */
    always @ (posedge clk) begin
       if (rst_n) begin
-         if (Halt || RegWrite || MemWrite) begin
+         if ((Halt || RegWrite || MemWrite)) begin
             inst_count = inst_count + 1;
          end
-	 if (DCacheHit) begin
+         if (DCacheHit) begin
             DCacheHit_count = DCacheHit_count + 1;	 	
          end	
-	 if (ICacheHit) begin
+         if (ICacheHit) begin
             ICacheHit_count = ICacheHit_count + 1;	 	
-	 end    
-	 if (DCacheReq) begin
+         end    
+         if (DCacheReq) begin
             DCacheReq_count = DCacheReq_count + 1;	 	
          end	
-	 if (ICacheReq) begin
+         if (ICacheReq) begin
             ICacheReq_count = ICacheReq_count + 1;	 	
-	 end 
+         end 
 
          $fdisplay(sim_log_file, "SIMLOG:: Cycle %d PC: %8x I: %8x R: %d %3d %8x M: %d %d %8x %8x %8x",
                   cycle_count,
@@ -117,21 +115,27 @@ module cpu_ptb_phase3();
                   MemWrite,
                   MemAddress,
                   MemDataIn,
-		  MemDataOut);
+                  MemDataOut);
+
+         // Only log register writes if there's no stall in FD stage
          if (RegWrite) begin
             $fdisplay(trace_file,"REG: %d VALUE: 0x%04x",
-                      WriteRegister,
-                      WriteData );            
+                     WriteRegister,
+                     WriteData);            
          end
+         
+         // Only log memory reads if there's no stall in FD stage
          if (MemRead) begin
             $fdisplay(trace_file,"LOAD: ADDR: 0x%04x VALUE: 0x%04x",
-                      MemAddress, MemDataOut );
+                     MemAddress, MemDataOut);
          end
 
+         // Only log memory writes if there's no stall in FD stage
          if (MemWrite) begin
             $fdisplay(trace_file,"STORE: ADDR: 0x%04x VALUE: 0x%04x",
-                      MemAddress, MemDataIn  );
+                     MemAddress, MemDataIn);
          end
+         
          if (Halt) begin
             $fdisplay(sim_log_file, "SIMLOG:: Processor halted\n");
             $fdisplay(sim_log_file, "SIMLOG:: sim_cycles %d\n", cycle_count);
@@ -141,29 +145,25 @@ module cpu_ptb_phase3();
             $fdisplay(sim_log_file, "SIMLOG:: dcachereq_count %d\n", DCacheReq_count);
             $fdisplay(sim_log_file, "SIMLOG:: icachereq_count %d\n", ICacheReq_count);
 
-
             $fclose(trace_file);
             $fclose(sim_log_file);
-	    #5;
+            #5;
             $finish;
          end 
       end
-      
    end
+
    /* Assign internal signals to top level wires
       The internal module names and signal names will vary depending
       on your naming convention and your design */
 
-   // Edit the example below. You must change the signal
-   // names on the right hand side
-    
-//   assign PC = DUT.fetch0.pcCurrent; //You won't need this because it's part of the main cpu interface
+   // Stall signal
+   assign stall = stallFD | stallDX | stallXM;
+   assign stallFD = DUT.stallFD;
+   assign stallDX = DUT.stallDX;
+   assign stallXM = DUT.stallXM;
    
-//   assign Halt = DUT.memory0.halt; //You won't need this because it's part of the main cpu interface
-   // Is processor halted (1 bit signal)
-   
-
-   assign Inst = DUT.fetch.instruction;
+   assign Inst = DUT.fetch.pc_en;
    //Instruction fetched in the current cycle
    
    assign RegWrite = DUT.writeback.RegWrite_W;
@@ -175,7 +175,7 @@ module cpu_ptb_phase3();
    assign WriteData = DUT.writeback.write_data_W;
    // If above is true, this should hold the Data being written to the register. (16 bits)
    
-   assign MemRead =  DUT.memory.MemRead_M;
+   assign MemRead = DUT.memory.MemRead_M;
    // Is memory being read from, in this cycle. one bit signal (1 means yes, 0 means no)
    
    assign MemWrite = DUT.memory.MemWrite_M;
@@ -190,20 +190,18 @@ module cpu_ptb_phase3();
    assign MemDataOut = MemRead ? DUT.memory.mem_data_out : 16'h0000;
    // If there's a memory read in this cycle, this is the data being read out of memory (16 bits)
 
-   assign ICacheReq = DUT.mem_interface.i_read_req;
+   assign ICacheReq = DUT.mem_interface.iCache.FSM_I.read_request;
    // Signal indicating a valid instruction read request to cache
    
-   assign ICacheHit = DUT.mem_interface.i_read_req & ~DUT.mem_interface.i_fsm_busy;
+   assign ICacheHit = DUT.mem_interface.iCache.hit & ~DUT.mem_interface.iCache.fsm_busy;
    // Signal indicating a valid instruction cache hit
 
-   assign DCacheReq = DUT.mem_interface.d_mem_en;
+   assign DCacheReq = DUT.mem_interface.dCache.FSM_D.read_request;
    // Signal indicating a valid instruction data read or write request to cache
    
-   assign DCacheHit = DUT.mem_interface.d_mem_en & ~DUT.mem_interface.d_fsm_busy;
+   assign DCacheHit = DUT.mem_interface.dCache.hit & ~DUT.mem_interface.dCache.fsm_busy;
    // Signal indicating a valid data cache hit
 
-
    /* Add anything else you want here */
-
    
 endmodule

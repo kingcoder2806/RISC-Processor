@@ -68,7 +68,7 @@ module iCache (
     assign wrt_mem = 1'b0;  // I-cache never writes memory
 
     /* refill FSM */
-    cache_fill_FSM fill_I (
+    cache_fill_FSM FSM_I (
         .clk            (clk),
         .rst            (rst),
         .wrt            (1'b0),
