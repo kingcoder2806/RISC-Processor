@@ -1,0 +1,1337 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/aniko/OneDrive/Desktop/CS552/hw7
+vadder
+Z0 !s110 1746071710
+!i10b 1
+!s100 :RCiBRjP;5bLO@DTjGo2o2
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+Imm2R600f4DC9OkcEE6cTz1
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches
+Z4 w1746070712
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder.v
+!i122 3
+L0 2 40
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1746071710.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder.v|
+!i113 1
+Z7 o-work work
+Z8 tCvgOpt 0
+vadder_16bit
+R0
+!i10b 1
+!s100 TdDcW?mk^2FGmh3jD_lDm3
+R1
+IaSJfg2_<9flg2CZ3Qn5AI3
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit.v
+!i122 4
+L0 1 30
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit.v|
+!i113 1
+R7
+R8
+vadder_16bit_tb
+Z9 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+R0
+!i10b 1
+!s100 15K`zKJ:92oUA<`WM53@90
+R1
+I3>4YH]cTKZaRR>SCHhkU22
+R2
+S1
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit_tb.sv
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit_tb.sv
+!i122 5
+L0 2 38
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit_tb.sv|
+!i113 1
+Z10 o-work work -sv
+R8
+vaddsub_4bit
+R0
+!i10b 1
+!s100 ^iMTF4a:JDkZZBhL522?L0
+R1
+IdFzCLPjTRTXcoTHE9U]]80
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/addsub_4bit.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/addsub_4bit.v
+!i122 6
+L0 2 31
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/addsub_4bit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/addsub_4bit.v|
+!i113 1
+R7
+R8
+valu
+R0
+!i10b 1
+!s100 m;0Yl1G<UH13>G?KHn>fB2
+R1
+II3CE]odE=o=7]TEfzJCUX0
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu.v
+!i122 7
+L0 1 93
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu.v|
+!i113 1
+R7
+R8
+valu_tb
+R9
+R0
+!i10b 1
+!s100 lllfg9Kk8c;K=PK7Hml_T2
+R1
+Ibdi59SC8`HcC2EZ9>PK?_0
+R2
+S1
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu_tb.sv
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu_tb.sv
+!i122 8
+L0 2 203
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu_tb.sv|
+!i113 1
+R10
+R8
+vBitCell
+Z11 !s110 1746071712
+!i10b 1
+!s100 jV_5khgM8NO79f>XD:ZkV2
+R1
+IM[?Gm8@Sj@WOA[84V@BU>0
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/BitCell.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/BitCell.v
+!i122 32
+L0 1 12
+R5
+r1
+!s85 0
+31
+Z12 !s108 1746071712.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/BitCell.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/BitCell.v|
+!i113 1
+R7
+R8
+n@bit@cell
+vBlock
+R11
+!i10b 1
+!s100 9_OEHb:AegHE0n6jc1>M51
+R1
+IfHl>NeZ`?PY1D<j0G2h`l3
+R2
+R3
+R4
+Z13 8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/DataArray.v
+Z14 FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/DataArray.v
+!i122 25
+L0 11 5
+R5
+r1
+!s85 0
+31
+R12
+Z15 !s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/DataArray.v|
+Z16 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/DataArray.v|
+!i113 1
+R7
+R8
+n@block
+vbranch_predictor
+!s110 1746166332
+!i10b 1
+!s100 HU?42_0o[jEYNUib7SGRn0
+R1
+I>XbWIZ:[IA6aCH4@KIO8P2
+R2
+R3
+w1746165203
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/branch_predictor.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/branch_predictor.v
+!i122 55
+L0 2 58
+R5
+r1
+!s85 0
+31
+!s108 1746166331.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/branch_predictor.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/branch_predictor.v|
+!i113 1
+R7
+R8
+vbranch_unit
+Z17 !s110 1746071713
+!i10b 1
+!s100 Y]_l^6z;NT?WMO@lQA0c=3
+R1
+IAo4P9a;[ECojaMN0i8MKG0
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/branch_unit.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/branch_unit.v
+!i122 39
+L0 1 70
+R5
+r1
+!s85 0
+31
+Z18 !s108 1746071713.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/branch_unit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/branch_unit.v|
+!i113 1
+R7
+R8
+vcache_fill_FSM
+Z19 !s110 1746071711
+!i10b 1
+!s100 PN4iZf80>oZI3IEFmU<fV1
+R1
+ITAg4Y>cmVj`>fQLBKL6<j2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_fill_FSM.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_fill_FSM.v
+!i122 22
+L0 1 163
+R5
+r1
+!s85 0
+31
+Z20 !s108 1746071711.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_fill_FSM.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_fill_FSM.v|
+!i113 1
+R7
+R8
+ncache_fill_@f@s@m
+vcache_fill_FSM_tb
+R19
+!i10b 1
+!s100 i:0a]:hO@H<nEiz2XOQdj2
+R1
+Id32N;ZO[0<m_>6e0;X3=K2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_tb.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_tb.v
+!i122 23
+L0 1 299
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_tb.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_tb.v|
+!i113 1
+R7
+R8
+ncache_fill_@f@s@m_tb
+vCLA
+R0
+!i10b 1
+!s100 fTM3hJ:U_@BHjHjblfNb`2
+R1
+I8I3@?TjQKk^l6n2213lLC2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA.v
+!i122 9
+L0 2 48
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA.v|
+!i113 1
+R7
+R8
+n@c@l@a
+vCLA_5bit
+R0
+!i10b 1
+!s100 <]:lJzm]`d>YgT;IzgHck0
+R1
+IR>mF@]7kQ>CM;2j@3[Z0i1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_5bit.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_5bit.v
+!i122 10
+L0 2 35
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_5bit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_5bit.v|
+!i113 1
+R7
+R8
+n@c@l@a_5bit
+vCLA_6bit
+R0
+!i10b 1
+!s100 FKK[g=Vl1ROAS63z273X:2
+R1
+Iaj84i@5NQ5z_O;NzP5JI21
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_6bit.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_6bit.v
+!i122 11
+L0 2 45
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_6bit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_6bit.v|
+!i113 1
+R7
+R8
+n@c@l@a_6bit
+vCLA_7bit
+R19
+!i10b 1
+!s100 28BQCDkEz<bok9nI`Y9z43
+R1
+IL0=F=:BbSafo6P06M[Z[M2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_7bit.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_7bit.v
+!i122 12
+L0 2 55
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_7bit.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_7bit.v|
+!i113 1
+R7
+R8
+n@c@l@a_7bit
+vCLA_tb
+R9
+R19
+!i10b 1
+!s100 I`LjT904VbI:3Snl2;U2h0
+R1
+IlnmF70AdhULSa>3LC12f^2
+R2
+S1
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_tb.sv
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_tb.sv
+!i122 13
+L0 2 44
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_tb.sv|
+!i113 1
+R10
+R8
+n@c@l@a_tb
+vcontrol
+R17
+!i10b 1
+!s100 OeeO<Ljg2nA5S5VgE^:8O3
+R1
+IRz`:V^]R^KmAPi7EEHLAW3
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/control.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/control.v
+!i122 40
+L0 1 134
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/control.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/control.v|
+!i113 1
+R7
+R8
+vcpu
+!s110 1746166313
+!i10b 1
+!s100 cQ>Y3<<;:Pk:<D]n?Zd_01
+R1
+IP_k2TNefCcb3c::;aoj6k3
+R2
+R3
+w1746166197
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/cpu.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/cpu.v
+!i122 54
+L0 1 268
+R5
+r1
+!s85 0
+31
+!s108 1746166313.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/cpu.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/cpu.v|
+!i113 1
+R7
+R8
+vcpu_ptb_phase2
+!s110 1746073496
+!i10b 1
+!s100 cQ51nSidH1649LlOe]kX30
+R1
+IQPGD`SQLAD2e[74Xiik<h3
+R2
+R3
+w1746072390
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase2-testbench.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase2-testbench.v
+!i122 51
+L0 2 164
+R5
+r1
+!s85 0
+31
+!s108 1746073496.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase2-testbench.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase2-testbench.v|
+!i113 1
+R7
+R8
+vcpu_ptb_phase3
+R0
+!i10b 1
+!s100 XcT<NTTTUT3`?oNck[gf11
+R1
+I1mDW:X1T^HfbJcA4kZ99X1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase3-testbench.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase3-testbench.v
+!i122 2
+L0 2 206
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase3-testbench.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase3-testbench.v|
+!i113 1
+R7
+R8
+vcpu_tb
+R0
+!i10b 1
+!s100 9zaJCj^;WlUfmT?hhcQ=B0
+R1
+IooU3EKM^6GQo>ZzY[CEQN2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase1-testbench.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase1-testbench.v
+!i122 0
+L0 2 199
+R5
+r1
+!s85 0
+31
+!s108 1746071709.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase1-testbench.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase1-testbench.v|
+!i113 1
+R7
+R8
+vDataArray
+R11
+!i10b 1
+!s100 A>SH?XAHzRQnzjYBWnoa?1
+R1
+I@WJm1Z6]n_XU][N:8PL0I3
+R2
+R3
+R4
+R13
+R14
+!i122 25
+Z21 L0 6 3
+R5
+r1
+!s85 0
+31
+R12
+R15
+R16
+!i113 1
+R7
+R8
+n@data@array
+vdCache
+R11
+!i10b 1
+!s100 AT@18?RG[H_95bSTlIiS>2
+R1
+IiOi7odf>n^l>a^FcHgNbS3
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/D_cache.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/D_cache.v
+!i122 24
+L0 1 87
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/D_cache.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/D_cache.v|
+!i113 1
+R7
+R8
+nd@cache
+vDCell
+R11
+!i10b 1
+!s100 z6C6@V8^FMUm5Fz605jRh2
+R1
+IP;3LgF>i2nO09DOTCm7EL1
+R2
+R3
+R4
+R13
+R14
+!i122 25
+L0 24 5
+R5
+r1
+!s85 0
+31
+R12
+R15
+R16
+!i113 1
+R7
+R8
+n@d@cell
+vdecode
+!s110 1746166310
+!i10b 1
+!s100 EV1PCk=EPBk<ZOoiH1cP53
+R1
+I]<3VL^nD=hFDljk^=GLIG3
+R2
+R3
+w1746165861
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/decode.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/decode.v
+!i122 53
+L0 1 164
+R5
+r1
+!s85 0
+31
+!s108 1746166310.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/decode.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/decode.v|
+!i113 1
+R7
+R8
+vdecoder_3to8b
+R11
+!i10b 1
+!s100 [NfSgCC9hKkQB?Wl655c`1
+R1
+IOFm]P?4PXVWfm:Tj[E?TM2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_3to8b.v.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_3to8b.v.v
+!i122 26
+L0 1 14
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_3to8b.v.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_3to8b.v.v|
+!i113 1
+R7
+R8
+vdecoder_7to128b
+R11
+!i10b 1
+!s100 DO>hzAN6IMP2lXQLeIFPY1
+R1
+IHHYhaEMYVnWNnT:8`;1;Z1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_7to128b.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_7to128b.v
+!i122 27
+L0 1 166
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_7to128b.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_7to128b.v|
+!i113 1
+R7
+R8
+vdff
+R11
+!i10b 1
+!s100 GPkooLjk<d<^mBZg??8oj3
+R1
+I4ZLWXE[X32Le>UA=B^k?S1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/D-Flip-Flop.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/D-Flip-Flop.v
+!i122 33
+L0 3 17
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/D-Flip-Flop.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/D-Flip-Flop.v|
+!i113 1
+R7
+R8
+vDWord
+R11
+!i10b 1
+!s100 dHnQeAiiP:?hB[UD6`Y3O1
+R1
+Inc4KJEEzV^9=hgzWQKZGc3
+R2
+R3
+R4
+R13
+R14
+!i122 25
+L0 19 3
+R5
+r1
+!s85 0
+31
+R12
+R15
+R16
+!i113 1
+R7
+R8
+n@d@word
+vexecute
+R17
+!i10b 1
+!s100 E=5JS]LfnI5<n@<VS5_>S0
+R1
+IIR;P9J8[D:HIYeaRIaeXG3
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/execute.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/execute.v
+!i122 43
+L0 1 100
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/execute.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/execute.v|
+!i113 1
+R7
+R8
+vfetch
+!s110 1746166308
+!i10b 1
+!s100 4ZSnB?Wzl75hF8XI:NT?Y0
+R1
+I`ISEL7;K]M?eYcCbDhT=Y2
+R2
+R3
+w1746165358
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/fetch.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/fetch.v
+!i122 52
+L0 1 71
+R5
+r1
+!s85 0
+31
+!s108 1746166308.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/fetch.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/fetch.v|
+!i113 1
+R7
+R8
+vfull_adder_1bit
+R19
+!i10b 1
+!s100 C9`oUIJK@TNBedQ`<EXQe0
+R1
+II^DV9MTK7O15@PgQ6;?9:2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/full_adder.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/full_adder.v
+!i122 14
+L0 2 20
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/full_adder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/full_adder.v|
+!i113 1
+R7
+R8
+vhazard_forward
+R17
+!i10b 1
+!s100 RPkDRbnLLRW:UB[Dh18_@3
+R1
+IRENUYSk>gTjOeJ6Y`KLja2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/hazard_forward.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/hazard_forward.v
+!i122 45
+L0 1 97
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/hazard_forward.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/hazard_forward.v|
+!i113 1
+R7
+R8
+viCache
+R11
+!i10b 1
+!s100 2`OTmdX?8=O7>8XC>527>0
+R1
+I7EAcf<JmA9W@Dc9c1DCUY3
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/I_cache.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/I_cache.v
+!i122 28
+L0 1 88
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/I_cache.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/I_cache.v|
+!i113 1
+R7
+R8
+ni@cache
+vMBlock
+R11
+!i10b 1
+!s100 F<[agXiEVmYBa7U;cBMEh3
+R1
+I@5i8:mKHSMaP3Y_?ndb:c1
+R2
+R3
+R4
+Z22 8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/MetaDataArray.v
+Z23 FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/MetaDataArray.v
+!i122 30
+L0 10 3
+R5
+r1
+!s85 0
+31
+R12
+Z24 !s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/MetaDataArray.v|
+Z25 !s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/MetaDataArray.v|
+!i113 1
+R7
+R8
+n@m@block
+vMCell
+R11
+!i10b 1
+!s100 m>5VC4AEXZmOR4k4Ra4^>3
+R1
+IV6AgCb_bYW:g>?7J<VDCc2
+R2
+R3
+R4
+R22
+R23
+!i122 30
+L0 14 5
+R5
+r1
+!s85 0
+31
+R12
+R24
+R25
+!i113 1
+R7
+R8
+n@m@cell
+vmem_interface
+R11
+!i10b 1
+!s100 D=WjI9Ii1`m=goe?mUlPM1
+R1
+I=^mlMR35gk1Iz^T]V>X[@2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/mem_interface.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/mem_interface.v
+!i122 29
+L0 1 89
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/mem_interface.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/mem_interface.v|
+!i113 1
+R7
+R8
+vmemory
+Z26 !s110 1746071714
+!i10b 1
+!s100 :37g=_1oQVo7@ZlDFbBT=1
+R1
+In32KS>Z=Z9DKelC@RCjie1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/memory.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/memory.v
+!i122 46
+L0 1 83
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/memory.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/memory.v|
+!i113 1
+R7
+R8
+vmemory4c
+R11
+!i10b 1
+!s100 PPFMXS?@KmM[mjab0Jk7e3
+R1
+Il9@o<X5`9L2aRa_>3^8m:0
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/multicycle_memory.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/multicycle_memory.v
+!i122 31
+L0 24 69
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/multicycle_memory.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/multicycle_memory.v|
+!i113 1
+R7
+R8
+vMetaDataArray
+R11
+!i10b 1
+!s100 2k_Lm;E@HE<lR466]P:OW2
+R1
+I7eB[GM:?>1Yn<hdA?5gf[2
+R2
+R3
+R4
+R22
+R23
+!i122 30
+R21
+R5
+r1
+!s85 0
+31
+R12
+R24
+R25
+!i113 1
+R7
+R8
+n@meta@data@array
+vPADDSB
+R19
+!i10b 1
+!s100 khFRUFe804Xz_7A>jQ9<Q3
+R1
+I86oiT=MzkB:O[QkjoG@ji3
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb.v
+!i122 15
+L0 2 32
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb.v|
+!i113 1
+R7
+R8
+n@p@a@d@d@s@b
+vpaddsb_tb
+R9
+R19
+!i10b 1
+!s100 [?EmA?N5@LMeoMn4LGS:^3
+R1
+I31io8]AU9Rn>mSEnMZ4RL0
+R2
+S1
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb_tb.sv
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb_tb.sv
+!i122 16
+L0 2 27
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb_tb.sv|
+!i113 1
+R10
+R8
+vpc_reg
+R26
+!i10b 1
+!s100 ?:_9T?T42kBT63]SR=neM0
+R1
+IBGJXPhAbL3b1@E=dho7A71
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pc_reg.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pc_reg.v
+!i122 47
+Z27 L0 1 42
+R5
+r1
+!s85 0
+31
+Z28 !s108 1746071714.000000
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pc_reg.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pc_reg.v|
+!i113 1
+R7
+R8
+vpipeline_reg
+R26
+!i10b 1
+!s100 Sj?W[6>8FAP7KHDM0EmbL1
+R1
+IKf<PXm?6I4PiXFIOfn@<>2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pipeline_reg.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pipeline_reg.v
+!i122 48
+L0 1 19
+R5
+r1
+!s85 0
+31
+R28
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pipeline_reg.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pipeline_reg.v|
+!i113 1
+R7
+R8
+vReadDecoder_4_16
+R11
+!i10b 1
+!s100 KPZ<HN<MiSi7XTimh>bcM0
+R1
+IW:fKeL`7;5961ZeQFSo_R0
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/ReadDecoder_4_16.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/ReadDecoder_4_16.v
+!i122 34
+L0 1 21
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/ReadDecoder_4_16.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/ReadDecoder_4_16.v|
+!i113 1
+R7
+R8
+n@read@decoder_4_16
+vRED
+R19
+!i10b 1
+!s100 <k9lOHQWn`G3BgzYL6Ha53
+R1
+I;XJYoYgmdB8keb>?GPmHL0
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED.v
+!i122 17
+L0 1 48
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED.v|
+!i113 1
+R7
+R8
+n@r@e@d
+vRED_tb
+R19
+!i10b 1
+!s100 VV^mo1XO==1aJ5G8AZ6AI1
+R1
+Ij7z98kVlh?oU0^@YQNeLG2
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED_tb.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED_tb.v
+!i122 18
+L0 2 89
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED_tb.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED_tb.v|
+!i113 1
+R7
+R8
+n@r@e@d_tb
+vRegister
+R17
+!i10b 1
+!s100 >>2lA6CUCjHkBo=j>NMoG2
+R1
+I9I3k^fV7KRO`14SXnF_6o3
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/Register.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/Register.v
+!i122 35
+L0 1 22
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/Register.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/Register.v|
+!i113 1
+R7
+R8
+n@register
+vRegisterFile
+R17
+!i10b 1
+!s100 3<]S5gohJJOKfgFDnYlXM2
+R1
+I?Dh1TAgDYgiZ9>ZKfZHma1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile.v
+!i122 36
+R27
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile.v|
+!i113 1
+R7
+R8
+n@register@file
+vRegisterFile_tb
+R9
+R17
+!i10b 1
+!s100 72:1fM[D@jMfHncA^S;Jn3
+R1
+I0fW`Ozl3njC7LDl0h61mg0
+R2
+S1
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile_tb.sv
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile_tb.sv
+!i122 37
+L0 1 196
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile_tb.sv|
+!i113 1
+R10
+R8
+n@register@file_tb
+vror_tb
+R9
+R19
+!i10b 1
+!s100 VH<4:8m_<zQI=e=zUIk3N2
+R1
+I4c?BkN;f>DGKYh3mNO18I3
+R2
+S1
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror_tb.sv
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror_tb.sv
+!i122 20
+L0 2 24
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror_tb.sv|
+!i113 1
+R10
+R8
+vrotate_right
+R19
+!i10b 1
+!s100 =gQ4aG:TFU]@QTH4PdBWL2
+R1
+I6]=<USamzT2MW?of1817d1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror.v
+!i122 19
+L0 2 22
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror.v|
+!i113 1
+R7
+R8
+vShifter
+R19
+!i10b 1
+!s100 XkPKgP8:64GW6HGi]GKK^1
+R1
+I@=zzzOo_ge84>km_N:f<`1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/shifter.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/shifter.v
+!i122 21
+L0 2 33
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/shifter.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/shifter.v|
+!i113 1
+R7
+R8
+n@shifter
+vwriteback
+R26
+!i10b 1
+!s100 JG_dG3NkPPYQ4G6XnMc4N0
+R1
+I4LZ_:k7GSnze99_VL1g=`1
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/writeback.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/writeback.v
+!i122 49
+L0 1 32
+R5
+r1
+!s85 0
+31
+R28
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/writeback.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/writeback.v|
+!i113 1
+R7
+R8
+vWriteDecoder_4_16
+R17
+!i10b 1
+!s100 B8;_[<Z57WcQTO=Udc4kz3
+R1
+IgG334nHhJJ;GKNJ`YZcHo0
+R2
+R3
+R4
+8C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/WriteDecoder_4_16.v
+FC:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/WriteDecoder_4_16.v
+!i122 38
+L0 1 23
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/WriteDecoder_4_16.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/WriteDecoder_4_16.v|
+!i113 1
+R7
+R8
+n@write@decoder_4_16

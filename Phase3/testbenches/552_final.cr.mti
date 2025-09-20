@@ -1,0 +1,356 @@
+C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/I_cache.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/I_cache.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module iCache
+
+Top level modules:
+	iCache
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module adder
+
+Top level modules:
+	adder
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/decode.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/decode.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module decode
+
+Top level modules:
+	decode
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/writeback.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/writeback.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module writeback
+
+Top level modules:
+	writeback
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module alu_tb
+
+Top level modules:
+	alu_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_tb.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_tb.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cache_fill_FSM_tb
+
+Top level modules:
+	cache_fill_FSM_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pc_reg.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pc_reg.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module pc_reg
+
+Top level modules:
+	pc_reg
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_7to128b.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_7to128b.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module decoder_7to128b
+
+Top level modules:
+	decoder_7to128b
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/execute.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/execute.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module execute
+
+Top level modules:
+	execute
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/full_adder.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/full_adder.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module full_adder_1bit
+
+Top level modules:
+	full_adder_1bit
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/alu.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module alu
+
+Top level modules:
+	alu
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_5bit.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_5bit.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module CLA_5bit
+
+Top level modules:
+	CLA_5bit
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module RED
+
+Top level modules:
+	RED
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/addsub_4bit.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/addsub_4bit.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module addsub_4bit
+
+Top level modules:
+	addsub_4bit
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/control.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/control.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module control
+
+Top level modules:
+	control
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/memory.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/memory.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module memory
+
+Top level modules:
+	memory
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module CLA_tb
+
+Top level modules:
+	CLA_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase1-testbench.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase1-testbench.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cpu_tb
+
+Top level modules:
+	cpu_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase3-testbench.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase3-testbench.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cpu_ptb_phase3
+
+Top level modules:
+	cpu_ptb_phase3
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module rotate_right
+
+Top level modules:
+	rotate_right
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/DataArray.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/DataArray.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module DataArray
+-- Compiling module Block
+-- Compiling module DWord
+-- Compiling module DCell
+
+Top level modules:
+	DataArray
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/WriteDecoder_4_16.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/WriteDecoder_4_16.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module WriteDecoder_4_16
+
+Top level modules:
+	WriteDecoder_4_16
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pipeline_reg.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/pipeline_reg.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module pipeline_reg
+
+Top level modules:
+	pipeline_reg
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module CLA
+
+Top level modules:
+	CLA
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/BitCell.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/BitCell.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module BitCell
+
+Top level modules:
+	BitCell
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_7bit.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_7bit.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module CLA_7bit
+
+Top level modules:
+	CLA_7bit
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/mem_interface.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/mem_interface.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module mem_interface
+
+Top level modules:
+	mem_interface
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module adder_16bit
+
+Top level modules:
+	adder_16bit
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/shifter.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/shifter.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Shifter
+
+Top level modules:
+	Shifter
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/multicycle_memory.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/multicycle_memory.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module memory4c
+
+Top level modules:
+	memory4c
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/D-Flip-Flop.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/D-Flip-Flop.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module dff
+
+Top level modules:
+	dff
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module paddsb_tb
+
+Top level modules:
+	paddsb_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/fetch.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/fetch.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module fetch
+
+Top level modules:
+	fetch
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module RegisterFile_tb
+
+Top level modules:
+	RegisterFile_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_fill_FSM.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/cache_fill_FSM.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cache_fill_FSM
+
+Top level modules:
+	cache_fill_FSM
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/MetaDataArray.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/MetaDataArray.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module MetaDataArray
+-- Compiling module MBlock
+-- Compiling module MCell
+
+Top level modules:
+	MetaDataArray
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/branch_unit.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/branch_unit.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module branch_unit
+
+Top level modules:
+	branch_unit
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/ror_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ror_tb
+
+Top level modules:
+	ror_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_3to8b.v.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/decoder_3to8b.v.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module decoder_3to8b
+
+Top level modules:
+	decoder_3to8b
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/hazard_forward.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/hazard_forward.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module hazard_forward
+
+Top level modules:
+	hazard_forward
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/paddsb.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module PADDSB
+
+Top level modules:
+	PADDSB
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/Register.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/Register.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Register
+
+Top level modules:
+	Register
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/RegisterFile.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module RegisterFile
+
+Top level modules:
+	RegisterFile
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase2-testbench.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/testbenches/project-phase2-testbench.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cpu_ptb_phase2
+
+Top level modules:
+	cpu_ptb_phase2
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_6bit.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/CLA_6bit.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module CLA_6bit
+
+Top level modules:
+	CLA_6bit
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/cpu.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/stages/cpu.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module cpu
+
+Top level modules:
+	cpu
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/ReadDecoder_4_16.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/register/ReadDecoder_4_16.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ReadDecoder_4_16
+
+Top level modules:
+	ReadDecoder_4_16
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED_tb.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/RED_tb.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module RED_tb
+
+Top level modules:
+	RED_tb
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/D_cache.v {1 {vlog -work work -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/cache/D_cache.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module dCache
+
+Top level modules:
+	dCache
+
+} {} {}} C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit_tb.sv {1 {vlog -work work -sv -stats=none C:/Users/aniko/OneDrive/Desktop/RISC_Processor_552/ECE552_Project/Phase3/ALU/adder_16bit_tb.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module adder_16bit_tb
+
+Top level modules:
+	adder_16bit_tb
+
+} {} {}}
